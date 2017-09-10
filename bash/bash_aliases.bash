@@ -1,0 +1,6 @@
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias lal='ls -Al'
+alias up='sudo apt-get update && sudo apt-get upgrade'
+alias opamup='opam update && opam upgrade'

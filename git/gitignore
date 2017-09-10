@@ -1,0 +1,11 @@
+# Emacs files
+*~
+\#*\#
+.\#*
+.dir-locals.el
+.emacs.desktop
+.emacs.desktop.lock
+TAGS
+
+# AUCTeX files
+.auto/

@@ -1,0 +1,18 @@
+[alias]
+	br = branch
+	ci = commit
+	co = checkout
+	st = status
+
+[core]
+	editor = emacsclient
+	excludesfile = ~/.gitignore
+
+[merge]
+	log = true
+
+[push]
+	default = simple
+
+[user]
+	name = Idir Lankri
