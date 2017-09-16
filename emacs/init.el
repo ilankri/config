@@ -22,19 +22,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; Enriched Text mode has its support for decoding 'x-display' disabled.
-;; This feature allows saving 'display' properties as part of text.
-;; Emacs 'display' properties support evaluation of arbitrary Lisp forms
-;; as part of instantiating the property, so decoding 'x-display' is
-;; vulnerable to executing arbitrary malicious Lisp code included in the
-;; text (e.g., sent as part of an email message).
-;;
-;; This vulnerability was introduced in Emacs 19.29.  To work around
-;; that in Emacs versions before 25.3:
-(eval-after-load "enriched"
-  '(defun enriched-decode-display-prop (start end &optional param)
-     (list start end)))
-
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 (require 'my)
