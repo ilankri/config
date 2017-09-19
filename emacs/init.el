@@ -147,10 +147,6 @@
              (concat stem ".hpp")))))
         & 34 | -10))
 
-(define-auto-insert '(java-mode . "Java public class")
-  '((file-name-nondirectory (file-name-sans-extension buffer-file-name))
-    "public class " str " {\n" _ "\n}\n"))
-
 ;; Prompt the user for the appropriate Makefile type to insert.
 (define-auto-insert '("[Mm]akefile\\'" . "Makefile") 'my-makefile-auto-insert)
 
