@@ -135,6 +135,11 @@ export GIT_PS1_SHOWCOLORHINTS=1
 
 ## Miscellaneous settings
 
+# Turn off system bell.
+if [ -n "$DISPLAY" ]; then
+    xset b off
+fi
+
 # To avoid errors.
 set -o noclobber
 shopt -s checkjobs
