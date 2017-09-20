@@ -135,6 +135,7 @@
       (setq-local indent-region-function 'ocp-indent-region)))
   (my-undefine-key tuareg-mode-map "C-c C-h")
   (my-local-set-key "h" 'caml-help)
+  (my-local-set-key "l" 'ocaml-add-path)
   (my-local-set-key "a" 'tuareg-find-alternate-file))
 
 (defun my-merlin-mode-hook-f ()
