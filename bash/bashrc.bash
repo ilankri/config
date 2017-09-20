@@ -144,6 +144,9 @@ fi
 set -o noclobber
 shopt -s checkjobs
 
+# Extend pattern matching features.
+shopt -s extglob
+
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/latex:
