@@ -106,13 +106,7 @@
 (ido-everywhere 1)
 
 ;;; Ffap
-(setq ffap-require-prefix t
-      dired-at-point-require-prefix t
-      ffap-machine-p-known 'reject
-      ffap-file-finder 'ido-find-file
-      ffap-directory-finder 'ido-dired)
-
-(ffap-bindings)
+(setq ffap-machine-p-known 'reject)
 
 ;;; Auto-insert
 
