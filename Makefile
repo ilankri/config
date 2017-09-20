@@ -4,7 +4,6 @@ LN = ln -fs
 srcdir = $(shell pwd)
 bashdir = $(srcdir)/bash
 bindir = $(srcdir)/bin
-ctagsdir = $(srcdir)/ctags
 dockerdir = $(srcdir)/docker
 emacsdir = $(srcdir)/emacs
 elispdir = $(emacsdir)/lisp
@@ -17,15 +16,15 @@ print_installing = printf "Installing %s config... "
 print_done = echo "done."
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-bin install-ctags	\
-	install-docker install-emacs install-git install-latexmk	\
-	install-ocaml install-ocp install-readline compile-emacs-lisp
+.PHONY: all install clean install-bash install-bin install-docker	\
+	install-emacs install-git install-latexmk install-ocaml		\
+	install-ocp install-readline compile-emacs-lisp
 
 all: install
 
-install: install-bash install-bin install-ctags install-docker	\
-		install-emacs install-git install-latexmk	\
-		install-ocaml install-ocp install-readline
+install: install-bash install-bin install-docker install-emacs		\
+		install-git install-latexmk install-ocaml install-ocp	\
+		install-readline
 
 clean:
 	@$(RM) $(elispdir)/*.elc
@@ -39,11 +38,6 @@ install-bash:
 install-bin:
 	@echo -n "Installing user's bin... "
 	@$(LN) $(bindir) ~
-	@$(print_done)
-
-install-ctags:
-	@$(print_installing) ctags
-	@$(LN) $(ctagsdir)/ctags ~/.ctags
 	@$(print_done)
 
 install-docker:

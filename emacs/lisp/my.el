@@ -74,12 +74,6 @@
 (defun my-add-hooks (hooks f)
   (mapc (lambda (hook) (add-hook hook f)) hooks))
 
-;; (defun my-create-tags-table ()
-;;   (interactive)
-;;   (let ((dirname (ido-read-directory-name "Create tags table for directory: "
-;;                                        nil nil t)))
-;;     (shell-command (concat "ctags -f " dirname "TAGS " dirname))))
-
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
