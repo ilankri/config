@@ -91,8 +91,8 @@
                                                           newline-mark))
       whitespace-action '(auto-cleanup))
 
-;; Turn off whitespace-mode in Dired buffers.
-(setq whitespace-global-modes '(not dired-mode))
+;; Turn off whitespace-mode in Dired-like buffers.
+(setq whitespace-global-modes '(not dired-mode archive-mode))
 
 ;;; Compilation
 (setq compilation-scroll-output 'first-error
