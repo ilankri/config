@@ -302,13 +302,15 @@
 
 (my-global-set-key "p" 'check-parens)
 
-(my-global-set-spelling-key "c" 'ispell-comments-and-strings)
+(my-set-spelling-key "c" 'ispell-comments-and-strings)
 
-(my-global-set-spelling-key "d" 'ispell-change-dictionary)
+(my-set-spelling-key "d" 'ispell-change-dictionary)
 
-(my-global-set-spelling-key "s" 'ispell)
+(my-set-spelling-key "s" 'ispell)
 
 (my-global-set-key "t" 'my-transpose-windows)
+
+(my-global-set-key "u" 'browse-url)
 
 (my-global-set-key "w" 'whitespace-cleanup)
 
@@ -323,6 +325,8 @@
 (add-hook 'find-file-hook 'my-try-smerge t)
 
 (add-hook 'conf-mode-hook 'my-indent-tabs-mode-on)
+
+(add-hook 'message-mode-hook 'my-message-mode-hook-f)
 
 ;;; Emacs server
 (server-start)

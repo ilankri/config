@@ -58,12 +58,13 @@
 (defun my-global-set-key (key cmd)
   (global-set-key (my-user-key key) cmd))
 
-(defun my-global-set-spelling-key (key cmd)
-  (let ((spelling-prefix-key "s"))
-    (my-global-set-key (concat spelling-prefix-key " " key) cmd)))
-
 (defun my-local-set-key (key cmd)
   (local-set-key (my-user-key key) cmd))
+
+(defun my-set-spelling-key (key cmd &optional local)
+  (let* ((spelling-prefix-key "s")
+         (key (concat spelling-prefix-key " " key)))
+    (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
 
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
@@ -144,5 +145,8 @@
                '("Latexmk" "latexmk -pdflatex=\"%l%(mode)\" %t"
                  TeX-run-TeX nil t))
   (add-to-list 'TeX-style-path "/usr/share/doc/texlive-doc/latex/curve/"))
+
+(defun my-message-mode-hook-f ()
+  (my-set-spelling-key "s" 'ispell-message t))
 
 (provide 'my)
