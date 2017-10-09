@@ -1,16 +1,19 @@
 SHELL = /bin/sh
 LN = ln -fs
+MKDIR = mkdir -p
 
 srcdir = $(shell pwd)
 bashdir = $(srcdir)/bash
 bindir = $(srcdir)/bin
 dockerdir = $(srcdir)/docker
+dockerinstalldir = ~/.docker
 emacsdir = $(srcdir)/emacs
 elispdir = $(emacsdir)/lisp
 gitdir = $(srcdir)/git
 latexmkdir = $(srcdir)/latexmk
 ocamldir = $(srcdir)/ocaml
 ocpdir = $(srcdir)/ocp
+ocpinstalldir = ~/.ocp
 readlinedir = $(srcdir)/readline
 print_installing = printf "Installing %s config... "
 print_done = echo "done."
@@ -42,7 +45,8 @@ install-bin:
 
 install-docker:
 	@$(print_installing) docker
-	@$(LN) $(dockerdir)/config.json ~/.docker
+	@$(MKDIR) $(dockerinstalldir)
+	@$(LN) $(dockerdir)/config.json $(dockerinstalldir)
 	@$(print_done)
 
 install-emacs: compile-emacs-lisp
@@ -70,7 +74,8 @@ install-ocaml:
 
 install-ocp:
 	@$(print_installing) ocp
-	@$(LN) $(ocpdir)/ocp-indent.conf ~/.ocp
+	@$(MKDIR) $(ocpinstalldir)
+	@$(LN) $(ocpdir)/ocp-indent.conf $(ocpinstalldir)
 	@$(print_done)
 
 install-readline:
