@@ -116,7 +116,7 @@ if ! shopt -oq posix; then
 fi
 
 ## OPAM configuration
-. /home/idir/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+. ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 export OPAMBUILDDOC=true
 opam-switch-eval system
 
