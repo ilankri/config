@@ -135,10 +135,9 @@ export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_HIDE_IF_PWD_IGNORED=1
 
 ## Miscellaneous settings
-
-# Turn off system bell.
 if [ -n "$DISPLAY" ]; then
-    xset b off
+    xset b off                  # Turn off system bell.
+    my-kbd-config               # Tweak keyboard layout.
 fi
 
 # To avoid errors.
@@ -156,9 +155,6 @@ export ALTERNATE_EDITOR=emacs
 export EMAIL=lankri.idir@gmail.com
 export UNIV=lankri@lucien.informatique.univ-paris-diderot.fr
 export OCAMLRUNPARAM=b
-
-## Keyboard configuration
-my-kbd-config
 
 ## SSH initialization
 my-ssh-init
