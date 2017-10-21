@@ -1,11 +1,12 @@
 SHELL = /bin/sh
+RM = rm -f
 JAVAC = javac
 JAVACFLAGS = -g -Xlint
-JAVA = java
 
+MAIN_SRC =
+MAIN_CLASS = $(MAIN_SRC:.java=.class)
 SRCS =
-CLS = $(SRCS:.java=.class)
-EXEC =
+CLASSES = $(SRCS:.java=.class)
 
 compile = $(JAVAC) $(JAVACFLAGS)
 
@@ -13,10 +14,13 @@ compile = $(JAVAC) $(JAVACFLAGS)
 .SUFFIXES: .class .java
 .PHONY: all clean
 
-all: $(CLS)
+all: $(MAIN_CLASS)
+
+$(MAIN_CLASS): $(MAIN_SRC) $(CLASSES)
+	$(compile) $<
 
 %.class: %.java
 	$(compile) $<
 
 clean:
-	$(RM) $(CLS)
+	$(RM) $(MAIN_CLASS) $(CLASSES)

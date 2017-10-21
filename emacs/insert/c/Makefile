@@ -1,6 +1,7 @@
 SHELL = /bin/sh
+RM = rm -f
 CC = gcc
-CPPFLAGS = -MD -MP
+CPPFLAGS = -MMD -MP
 DEBUGFLAG = -g3
 CFLAGS = $(DEBUGFLAG) -pedantic-errors -Wall -Wextra -Wconversion -Wfloat-equal
 LDFLAGS = $(DEBUGFLAG)
