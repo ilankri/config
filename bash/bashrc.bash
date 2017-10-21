@@ -149,7 +149,7 @@ shopt -s extglob
 
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 export RLWRAP_HOME=~/.rlwrap
-export TEXINPUTS=.:~/latex:
+export TEXINPUTS=.:~/dotfiles/latex:
 export EDITOR=emacsclient
 export ALTERNATE_EDITOR=emacs
 export EMAIL=lankri.idir@gmail.com
