@@ -14,7 +14,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (company auctex))))
+ '(package-selected-packages (quote (ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -177,17 +177,13 @@
 (my-add-hooks '(java-mode-hook c++-mode-hook) 'my-c-trad-comment-on)
 
 ;;; Tuareg
-(setq tuareg-interactive-read-only-input t
-      tuareg-electric-indent nil)
+(setq tuareg-interactive-read-only-input t)
 
-(my-add-hook 'tuareg-mode-hook '((lambda () (electric-indent-local-mode 0))
-                                 merlin-mode
-                                 my-tuareg-mode-hook-f))
+(my-add-hook 'tuareg-mode-hook '(merlin-mode my-tuareg-mode-hook-f))
 
 ;;; Merlin
 (setq merlin-command 'opam
       merlin-error-after-save nil
-      merlin-show-instance-in-lighter nil
       merlin-completion-with-doc t)
 
 (add-hook 'merlin-mode-hook 'my-merlin-mode-hook-f)
@@ -217,6 +213,7 @@
       reftex-enable-partial-scans t
       reftex-save-parse-info t
       reftex-use-multiple-selection-buffers t
+      TeX-electric-math (cons "$" "$")
       TeX-electric-sub-and-superscript t
       font-latex-fontify-script 'multi-level)
 
