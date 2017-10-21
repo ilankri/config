@@ -137,6 +137,9 @@
   (my-undefine-key merlin-mode-map "C-c C-r")
   (my-local-set-key "o" 'merlin-switch-to-mli))
 
+(defun my-scala-mode-hook-f ()
+  (setq scala-indent:default-run-on-strategy 1))
+
 (defun my-LaTeX-mode-hook-f ()
   (setq TeX-command-default "Latexmk")
   (my-add-to-list 'LaTeX-clean-intermediate-suffixes

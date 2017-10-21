@@ -172,8 +172,8 @@
 
 (add-hook 'c-initialization-hook 'my-c-initialization-hook-f)
 
-;; In java-mode and c++-mode, we use C style comments and not single-line
-;; comments.
+;; In java-mode and c++-mode, we use C style comments and not
+;; single-line comments.
 (my-add-hooks '(java-mode-hook c++-mode-hook) 'my-c-trad-comment-on)
 
 ;;; Tuareg
@@ -187,6 +187,9 @@
       merlin-completion-with-doc t)
 
 (add-hook 'merlin-mode-hook 'my-merlin-mode-hook-f)
+
+;;; Scala
+(my-add-hook 'scala-mode-hook '(my-c-trad-comment-on my-scala-mode-hook-f))
 
 ;;; Proof general
 (setq proof-splash-enable nil
