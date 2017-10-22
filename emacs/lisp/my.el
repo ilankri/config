@@ -78,7 +78,7 @@
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
-           (ido-completing-read "Type: " '("c" "java" "ocaml") nil t)
+           (ido-completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
            "/" filename)))
 
 (defun my-makefile-auto-insert ()
