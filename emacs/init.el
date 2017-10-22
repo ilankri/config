@@ -245,8 +245,7 @@
 (my-add-to-list 'completion-ignored-extensions
                 '(".auto/" ".prv/" "_build/"
                   ".d" ".native" ".byte" ".pdf"
-                  ".out" ".fls" ".synctex.gz" ".fdb_latexmk"
-                  ".rel" ".unq" ".tns"
+                  ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
                   ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
 
 (my-add-to-list 'auto-mode-alist

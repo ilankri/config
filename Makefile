@@ -12,7 +12,6 @@ dockerinstalldir = ~/.docker
 emacsdir = $(srcdir)/emacs
 elispdir = $(emacsdir)/lisp
 gitdir = $(srcdir)/git
-latexmkdir = $(srcdir)/latexmk
 ocamldir = $(srcdir)/ocaml
 ocpdir = $(srcdir)/ocp
 ocpinstalldir = ~/.ocp
@@ -21,15 +20,15 @@ print_installing = printf "Installing %s config... "
 print_done = echo "done."
 
 .SUFFIXES:
-.PHONY: all install clean install-apt install-bash install-bin		\
-	install-docker install-emacs install-git install-latexmk	\
-	install-ocaml install-ocp install-readline compile-emacs-lisp
+.PHONY: all install clean install-apt install-bash install-bin	\
+	install-docker install-emacs install-git install-ocaml	\
+	install-ocp install-readline compile-emacs-lisp
 
 all: install
 
 install: install-apt install-bash install-bin install-docker		\
-		install-emacs install-git install-latexmk install-ocaml	\
-		install-ocp install-readline
+		install-emacs install-git install-ocaml install-ocp	\
+		install-readline
 
 clean:
 	@$(RM) $(elispdir)/*.elc
@@ -67,11 +66,6 @@ install-git:
 	@$(print_installing) git
 	@$(LN) $(gitdir)/gitconfig ~/.gitconfig
 	@$(LN) $(gitdir)/gitignore ~/.gitignore
-	@$(print_done)
-
-install-latexmk:
-	@$(print_installing) latexmk
-	@$(LN) $(latexmkdir)/latexmkrc.pl ~/.latexmkrc
 	@$(print_done)
 
 install-ocaml:

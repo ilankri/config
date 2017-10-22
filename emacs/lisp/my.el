@@ -141,12 +141,6 @@
   (setq scala-indent:default-run-on-strategy 1))
 
 (defun my-LaTeX-mode-hook-f ()
-  (setq TeX-command-default "Latexmk")
-  (my-add-to-list 'LaTeX-clean-intermediate-suffixes
-                  '("\\.fmt" "\\.fdb_latexmk" "\\.rel" "\\.unq" "\\.tns"))
-  (add-to-list 'TeX-command-list
-               '("Latexmk" "latexmk -pdflatex=\"%l%(mode)\" %t"
-                 TeX-run-TeX nil t))
   (add-to-list 'TeX-style-path "/usr/share/doc/texlive-doc/latex/curve/"))
 
 (defun my-message-mode-hook-f ()
