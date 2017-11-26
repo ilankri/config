@@ -6,13 +6,19 @@
 
 [core]
 	editor = emacsclient
-	excludesfile = ~/.gitignore
+	excludesFile = ~/.gitignore
 
 [merge]
 	log = true
 
 [push]
 	default = simple
+
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = lankri.idir@gmail.com
+	smtpServerPort = 587
 
 [user]
 	name = Idir Lankri

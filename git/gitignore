@@ -8,4 +8,8 @@
 TAGS
 
 # AUCTeX files
-.auto/
+auto/
+
+# ENSIME files
+.ensime
+.ensime_cache/

@@ -14,7 +14,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (ensime company auctex))))
+ '(package-selected-packages (quote (markdown-mode ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -189,7 +189,12 @@
 (add-hook 'merlin-mode-hook 'my-merlin-mode-hook-f)
 
 ;;; Scala
-(my-add-hook 'scala-mode-hook '(my-c-trad-comment-on my-scala-mode-hook-f))
+(setq scala-indent:default-run-on-strategy 1)
+
+(add-hook 'scala-mode-hook 'my-c-trad-comment-on)
+
+;;; ENSIME
+(setq ensime-typecheck-when-idle nil)
 
 ;;; Proof general
 (setq proof-splash-enable nil
@@ -205,8 +210,6 @@
 ;;; LaTeX
 (setq TeX-auto-save t
       TeX-parse-self t
-      TeX-auto-local ".auto"
-      TeX-auto-private (list (my-prefix-by-user-emacs-directory "auctex/auto"))
       LaTeX-section-hook '(LaTeX-section-heading
                            LaTeX-section-title
                            LaTeX-section-toc
@@ -243,10 +246,11 @@
               indent-tabs-mode nil)
 
 (my-add-to-list 'completion-ignored-extensions
-                '(".auto/" ".prv/" "_build/"
+                '("auto/" ".prv/" "_build/" ".ensime_cache/" "target/"
                   ".d" ".native" ".byte" ".pdf"
                   ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
-                  ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
+                  ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"
+                  ".ensime"))
 
 (my-add-to-list 'auto-mode-alist
                 '(("README\\'" . text-mode)
