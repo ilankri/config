@@ -117,8 +117,7 @@ fi
 
 ## OPAM configuration
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-export OPAMBUILDDOC=true
-opam-switch-eval system
+opam-switch-eval 4.04.2
 
 ## Git prompt
 
@@ -135,10 +134,6 @@ export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_HIDE_IF_PWD_IGNORED=1
 
 ## Miscellaneous settings
-if [ -n "$DISPLAY" ]; then
-    xset b off                  # Turn off system bell.
-    my-kbd-config               # Tweak keyboard layout.
-fi
 
 # To avoid errors.
 set -o noclobber
@@ -147,7 +142,9 @@ shopt -s checkjobs
 # Extend pattern matching features.
 shopt -s extglob
 
-export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+export GOPATH=~/go
+export OZHOME=~/oz
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/bin:$GOPATH/bin:$OZHOME/bin
 export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/dotfiles/latex:
 export EDITOR=emacsclient
@@ -155,6 +152,19 @@ export ALTERNATE_EDITOR=emacs
 export EMAIL=lankri.idir@gmail.com
 export UNIV=lankri@lucien.informatique.univ-paris-diderot.fr
 export OCAMLRUNPARAM=b
+
+# npm
+export PATH=$PATH:~/.npm-global/bin
+
+# Android
+export ANDROID_SDK_ROOT=~/android-sdk-linux
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
+
+if [ -n "$DISPLAY" ]; then
+    xset b off                  # Turn off system bell.
+    my-kbd-config               # Tweak keyboard layout.
+fi
 
 ## SSH initialization
 my-ssh-init
