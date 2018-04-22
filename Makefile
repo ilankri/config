@@ -34,12 +34,12 @@ clean:
 	@$(RM) $(elispdir)/*.elc
 
 install-apt:
-	@$(print_installing) apt
+	@$(print_installing) APT
 	@$(CP) $(aptdir) /etc
 	@$(print_done)
 
 install-bash:
-	@$(print_installing) bash
+	@$(print_installing) Bash
 	@$(LN) $(bashdir)/bashrc.bash ~/.bashrc
 	@$(LN) $(bashdir)/bash_aliases.bash ~/.bash_aliases
 	@$(print_done)
@@ -50,41 +50,41 @@ install-bin:
 	@$(print_done)
 
 install-docker:
-	@$(print_installing) docker
+	@$(print_installing) Docker
 	@$(MKDIR) $(dockerinstalldir)
 	@$(LN) $(dockerdir)/config.json $(dockerinstalldir)
 	@$(print_done)
 
 install-emacs: compile-emacs-lisp
-	@$(print_installing) emacs
+	@$(print_installing) Emacs
 	@$(LN) $(emacsdir)/gnus-init.el $(emacsdir)/signature		\
 		$(emacsdir)/init.el $(emacsdir)/insert $(elispdir)	\
 		~/.emacs.d
 	@$(print_done)
 
 install-git:
-	@$(print_installing) git
+	@$(print_installing) Git
 	@$(LN) $(gitdir)/gitconfig ~/.gitconfig
 	@$(LN) $(gitdir)/gitignore ~/.gitignore
 	@$(print_done)
 
 install-ocaml:
-	@$(print_installing) ocaml
+	@$(print_installing) OCaml
 	@$(LN) $(ocamldir)/ocamlinit.ml ~/.ocamlinit
 	@$(print_done)
 
 install-ocp:
-	@$(print_installing) ocp
+	@$(print_installing) OCP
 	@$(MKDIR) $(ocpinstalldir)
 	@$(LN) $(ocpdir)/ocp-indent.conf $(ocpinstalldir)
 	@$(print_done)
 
 install-readline:
-	@$(print_installing) readline
+	@$(print_installing) Readline
 	@$(LN) $(readlinedir)/inputrc ~/.inputrc
 	@$(print_done)
 
 compile-emacs-lisp:
-	@echo "Compiling elisp files... "
+	@echo "Compiling Elisp files... "
 	@emacs --batch --eval '(batch-byte-recompile-directory 0)'	\
 		$(elispdir)
