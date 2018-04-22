@@ -73,27 +73,8 @@
 (my-add-hooks '(text-mode-hook c-mode-common-hook) 'auto-fill-mode)
 
 ;;; Mail
-(setq mail-user-agent 'gnus-user-agent
-      mail-header-separator
-      "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
-      message-directory "~/.mail/"
-      gnus-directory "~/.news/"
-      gnus-inhibit-startup-message t
-      send-mail-function 'smtpmail-send-it
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      message-citation-line-format "On %e %B %Y %R, %N wrote:\n"
-      message-citation-line-function 'message-insert-formatted-citation-line
-      message-make-forward-subject-function 'message-forward-subject-fwd)
-
-;;; BBDB
-(setq
- ;; Create a new record in BBDB without prompting.
- bbdb-update-records-p t
- ;; Update BBDB with all mail addresses of the message.
- bbdb-message-all-addresses t)
-
-(when (featurep 'bbdb-loaddefs) (my-bbdb-initialize))
+(setq mail-header-separator
+      "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-")
 
 ;;; Whitespace
 (global-whitespace-mode 1)
@@ -254,10 +235,6 @@
       load-prefer-newer t
       view-read-only t
       comint-prompt-read-only t
-      auth-source-save-behavior nil
-      auth-source-cache-expiry nil
-      mail-signature-file (my-prefix-by-user-emacs-directory "signature")
-      gnus-init-file (my-prefix-by-user-emacs-directory "gnus-init.el")
       vc-follow-symlinks t)
 
 (setq-default require-final-newline t
@@ -323,8 +300,6 @@
 
 (my-global-set-key "m" 'man)
 
-(my-global-set-key "n" 'gnus)
-
 (my-global-set-key "o" 'ff-find-other-file)
 
 (my-global-set-key "p" 'check-parens)
@@ -346,7 +321,7 @@
 ;; Do not activate following in diff-mode because it can freeze Emacs.
 (add-hook 'occur-mode-hook 'next-error-follow-minor-mode)
 
-(my-add-hook 'after-init-hook '(global-company-mode my-after-init-hook-f))
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)

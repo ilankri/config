@@ -115,15 +115,7 @@
     (when (re-search-forward smerge-begin-re nil t)
       (smerge-mode 1))))
 
-(defun my-bbdb-initialize ()
-  (bbdb-initialize 'gnus 'message)
-  ;; Update BBDB only when sending mails.
-  (bbdb-mua-auto-update-init 'message))
-
 ;;; Hook functions
-(defun my-after-init-hook-f ()
-  (setq smtpmail-smtp-user user-mail-address))
-
 (defun my-c-initialization-hook-f ()
   (setq c-default-style '((java-mode . "java")
                           (awk-mode . "awk")
