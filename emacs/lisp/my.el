@@ -9,6 +9,7 @@
   (interactive)
   (indent-region (point-min) (point-max)))
 
+;; Inspired by https://www.emacswiki.org/emacs/TransposeWindows.
 (defun my-transpose-windows (count)
   (interactive "p")
   (let* ((ws (window-list))
@@ -61,10 +62,19 @@
 (defun my-local-set-key (key cmd)
   (local-set-key (my-user-key key) cmd))
 
-(defun my-set-spelling-key (key cmd &optional local)
-  (let* ((spelling-prefix-key "s")
-         (key (concat spelling-prefix-key " " key)))
+(defconst my-spelling-prefix "s")
+
+(defconst my-vc-prefix "v")
+
+(defun my-set-prefix-key (prefix key cmd &optional local)
+  (let* ((key (concat prefix " " key)))
     (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
+
+(defun my-set-spelling-key (key cmd &optional local)
+  (my-set-prefix-key my-spelling-prefix key cmd local))
+
+(defun my-set-vc-key (key cmd &optional local)
+  (my-set-prefix-key my-vc-prefix key cmd local))
 
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
@@ -120,6 +130,7 @@
                           (other . "my-linux"))))
 
 (defun my-tuareg-mode-hook-f ()
+  (setq-local comment-style 'indent)
   (setq-local tuareg-interactive-program
               (concat tuareg-interactive-program " -nopromptcont"))
   (let ((ext (file-name-extension buffer-file-name)))
@@ -129,13 +140,54 @@
       (setq-local indent-line-function 'ocp-indent-line)
       (setq-local indent-region-function 'ocp-indent-region)))
   (my-undefine-key tuareg-mode-map "C-c C-h")
+  (my-undefine-key tuareg-mode-map "M-q")
+  (local-set-key (kbd "M-q") 'fill-paragraph)
   (my-local-set-key "h" 'caml-help)
   (my-local-set-key "l" 'ocaml-add-path)
-  (my-local-set-key "a" 'tuareg-find-alternate-file))
+  (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
+                              ("\\.ml\\'" (".mli"))
+                              ("\\.eliomi\\'" (".eliom"))
+                              ("\\.eliom\\'" (".eliomi")))))
 
 (defun my-merlin-mode-hook-f ()
   (my-undefine-key merlin-mode-map "C-c C-r")
   (my-local-set-key "o" 'merlin-switch-to-mli))
+
+(defun my-ocp-index-jump (f)
+  (xref-push-marker-stack)
+  (funcall f))
+
+(defun my-ocp-index-jump-to-sig-at-point-other-window ()
+  (interactive)
+  (my-ocp-index-jump 'ocp-index-jump-to-sig-at-point-other-window))
+
+(defun my-ocp-index-jump-to-definition-at-point-other-window ()
+  (interactive)
+  (my-ocp-index-jump 'ocp-index-jump-to-definition-at-point-other-window))
+
+(defun my-ocp-index-jump-to-sig-at-point ()
+  (interactive)
+  (my-ocp-index-jump 'ocp-index-jump-to-sig-at-point))
+
+(defun my-ocp-index-jump-to-definition-at-point ()
+  (interactive)
+  (my-ocp-index-jump 'ocp-index-jump-to-definition-at-point))
+
+(defun my-ocp-index-mode-hook-f ()
+  (my-undefine-key ocp-index-keymap "C-c :")
+  (my-undefine-key ocp-index-keymap "C-c ;")
+  (my-undefine-key ocp-index-keymap "C-c C-:")
+  (my-undefine-key ocp-index-keymap "C-c C-;")
+  (my-local-set-key ":" 'my-ocp-index-jump-to-sig-at-point-other-window)
+  (my-local-set-key ";" 'my-ocp-index-jump-to-definition-at-point-other-window)
+  (my-local-set-key "C-:" 'my-ocp-index-jump-to-sig-at-point)
+  (my-local-set-key "C-;" 'my-ocp-index-jump-to-definition-at-point)
+  (local-set-key (kbd "M-.") 'my-ocp-index-jump-to-definition-at-point)
+  (local-set-key (kbd "C-x 4 .")
+                 'my-ocp-index-jump-to-definition-at-point-other-window))
+
+(defun my-go-mode-hook-f ()
+  (add-hook 'before-save-hook 'gofmt nil t))
 
 (defun my-LaTeX-mode-hook-f ()
   (add-to-list 'TeX-style-path "/usr/share/doc/texlive-doc/latex/curve/"))

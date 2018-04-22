@@ -14,7 +14,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (markdown-mode ensime company auctex))))
+ '(package-selected-packages
+   (quote
+    (company-go go-guru go-rename rust-mode go-mode markdown-mode ensime company
+                auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -33,7 +36,18 @@
 
 (require 'ocp-indent)
 
+(require 'ocp-index)
+
 (require 'merlin)
+
+;;; Go
+(require 'go-guru)
+
+(require 'company-go)
+
+(add-to-list 'company-backends 'company-go)
+
+(add-hook 'go-mode-hook 'my-go-mode-hook-f)
 
 ;;; Ispell
 
@@ -60,6 +74,8 @@
 
 ;;; Mail
 (setq mail-user-agent 'gnus-user-agent
+      mail-header-separator
+      "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
       message-directory "~/.mail/"
       gnus-directory "~/.news/"
       gnus-inhibit-startup-message t
@@ -179,7 +195,7 @@
 ;;; Tuareg
 (setq tuareg-interactive-read-only-input t)
 
-(my-add-hook 'tuareg-mode-hook '(merlin-mode my-tuareg-mode-hook-f))
+(my-add-hook 'tuareg-mode-hook '(ocp-index-mode my-tuareg-mode-hook-f))
 
 ;;; Merlin
 (setq merlin-command 'opam
@@ -187,6 +203,8 @@
       merlin-completion-with-doc t)
 
 (add-hook 'merlin-mode-hook 'my-merlin-mode-hook-f)
+
+(add-hook 'ocp-index-mode-hook 'my-ocp-index-mode-hook-f)
 
 ;;; Scala
 (setq scala-indent:default-run-on-strategy 1)
@@ -258,6 +276,7 @@
                   ("COMMIT_EDITMSG\\'" . text-mode)
                   ("MERGE_MSG\\'" . text-mode)
                   ("\\.gitignore\\'" . conf-unix-mode)
+                  ("\\.dockerignore\\'" . conf-unix-mode)
                   ("\\.ml[ly]\\'" . tuareg-mode)
                   ("\\.top\\'" . tuareg-mode)
                   ("\\.ocamlinit\\'" . tuareg-mode)
@@ -266,7 +285,8 @@
                   ("_tags\\'" . conf-colon-mode)
                   ("_log\\'" . conf-unix-mode)
                   ("\\.merlin\\'" . conf-space-mode)
-                  ("\\.mrconfig\\'" . conf-unix-mode)))
+                  ("\\.mrconfig\\'" . conf-unix-mode)
+                  ("\\.eml\\'" . message-mode)))
 
 (tool-bar-mode 0)
 
@@ -294,6 +314,10 @@
 (my-global-set-key "d" 'desktop-change-dir)
 
 (my-global-set-key "g" 'revert-buffer)
+
+(require 'vc-git)
+
+(my-set-vc-key "g" 'vc-git-grep)
 
 (my-global-set-key "i" 'my-indent-buffer)
 
