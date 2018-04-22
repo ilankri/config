@@ -8,7 +8,10 @@
 TAGS
 
 # AUCTeX files
+*.fmt
 auto/
+_region_.prv/
+_region_.tex
 
 # ENSIME files
 .ensime
