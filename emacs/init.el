@@ -16,8 +16,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-go go-guru go-rename rust-mode go-mode markdown-mode ensime company
-                auctex))))
+    (ivy company-go go-guru go-rename rust-mode go-mode markdown-mode ensime
+         company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -242,10 +242,14 @@
 
 (my-add-to-list 'completion-ignored-extensions
                 '("auto/" ".prv/" "_build/" ".ensime_cache/" "target/"
+                  "_client/" "_deps/" "_server/"
                   ".d" ".native" ".byte" ".pdf"
                   ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
                   ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"
                   ".ensime"))
+
+(setq counsel-find-file-ignore-regexp
+      (regexp-opt completion-ignored-extensions))
 
 (my-add-to-list 'auto-mode-alist
                 '(("README\\'" . text-mode)
@@ -283,6 +287,10 @@
 
 (winner-mode 1)
 
+(ivy-mode 1)
+
+(counsel-mode 1)
+
 ;;; Custom global key bindings
 (my-global-set-key "a" 'ff-get-other-file)
 
@@ -290,11 +298,9 @@
 
 (my-global-set-key "d" 'desktop-change-dir)
 
-(my-global-set-key "g" 'revert-buffer)
+(my-global-set-key "f" 'counsel-git)
 
-(require 'vc-git)
-
-(my-set-vc-key "g" 'vc-git-grep)
+(my-global-set-key "g" 'counsel-git-grep)
 
 (my-global-set-key "i" 'my-indent-buffer)
 
@@ -307,6 +313,8 @@
 (my-set-spelling-key "c" 'ispell-comments-and-strings)
 
 (my-set-spelling-key "d" 'ispell-change-dictionary)
+
+(my-global-set-key "r" 'revert-buffer)
 
 (my-set-spelling-key "s" 'ispell)
 
