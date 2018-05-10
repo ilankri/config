@@ -62,16 +62,21 @@
 (defun my-local-set-key (key cmd)
   (local-set-key (my-user-key key) cmd))
 
-(defconst my-spelling-prefix "s")
-
-(defconst my-vc-prefix "v")
-
 (defun my-set-prefix-key (prefix key cmd &optional local)
   (let* ((key (concat prefix " " key)))
     (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
 
-(defun my-set-spelling-key (key cmd &optional local)
-  (my-set-prefix-key my-spelling-prefix key cmd local))
+(defconst my-desktop-prefix "d")
+
+(defun my-set-desktop-key (key cmd &optional local)
+  (my-set-prefix-key my-desktop-prefix key cmd local))
+
+(defconst my-ispell-prefix "s")
+
+(defun my-set-ispell-key (key cmd &optional local)
+  (my-set-prefix-key my-ispell-prefix key cmd local))
+
+(defconst my-vc-prefix "v")
 
 (defun my-set-vc-key (key cmd &optional local)
   (my-set-prefix-key my-vc-prefix key cmd local))
@@ -88,7 +93,7 @@
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
-           (ido-completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
+           (ivy-completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
            "/" filename)))
 
 (defun my-makefile-auto-insert ()
@@ -185,6 +190,6 @@
   (add-to-list 'TeX-style-path "/usr/share/doc/texlive-doc/latex/curve/"))
 
 (defun my-message-mode-hook-f ()
-  (my-set-spelling-key "s" 'ispell-message t))
+  (my-set-ispell-key "s" 'ispell-message t))
 
 (provide 'my)

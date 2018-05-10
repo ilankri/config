@@ -97,11 +97,6 @@
 
 (add-hook 'compilation-mode-hook 'next-error-follow-minor-mode)
 
-;;; Ido
-(ido-mode 1)
-
-(ido-everywhere 1)
-
 ;;; Ffap
 (setq ffap-machine-p-known 'reject)
 
@@ -296,7 +291,9 @@
 
 (my-global-set-key "c" 'my-compile)
 
-(my-global-set-key "d" 'desktop-change-dir)
+(my-set-desktop-key "d" 'desktop-change-dir)
+
+(my-set-desktop-key "k" 'desktop-clear)
 
 (my-global-set-key "f" 'counsel-git)
 
@@ -310,13 +307,13 @@
 
 (my-global-set-key "p" 'check-parens)
 
-(my-set-spelling-key "c" 'ispell-comments-and-strings)
+(my-global-set-key "r" 'ivy-resume)
 
-(my-set-spelling-key "d" 'ispell-change-dictionary)
+(my-set-ispell-key "c" 'ispell-comments-and-strings)
 
-(my-global-set-key "r" 'revert-buffer)
+(my-set-ispell-key "d" 'ispell-change-dictionary)
 
-(my-set-spelling-key "s" 'ispell)
+(my-set-ispell-key "s" 'ispell)
 
 (my-global-set-key "t" 'my-transpose-windows)
 
