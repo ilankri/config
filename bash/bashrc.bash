@@ -117,6 +117,10 @@ fi
 
 ## OPAM configuration
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+# Useful to make ocp-index work correctly on library files.
+export OPAMKEEPBUILDDIR=true
+
 opam-switch-eval 4.04.2
 
 ## Git prompt
