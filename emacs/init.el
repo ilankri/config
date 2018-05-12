@@ -95,8 +95,6 @@
 (setq compilation-scroll-output 'first-error
       compilation-context-lines 0)
 
-(add-hook 'compilation-mode-hook 'next-error-follow-minor-mode)
-
 ;;; Ffap
 (setq ffap-machine-p-known 'reject)
 
@@ -322,9 +320,6 @@
 (my-global-set-key "w" 'whitespace-cleanup)
 
 (my-global-set-key "x" 'ansi-term)
-
-;; Do not activate following in diff-mode because it can freeze Emacs.
-(add-hook 'occur-mode-hook 'next-error-follow-minor-mode)
 
 (add-hook 'after-init-hook 'global-company-mode)
 
