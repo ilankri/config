@@ -45,7 +45,7 @@
 ;;; Auxiliary functions
 (defun my-user-key (key)
   (let ((user-prefix-key "C-c"))
-    (kbd (concat user-prefix-key " " key))))
+    (concat user-prefix-key " " key)))
 
 (defun my-define-key (keymap key cmd)
   (define-key keymap (kbd key) cmd))
@@ -57,10 +57,10 @@
   (my-define-key keymap (my-user-key key) cmd))
 
 (defun my-global-set-key (key cmd)
-  (global-set-key (my-user-key key) cmd))
+  (global-set-key (kbd (my-user-key key)) cmd))
 
 (defun my-local-set-key (key cmd)
-  (local-set-key (my-user-key key) cmd))
+  (local-set-key (kbd (my-user-key key)) cmd))
 
 (defun my-set-prefix-key (prefix key cmd &optional local)
   (let* ((key (concat prefix " " key)))
@@ -132,23 +132,25 @@
               (concat tuareg-interactive-program " -nopromptcont"))
   (let ((ext (file-name-extension buffer-file-name)))
     (when (member ext '("mll" "mly"))
-      (electric-indent-local-mode 0))
+      (electric-indent-local-mode 0)
+      (my-undefine-key tuareg-mode-map "|")
+      (my-undefine-key tuareg-mode-map ")")
+      (my-undefine-key tuareg-mode-map "]")
+      (my-undefine-key tuareg-mode-map "}"))
     (when (string-equal ext "mly")
       (setq-local indent-line-function 'ocp-indent-line)
       (setq-local indent-region-function 'ocp-indent-region)))
   (my-undefine-key tuareg-mode-map "C-c C-h")
   (my-undefine-key tuareg-mode-map "M-q")
-  (local-set-key (kbd "M-q") 'fill-paragraph)
-  (my-local-set-key "h" 'caml-help)
-  (my-local-set-key "l" 'ocaml-add-path)
+  (my-define-user-key tuareg-mode-map "h" 'caml-help)
+  (my-define-user-key tuareg-mode-map "l" 'ocaml-add-path)
   (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
                               ("\\.ml\\'" (".mli"))
                               ("\\.eliomi\\'" (".eliom"))
                               ("\\.eliom\\'" (".eliomi")))))
 
 (defun my-merlin-mode-hook-f ()
-  (my-undefine-key merlin-mode-map "C-c C-r")
-  (my-local-set-key "o" 'merlin-switch-to-mli))
+  (my-undefine-key merlin-mode-map "C-c C-r"))
 
 (defun my-ocp-index-jump (f)
   (xref-push-marker-stack)
@@ -175,12 +177,16 @@
   (my-undefine-key ocp-index-keymap "C-c ;")
   (my-undefine-key ocp-index-keymap "C-c C-:")
   (my-undefine-key ocp-index-keymap "C-c C-;")
-  (my-local-set-key ":" 'my-ocp-index-jump-to-sig-at-point-other-window)
-  (my-local-set-key ";" 'my-ocp-index-jump-to-definition-at-point-other-window)
-  (my-local-set-key "C-:" 'my-ocp-index-jump-to-sig-at-point)
-  (my-local-set-key "C-;" 'my-ocp-index-jump-to-definition-at-point)
-  (local-set-key (kbd "M-.") 'my-ocp-index-jump-to-definition-at-point)
-  (local-set-key (kbd "C-x 4 .")
+  (my-define-key ocp-index-keymap "C-c :"
+                 'my-ocp-index-jump-to-sig-at-point-other-window)
+  (my-define-key ocp-index-keymap "C-c ;"
+                 'my-ocp-index-jump-to-definition-at-point-other-window)
+  (my-define-key ocp-index-keymap "C-c C-:" 'my-ocp-index-jump-to-sig-at-point)
+  (my-define-key ocp-index-keymap "C-c C-;"
+                 'my-ocp-index-jump-to-definition-at-point)
+  (my-define-key ocp-index-keymap "M-."
+                 'my-ocp-index-jump-to-definition-at-point)
+  (my-define-key ocp-index-keymap "C-x 4 ."
                  'my-ocp-index-jump-to-definition-at-point-other-window))
 
 (defun my-go-mode-hook-f ()
