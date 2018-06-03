@@ -121,7 +121,7 @@ fi
 # Useful to make ocp-index work correctly on library files.
 export OPAMKEEPBUILDDIR=true
 
-opam-switch-eval 4.04.2
+opam-switch-eval 4.06.1
 
 ## Git prompt
 
