@@ -295,7 +295,9 @@
 
 (my-global-set-key "f" 'counsel-git)
 
-(my-global-set-key "g" 'counsel-git-grep)
+(require 'vc-git)
+
+(my-global-set-key "g" 'vc-git-grep)
 
 (my-global-set-key "i" 'my-indent-buffer)
 
