@@ -307,8 +307,6 @@
 
 (my-global-set-key "p" 'check-parens)
 
-(my-global-set-key "r" 'ivy-resume)
-
 (my-set-ispell-key "c" 'ispell-comments-and-strings)
 
 (my-set-ispell-key "d" 'ispell-change-dictionary)
