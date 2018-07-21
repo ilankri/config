@@ -34,7 +34,6 @@
 
 ;; Directory name (depends on the active OPAM switch when Emacs was
 ;; started) where OPAM stores Emacs Lisp files.
-
 (defconst my-opam-lisp-dir
   (let ((opam-share
          (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
@@ -191,9 +190,6 @@
 
 (defun my-go-mode-hook-f ()
   (add-hook 'before-save-hook 'gofmt nil t))
-
-(defun my-LaTeX-mode-hook-f ()
-  (add-to-list 'TeX-style-path "/usr/share/doc/texlive-doc/latex/curve/"))
 
 (defun my-message-mode-hook-f ()
   (my-set-ispell-key "s" 'ispell-message t))

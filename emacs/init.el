@@ -169,7 +169,7 @@
 ;;; Tuareg
 (setq tuareg-interactive-read-only-input t)
 
-(my-add-hook 'tuareg-mode-hook '(ocp-index-mode my-tuareg-mode-hook-f))
+(add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f)
 
 ;;; Merlin
 (setq merlin-command 'opam
@@ -219,7 +219,7 @@
 
 (my-add-hook 'LaTeX-mode-hook
              '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
-                            reftex-mode my-LaTeX-mode-hook-f))
+                            reftex-mode))
 
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
