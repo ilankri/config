@@ -25,6 +25,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; Ensure that packages are installed.
+(package-install-selected-packages)
+
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 (require 'my)
