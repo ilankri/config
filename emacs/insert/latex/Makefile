@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 RM = rm -f
 PDFLATEX = pdflatex
-PDFLATEXFLAGS = -interaction nonstopmode -file-line-error
+PDFLATEXFLAGS = -interaction nonstopmode -file-line-error -synctex=1
 
 TARGET =
 SRCS = $(TARGET:.pdf=.tex)
@@ -17,7 +17,7 @@ $(TARGET): $(SRCS)
 	$(compile) $<
 
 mostlyclean:
-	$(RM) $(SRCS:.tex=.log) $(SRCS:.tex=.aux)
+	$(RM) $(SRCS:.tex=.log) $(SRCS:.tex=.aux) $(SRCS:.tex=.synctex.gz)
 
 clean: mostlyclean
 	$(RM) $(TARGET)
