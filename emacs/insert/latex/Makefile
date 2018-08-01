@@ -17,7 +17,8 @@ $(TARGET): $(SRCS)
 	$(compile) $<
 
 mostlyclean:
-	$(RM) $(SRCS:.tex=.log) $(SRCS:.tex=.aux) $(SRCS:.tex=.synctex.gz)
+	$(RM) $(SRCS:.tex=.log) $(SRCS:.tex=.aux) $(SRCS:.tex=.out)	\
+		$(SRCS:.tex=.synctex.gz)
 
 clean: mostlyclean
 	$(RM) $(TARGET)
