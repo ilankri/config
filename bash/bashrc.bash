@@ -154,7 +154,6 @@ export TEXINPUTS=.:~/dotfiles/latex:
 export EDITOR=emacsclient
 export ALTERNATE_EDITOR=emacs
 export EMAIL=lankri.idir@gmail.com
-export UNIV=lankri@lucien.informatique.univ-paris-diderot.fr
 export OCAMLRUNPARAM=b
 
 # npm
