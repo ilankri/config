@@ -248,7 +248,7 @@
                   ".ensime"))
 
 (setq counsel-find-file-ignore-regexp
-      (regexp-opt completion-ignored-extensions))
+      (concat (regexp-opt completion-ignored-extensions) "\\'"))
 
 (my-add-to-list 'auto-mode-alist
                 '(("README\\'" . text-mode)
