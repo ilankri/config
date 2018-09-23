@@ -64,7 +64,8 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; Switch to French dictionary when writing mails or LaTeX files.
-(my-add-hooks '(message-setup-hook LaTeX-mode-hook) 'my-flyspell-fr-on)
+(my-add-hooks '(message-mode-hook LaTeX-mode-hook)
+              'my-ispell-change-to-fr-dictionary)
 
 ;;; Filling
 (setq-default fill-column 72)

@@ -108,9 +108,9 @@
   (setq-local comment-start "/* ")
   (setq-local comment-end " */"))
 
-(defun my-flyspell-fr-on ()
-  (ispell-change-dictionary "fr_FR")
-  (flyspell-mode 1))
+(defun my-ispell-change-to-fr-dictionary ()
+  (interactive)
+  (ispell-change-dictionary "fr_FR"))
 
 (defun my-try-smerge ()
   (require 'smerge-mode)
