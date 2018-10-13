@@ -42,8 +42,6 @@
 
 (require 'ocp-indent)
 
-(require 'ocp-index)
-
 (require 'merlin)
 
 ;;; Go
@@ -176,16 +174,15 @@
 ;;; Tuareg
 (setq tuareg-interactive-read-only-input t)
 
-(add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f)
+(my-add-hook 'tuareg-mode-hook '(my-tuareg-mode-hook-f merlin-mode))
 
 ;;; Merlin
 (setq merlin-command 'opam
       merlin-error-after-save nil
+      merlin-locate-in-new-window 'never
       merlin-completion-with-doc t)
 
 (add-hook 'merlin-mode-hook 'my-merlin-mode-hook-f)
-
-(add-hook 'ocp-index-mode-hook 'my-ocp-index-mode-hook-f)
 
 ;;; Scala
 (setq scala-indent:default-run-on-strategy 1)

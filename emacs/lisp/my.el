@@ -148,45 +148,18 @@
                               ("\\.eliomi\\'" (".eliom"))
                               ("\\.eliom\\'" (".eliomi")))))
 
+(defun my-merlin-locate-other-window ()
+  (interactive)
+  (setq merlin-locate-in-new-window 'always)
+  (merlin-locate)
+  (setq merlin-locate-in-new-window 'never))
+
 (defun my-merlin-mode-hook-f ()
-  (my-undefine-key merlin-mode-map "C-c C-r"))
-
-(defun my-ocp-index-jump (f)
-  (xref-push-marker-stack)
-  (funcall f))
-
-(defun my-ocp-index-jump-to-sig-at-point-other-window ()
-  (interactive)
-  (my-ocp-index-jump 'ocp-index-jump-to-sig-at-point-other-window))
-
-(defun my-ocp-index-jump-to-definition-at-point-other-window ()
-  (interactive)
-  (my-ocp-index-jump 'ocp-index-jump-to-definition-at-point-other-window))
-
-(defun my-ocp-index-jump-to-sig-at-point ()
-  (interactive)
-  (my-ocp-index-jump 'ocp-index-jump-to-sig-at-point))
-
-(defun my-ocp-index-jump-to-definition-at-point ()
-  (interactive)
-  (my-ocp-index-jump 'ocp-index-jump-to-definition-at-point))
-
-(defun my-ocp-index-mode-hook-f ()
-  (my-undefine-key ocp-index-keymap "C-c :")
-  (my-undefine-key ocp-index-keymap "C-c ;")
-  (my-undefine-key ocp-index-keymap "C-c C-:")
-  (my-undefine-key ocp-index-keymap "C-c C-;")
-  (my-define-key ocp-index-keymap "C-c :"
-                 'my-ocp-index-jump-to-sig-at-point-other-window)
-  (my-define-key ocp-index-keymap "C-c ;"
-                 'my-ocp-index-jump-to-definition-at-point-other-window)
-  (my-define-key ocp-index-keymap "C-c C-:" 'my-ocp-index-jump-to-sig-at-point)
-  (my-define-key ocp-index-keymap "C-c C-;"
-                 'my-ocp-index-jump-to-definition-at-point)
-  (my-define-key ocp-index-keymap "M-."
-                 'my-ocp-index-jump-to-definition-at-point)
-  (my-define-key ocp-index-keymap "C-x 4 ."
-                 'my-ocp-index-jump-to-definition-at-point-other-window))
+  (my-undefine-key merlin-mode-map "C-c C-r")
+  (my-define-user-key merlin-mode-map "h" 'merlin-document)
+  (my-define-key merlin-mode-map "M-." 'merlin-locate)
+  (my-define-key merlin-mode-map "M-," 'merlin-pop-stack)
+  (my-define-key merlin-mode-map "C-x 4 ." 'my-merlin-locate-other-window))
 
 (defun my-go-mode-hook-f ()
   (add-hook 'before-save-hook 'gofmt nil t))
