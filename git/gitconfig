@@ -8,9 +8,6 @@
 	editor = emacsclient
 	excludesFile = ~/.gitignore
 
-[merge]
-	log = true
-
 [push]
 	default = simple
 
