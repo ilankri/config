@@ -291,17 +291,15 @@
 ;;; Custom global key bindings
 (my-global-set-key "a" 'ff-get-other-file)
 
+(my-global-set-key "b" 'previous-buffer)
+
 (my-global-set-key "c" 'my-compile)
 
 (my-set-desktop-key "d" 'desktop-change-dir)
 
 (my-set-desktop-key "k" 'desktop-clear)
 
-(my-global-set-key "f" 'counsel-git)
-
-(require 'vc-git)
-
-(my-global-set-key "g" 'vc-git-grep)
+(my-global-set-key "f" 'next-buffer)
 
 (my-global-set-key "i" 'my-indent-buffer)
 
@@ -320,6 +318,12 @@
 (my-global-set-key "t" 'my-transpose-windows)
 
 (my-global-set-key "u" 'browse-url)
+
+(my-set-vc-key "f" 'counsel-git)
+
+(require 'vc-git)
+
+(my-set-vc-key "g" 'vc-git-grep)
 
 (my-global-set-key "w" 'whitespace-cleanup)
 
