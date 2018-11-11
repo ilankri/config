@@ -120,8 +120,12 @@ fi
 
 export OPAMJOBS=4
 
-opam switch 4.06.1
-eval $(opam config env)
+function opam-switch-eval() {
+    opam switch $@
+    eval $(opam config env)
+}
+
+opam-switch-eval 4.06.1
 
 ## Git prompt
 
