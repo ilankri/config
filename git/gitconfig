@@ -2,6 +2,7 @@
 	br = branch
 	ci = commit
 	co = checkout
+	force-push = push --force-with-lease
 	st = status
 	sync = fetch --all
 
