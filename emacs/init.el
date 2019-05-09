@@ -317,6 +317,10 @@
 
 (my-set-ispell-key "d" 'ispell-change-dictionary)
 
+(my-set-ispell-key "e" 'my-ispell-en)
+
+(my-set-ispell-key "f" 'my-ispell-fr)
+
 (my-set-ispell-key "s" 'ispell)
 
 (my-global-set-key "t" 'my-transpose-windows)
