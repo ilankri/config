@@ -181,4 +181,15 @@
 (defun my-message-mode-hook-f ()
   (my-set-ispell-key "s" 'ispell-message t))
 
+(defun my-tab ()
+  (interactive)
+  (insert-char ?\t))
+
+(defun my-csv-mode-hook-f ()
+  (auto-fill-mode 0)
+  (flyspell-mode 0)
+  (my-indent-tabs-mode-on)
+  (setq-local whitespace-style (remove 'lines whitespace-style))
+  (my-define-key csv-mode-map "TAB" 'my-tab))
+
 (provide 'my)

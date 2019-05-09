@@ -19,8 +19,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ivy company-go go-guru go-rename rust-mode go-mode markdown-mode ensime
-         company auctex))))
+    (csv-mode ivy company-go go-guru go-rename rust-mode go-mode markdown-mode
+              ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -268,6 +268,7 @@
                   ("_log\\'" . conf-unix-mode)
                   ("\\.merlin\\'" . conf-space-mode)
                   ("\\.mrconfig\\'" . conf-unix-mode)
+                  ("\\.tsv\\'" . csv-mode)
                   ("\\.eml\\'" . message-mode)))
 
 (tool-bar-mode 0)
@@ -345,6 +346,8 @@
 (add-hook 'conf-mode-hook 'my-indent-tabs-mode-on)
 
 (add-hook 'message-mode-hook 'my-message-mode-hook-f)
+
+(add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
 
 ;;; Emacs server
 (server-start)
