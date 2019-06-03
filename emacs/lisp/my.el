@@ -192,4 +192,11 @@
   (setq-local whitespace-style (remove 'lines whitespace-style))
   (my-define-key csv-mode-map "TAB" 'my-tab))
 
+(defun my-git-grep ()
+  (interactive)
+  (require 'grep)
+  (require 'vc-git)
+  (let ((current-prefix-arg '(4)))
+    (vc-git-grep (grep-read-regexp) "" (vc-root-dir))))
+
 (provide 'my)

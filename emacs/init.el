@@ -332,7 +332,7 @@
 
 (require 'vc-git)
 
-(my-set-vc-key "g" 'vc-git-grep)
+(my-set-vc-key "g" 'my-git-grep)
 
 (my-global-set-key "w" 'whitespace-cleanup)
 
