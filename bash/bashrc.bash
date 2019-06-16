@@ -132,7 +132,25 @@ opam-switch-eval 4.06.1
 # Username and host in green and working directory in blue.
 my_ps1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]"
 
-export PROMPT_COMMAND='__git_ps1 $my_ps1 "\\\$ "'
+# Inspired by
+# http://git.savannah.gnu.org/cgit/bash.git/plain/examples/functions/exitstat.
+function prompt_end () {
+    local status="$?"
+    local signal=""
+
+    if [ ${status} -ne 0 ] && [ ${status} != 128 ]; then
+        # If process exited by a signal, determine name of signal.
+        if [ ${status} -gt 128 ]; then
+            signal="$(builtin kill -l $((${status} - 128)) 2>/dev/null)"
+            if [ "$signal" ]; then signal=" ($signal)"; fi
+        fi
+        echo "\[\033[31m\]\\\$[${status}${signal}]\[\033[00m\]"
+    else
+        echo "\\\$"
+    fi
+}
+
+export PROMPT_COMMAND='__git_ps1 $my_ps1 "$(prompt_end) "'
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
