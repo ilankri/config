@@ -64,11 +64,6 @@
   (let* ((key (concat prefix " " key)))
     (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
 
-(defconst my-desktop-prefix "d")
-
-(defun my-set-desktop-key (key cmd &optional local)
-  (my-set-prefix-key my-desktop-prefix key cmd local))
-
 (defconst my-ispell-prefix "s")
 
 (defun my-set-ispell-key (key cmd &optional local)

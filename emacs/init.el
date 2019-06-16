@@ -155,13 +155,6 @@
 
 (semantic-mode 1)
 
-;;; Desktop
-
-;; We only search for local desktop files.
-(setq desktop-path '("."))
-
-(desktop-save-mode 1)
-
 ;;; CC mode
 (c-add-style "my-linux" '("linux" (indent-tabs-mode . t)))
 
@@ -301,10 +294,6 @@
 (my-global-set-key "b" 'previous-buffer)
 
 (my-global-set-key "c" 'my-compile)
-
-(my-set-desktop-key "d" 'desktop-change-dir)
-
-(my-set-desktop-key "k" 'desktop-clear)
 
 (my-global-set-key "f" 'next-buffer)
 
