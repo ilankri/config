@@ -38,7 +38,6 @@
   (let ((opam-share
          (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
     (when (and opam-share (file-directory-p opam-share))
-      ;; Register Merlin
       (expand-file-name "emacs/site-lisp/" opam-share))))
 
 ;;; Auxiliary functions
