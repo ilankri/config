@@ -225,7 +225,8 @@
       load-prefer-newer t
       view-read-only t
       comint-prompt-read-only t
-      vc-follow-symlinks t)
+      vc-follow-symlinks t
+      vc-command-messages t)
 
 (setq-default require-final-newline t
               indent-tabs-mode nil)
