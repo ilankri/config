@@ -118,7 +118,10 @@ fi
 ## OPAM configuration
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-export OPAMJOBS=4
+export OPAMJOBS=$(nproc)
+export OPAMDOWNLOADJOBS=$(nproc)
+export OPAMKEEPBUILDDIR=true
+export OPAMBUILDDOC=true
 
 function opam-switch-eval() {
     opam switch $@
