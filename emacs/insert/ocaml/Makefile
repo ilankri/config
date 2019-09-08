@@ -1,14 +1,7 @@
 SHELL = /bin/sh
-OCAMLBUILD = ocamlbuild
-DEBUGFLAG = -g
-OCAMLCFLAGS = -cflags $(DEBUGFLAG),-annot,-bin-annot,-w,A
-OCAMLLFLAGS = -lflags $(DEBUGFLAG)
-OCAMLLIBS =
+DUNE = dune
 
 TARGET =
-
-build = $(OCAMLBUILD) $(OCAMLCFLAGS) $(OCAMLLFLAGS) $(OCAMLLIBS)
-clean = $(OCAMLBUILD) -clean
 
 .SUFFIXES:
 .PHONY: all $(TARGET) clean
@@ -16,7 +9,7 @@ clean = $(OCAMLBUILD) -clean
 all: $(TARGET)
 
 $(TARGET):
-	$(build) $@
+	$(DUNE) build $@
 
 clean:
-	$(clean)
+	$(DUNE) clean

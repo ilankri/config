@@ -44,6 +44,8 @@
 
 (require 'merlin)
 
+(require 'dune)
+
 ;;; Go
 (require 'go-guru)
 
@@ -247,6 +249,8 @@
                   ;; ("\\.pl\\'" . prolog-mode)
                   ("COMMIT_EDITMSG\\'" . text-mode)
                   ("MERGE_MSG\\'" . text-mode)
+                  ("dune-project\\'" . dune-mode)
+                  ("dune-workspace\\'" . dune-mode)
                   ("\\.gitignore\\'" . conf-unix-mode)
                   ("\\.dockerignore\\'" . conf-unix-mode)
                   ("\\.ml[ly]\\'" . tuareg-mode)
