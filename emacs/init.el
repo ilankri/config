@@ -232,7 +232,7 @@
 (my-add-to-list 'completion-ignored-extensions
                 '("auto/" ".prv/" "_build/" ".ensime_cache/" "target/"
                   "_client/" "_deps/" "_server/" ".sass-cache/"
-                  ".d" ".native" ".byte" ".pdf"
+                  ".d" ".native" ".byte" ".bc" ".exe" ".pdf"
                   ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
                   ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"
                   ".ensime"))
