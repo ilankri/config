@@ -128,7 +128,7 @@ function opam-switch-eval() {
     eval $(opam config env)
 }
 
-opam-switch-eval 4.06.1
+opam-switch-eval 4.07.1
 
 ## Git prompt
 
