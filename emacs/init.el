@@ -19,8 +19,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (csv-mode ivy company-go go-guru go-rename rust-mode go-mode markdown-mode
-              ensime company auctex))))
+    (debian-el csv-mode ivy company-go go-guru go-rename rust-mode go-mode
+               markdown-mode ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
