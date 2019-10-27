@@ -1,7 +1,7 @@
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
-alias lal='ls -Al'
+alias lal='ls -Ahl'
 alias up='sudo apt update && sudo apt upgrade'
 alias opamup='opam update -u'
 alias mr-sync='mr -j $(nproc) -d ~ -c ~/.mrconfig fetch'
