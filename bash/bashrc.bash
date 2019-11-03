@@ -115,6 +115,10 @@ if ! shopt -oq posix; then
     fi
 fi
 
+export OCAMLPARAM="_,bin-annot=1"
+# See
+# https://github.com/ocaml/merlin/wiki/Letting-merlin-locate-go-to-stuff-in-.opam.
+
 ## OPAM configuration
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
