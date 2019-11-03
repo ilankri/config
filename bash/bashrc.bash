@@ -121,7 +121,7 @@ fi
 export OPAMJOBS=$(nproc)
 export OPAMDOWNLOADJOBS=$(nproc)
 export OPAMKEEPBUILDDIR=true
-export OPAMBUILDDOC=true
+export OPAMWITHDOC=true
 
 function opam-switch-eval() {
     opam switch $@
