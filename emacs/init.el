@@ -341,8 +341,6 @@
 
 (my-set-vc-key "f" 'counsel-git)
 
-(require 'vc-git)
-
 (my-set-vc-key "g" 'my-git-grep)
 
 (my-global-set-key "w" 'whitespace-cleanup)
