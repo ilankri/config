@@ -267,6 +267,7 @@
                   ("PULLREQ_EDITMSG\\'" . text-mode)
                   ("dune-project\\'" . dune-mode)
                   ("dune-workspace\\'" . dune-mode)
+                  ("bash-fc\\'" . sh-mode)
                   ("\\.gitignore\\'" . conf-unix-mode)
                   ("\\.dockerignore\\'" . conf-unix-mode)
                   ("\\.ml[ly]\\'" . tuareg-mode)
