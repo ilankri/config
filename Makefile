@@ -59,7 +59,8 @@ install-emacs: compile-emacs-lisp
 	@$(print_installing) Emacs
 	@emacs --batch --eval \
 		"(progn $(head -n 7 emacs/init.el) (package-refresh-contents))"
-	@$(LN) $(emacsdir)/init.el $(emacsdir)/insert $(elispdir) ~/.emacs.d
+	@$(LN) $(emacsdir)/init.el ~/.emacs
+	@$(LN) $(emacsdir)/insert $(elispdir) ~/.emacs.d
 	@$(print_done)
 
 install-git:
