@@ -230,6 +230,8 @@
       vc-command-messages t)
 
 (setq-default require-final-newline t
+              scroll-up-aggressively 0
+              scroll-down-aggressively 0
               indent-tabs-mode nil)
 
 (my-add-to-list 'completion-ignored-extensions
