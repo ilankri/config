@@ -311,19 +311,15 @@
 ;;; Custom global key bindings
 (my-global-set-key "a" 'ff-get-other-file)
 
-(my-global-set-key "b" 'previous-buffer)
-
 (my-global-set-key "c" 'my-compile)
 
-(my-global-set-key "f" 'next-buffer)
+(my-global-set-key "f" 'counsel-git)
+
+(my-global-set-key "h" 'man)
 
 (my-global-set-key "i" 'my-indent-buffer)
 
-(my-global-set-key "m" 'man)
-
-(my-global-set-key "o" 'ff-find-other-file)
-
-(my-global-set-key "p" 'check-parens)
+(my-global-set-key "k" 'kill-whole-line)
 
 (my-set-ispell-key "c" 'ispell-comments-and-strings)
 
@@ -333,15 +329,15 @@
 
 (my-set-ispell-key "f" 'my-ispell-fr)
 
-(my-set-ispell-key "s" 'ispell)
+(my-set-ispell-key "o" 'ispell)
+
+(my-global-set-key "p" 'blink-matching-open)
+
+(my-global-set-key "s" 'my-git-grep)
 
 (my-global-set-key "t" 'my-transpose-windows)
 
 (my-global-set-key "u" 'browse-url)
-
-(my-set-vc-key "f" 'counsel-git)
-
-(my-set-vc-key "g" 'my-git-grep)
 
 (my-global-set-key "w" 'whitespace-cleanup)
 

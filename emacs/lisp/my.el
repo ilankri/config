@@ -64,15 +64,10 @@
   (let* ((key (concat prefix " " key)))
     (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
 
-(defconst my-ispell-prefix "s")
+(defconst my-ispell-prefix "o")
 
 (defun my-set-ispell-key (key cmd &optional local)
   (my-set-prefix-key my-ispell-prefix key cmd local))
-
-(defconst my-vc-prefix "v")
-
-(defun my-set-vc-key (key cmd &optional local)
-  (my-set-prefix-key my-vc-prefix key cmd local))
 
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
