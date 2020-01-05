@@ -13,7 +13,6 @@
 	sync = fetch --all
 
 [core]
-	editor = emacsclient
 	excludesFile = ~/.gitignore
 
 [push]
