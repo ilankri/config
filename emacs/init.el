@@ -35,6 +35,11 @@
 
 (require 'my)
 
+;;; Company
+(global-company-mode 1)
+
+(setq company-show-numbers t)
+
 ;;; OPAM
 (add-to-list 'load-path my-opam-lisp-dir)
 
@@ -334,8 +339,6 @@
 (my-global-set-key "w" 'whitespace-cleanup)
 
 (my-global-set-key "x" 'ansi-term)
-
-(add-hook 'after-init-hook 'global-company-mode)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
