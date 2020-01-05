@@ -19,8 +19,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (debian-el csv-mode ivy company-go go-guru go-rename rust-mode go-mode
-               markdown-mode ensime company auctex))))
+    (reason-mode debian-el csv-mode ivy company-go go-guru go-rename rust-mode
+                 go-mode markdown-mode ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -166,6 +166,9 @@
 (setq tuareg-interactive-read-only-input t)
 
 (my-add-hook 'tuareg-mode-hook '(my-tuareg-mode-hook-f merlin-mode))
+
+;;; Reason
+(my-add-hook 'reason-mode-hook '(my-reason-mode-hook-f merlin-mode))
 
 ;;; Merlin
 (setq merlin-command 'opam

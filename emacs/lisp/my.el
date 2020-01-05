@@ -169,6 +169,11 @@
   (my-define-key merlin-mode-map "M-," 'merlin-pop-stack)
   (my-define-key merlin-mode-map "C-x 4 ." 'my-merlin-locate-other-window))
 
+(defun my-reason-mode-hook-f ()
+  (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
+                              ("\\.re\\'" (".rei"))))
+  (add-hook 'before-save-hook #'refmt t t))
+
 (defun my-go-mode-hook-f ()
   (add-hook 'before-save-hook 'gofmt nil t))
 
