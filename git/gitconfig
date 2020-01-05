@@ -10,7 +10,7 @@
 			  }; \
 			  _"
 	st = status
-	sync = fetch --all
+	sync = fetch --all -t
 
 [core]
 	excludesFile = ~/.gitignore
