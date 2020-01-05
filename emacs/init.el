@@ -290,6 +290,8 @@
 
 (global-subword-mode 1)
 
+(delete-selection-mode 1)
+
 (electric-indent-mode 1)
 
 (electric-pair-mode 1)
