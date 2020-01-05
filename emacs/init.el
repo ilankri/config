@@ -264,6 +264,7 @@
                   ;; ("\\.pl\\'" . prolog-mode)
                   ("COMMIT_EDITMSG\\'" . text-mode)
                   ("MERGE_MSG\\'" . text-mode)
+                  ("PULLREQ_EDITMSG\\'" . text-mode)
                   ("dune-project\\'" . dune-mode)
                   ("dune-workspace\\'" . dune-mode)
                   ("\\.gitignore\\'" . conf-unix-mode)

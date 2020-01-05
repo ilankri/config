@@ -196,6 +196,9 @@ export ANDROID_SDK_ROOT=~/android-sdk-linux
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
 export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
+# GitHub
+export GITHUB_USER=ilankri
+
 if [ -n "$DISPLAY" ]; then
     xset b off                  # Turn off system bell.
     my-kbd-config               # Tweak keyboard layout.
