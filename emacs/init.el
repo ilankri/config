@@ -319,8 +319,6 @@
 
 (my-global-set-key "i" 'my-indent-buffer)
 
-(my-global-set-key "k" 'kill-whole-line)
-
 (my-set-ispell-key "c" 'ispell-comments-and-strings)
 
 (my-set-ispell-key "d" 'ispell-change-dictionary)
