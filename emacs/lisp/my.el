@@ -143,6 +143,7 @@
       (setq-local indent-line-function 'ocp-indent-line)
       (setq-local indent-region-function 'ocp-indent-region)))
   (my-undefine-key tuareg-mode-map "C-c C-h")
+  (my-undefine-key tuareg-mode-map "M-q")
   (my-define-key tuareg-mode-map "C-c ?" 'caml-help)
   (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
                               ("\\.ml\\'" (".mli"))
