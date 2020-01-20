@@ -282,7 +282,6 @@
                   ("_log\\'" . conf-unix-mode)
                   ("\\.merlin\\'" . conf-space-mode)
                   ("\\.mrconfig\\'" . conf-unix-mode)
-                  ("\\.tsv\\'" . csv-mode)
                   ("\\.eml\\'" . message-mode)))
 
 (tool-bar-mode 0)

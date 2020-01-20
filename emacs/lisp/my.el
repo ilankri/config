@@ -179,10 +179,8 @@
   (insert-char ?\t))
 
 (defun my-csv-mode-hook-f ()
-  (auto-fill-mode 0)
-  (flyspell-mode 0)
-  (my-indent-tabs-mode-on)
   (setq-local whitespace-style (remove 'lines whitespace-style))
+  (setq-local whitespace-action nil)
   (my-define-key csv-mode-map "TAB" 'my-tab))
 
 (defun my-git-grep ()
