@@ -326,8 +326,6 @@
 
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
-(my-global-set-key "g" 'magit-file-popup)
-
 (my-global-set-key "h" 'man)
 
 (my-global-set-key "i" 'my-indent-buffer)
