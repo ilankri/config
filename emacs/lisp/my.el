@@ -172,6 +172,7 @@
   (add-hook 'before-save-hook 'gofmt nil t))
 
 (defun my-message-mode-hook-f ()
+  (setq-local whitespace-action nil)
   (my-set-ispell-key "s" 'ispell-message t))
 
 (defun my-tab ()
