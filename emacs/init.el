@@ -313,13 +313,23 @@
 ;;; Custom global key bindings
 (my-global-set-key "a" 'ff-get-other-file)
 
+(my-global-set-key "b" 'windmove-left)
+
 (my-global-set-key "c" 'my-compile)
 
-(my-global-set-key "f" 'counsel-git)
+(my-global-set-key "f" 'windmove-right)
 
 (my-global-set-key "h" 'man)
 
 (my-global-set-key "i" 'my-indent-buffer)
+
+(my-global-set-key "j" 'browse-url)
+
+(my-global-set-key "k" 'kill-current-buffer)
+
+(my-global-set-key "m" 'blink-matching-open)
+
+(my-global-set-key "n" 'windmove-down)
 
 (my-set-ispell-key "c" 'ispell-comments-and-strings)
 
@@ -331,17 +341,17 @@
 
 (my-set-ispell-key "o" 'ispell)
 
-(my-global-set-key "p" 'blink-matching-open)
+(my-global-set-key "p" 'windmove-up)
 
 (my-global-set-key "s" 'my-git-grep)
 
 (my-global-set-key "t" 'my-transpose-windows)
 
-(my-global-set-key "u" 'browse-url)
+(my-global-set-key "u" 'winner-undo)
 
 (my-global-set-key "w" 'whitespace-cleanup)
 
-(my-global-set-key "x" 'ansi-term)
+(my-global-set-key "x" 'counsel-git)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
