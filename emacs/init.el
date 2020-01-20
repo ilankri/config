@@ -239,6 +239,9 @@
       vc-follow-symlinks t
       vc-command-messages t)
 
+;; Temporary
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (setq-default require-final-newline t
               scroll-up-aggressively 0
               scroll-down-aggressively 0
