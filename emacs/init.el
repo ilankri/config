@@ -19,8 +19,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (reason-mode debian-el csv-mode ivy company-go go-guru go-rename rust-mode
-                 go-mode markdown-mode ensime company auctex))))
+    (magit reason-mode debian-el csv-mode ivy company-go go-guru go-rename
+           rust-mode go-mode markdown-mode ensime company auctex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -97,7 +97,7 @@
       whitespace-action '(auto-cleanup))
 
 ;; Turn off whitespace-mode in Dired-like buffers.
-(setq whitespace-global-modes '(not dired-mode archive-mode))
+(setq whitespace-global-modes '(not dired-mode archive-mode git-rebase-mode))
 
 ;;; Auto-Revert
 (global-auto-revert-mode 1)
@@ -229,6 +229,12 @@
              '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
                             reftex-mode))
 
+;;; Magit
+(require 'magit)
+
+(setq git-commit-summary-max-length fill-column
+      magit-diff-refine-hunk t)
+
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
       disabled-command-function nil
@@ -265,9 +271,6 @@
 (my-add-to-list 'auto-mode-alist
                 '(("README\\'" . text-mode)
                   ;; ("\\.pl\\'" . prolog-mode)
-                  ("COMMIT_EDITMSG\\'" . text-mode)
-                  ("MERGE_MSG\\'" . text-mode)
-                  ("PULLREQ_EDITMSG\\'" . text-mode)
                   ("dune-project\\'" . dune-mode)
                   ("dune-workspace\\'" . dune-mode)
                   ("bash-fc\\'" . sh-mode)
@@ -318,6 +321,12 @@
 (my-global-set-key "c" 'my-compile)
 
 (my-global-set-key "f" 'windmove-right)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
+(my-global-set-key "g" 'magit-file-popup)
 
 (my-global-set-key "h" 'man)
 
