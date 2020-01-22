@@ -129,7 +129,7 @@ export OPAMWITHDOC=true
 
 function opam-switch-eval() {
     opam switch $@
-    eval $(opam config env)
+    eval $(opam env)
 }
 
 opam-switch-eval 4.08.1
