@@ -1,4 +1,5 @@
 SHELL = /bin/sh
+RM = rm -f
 LN = ln -fs
 MKDIR = mkdir -p
 CP = cp -r
@@ -16,8 +17,8 @@ ocamldir = $(srcdir)/ocaml
 ocpdir = $(srcdir)/ocp
 ocpinstalldir = ~/.ocp
 readlinedir = $(srcdir)/readline
-print_installing = printf "Installing %s config... "
-print_done = echo "done."
+print_installing = printf "Installing %s config...\n"
+print_done = echo "Done"
 
 .SUFFIXES:
 .PHONY: all install clean install-apt install-bash install-bin	\
@@ -31,7 +32,9 @@ install: install-apt install-bash install-bin install-docker		\
 		install-readline
 
 clean:
+	@echo "Cleaning..."
 	@$(RM) $(elispdir)/*.elc
+	@$(print_done)
 
 install-apt:
 	@$(print_installing) APT
@@ -45,7 +48,7 @@ install-bash:
 	@$(print_done)
 
 install-bin:
-	@echo -n "Installing user's bin... "
+	@echo "Installing user's bin..."
 	@$(LN) $(bindir) ~
 	@$(print_done)
 
@@ -86,6 +89,7 @@ install-readline:
 	@$(print_done)
 
 compile-emacs-lisp:
-	@echo "Compiling Elisp files... "
+	@echo "Compiling Elisp files..."
 	@emacs --batch --eval '(batch-byte-recompile-directory 0)'	\
 		$(elispdir)
+	@$(print_done)
