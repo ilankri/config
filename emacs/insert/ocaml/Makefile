@@ -1,15 +1,13 @@
 SHELL = /bin/sh
 DUNE = dune
 
-TARGET =
-
 .SUFFIXES:
-.PHONY: all $(TARGET) clean
+.PHONY: all build clean
 
-all: $(TARGET)
+all: build
 
-$(TARGET):
-	$(DUNE) build $@
+build:
+	$(DUNE) build
 
 clean:
 	$(DUNE) clean
