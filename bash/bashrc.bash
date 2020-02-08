@@ -182,7 +182,7 @@ export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/dotfiles/latex:
 export EDITOR='emacsclient -nw'
 export ALTERNATE_EDITOR=emacs
-export EMAIL=lankri.idir@gmail.com
+export EMAIL=ilankri@protonmail.com
 export OCAMLRUNPARAM=b
 
 # Firefox
