@@ -102,8 +102,6 @@
 ;;; Auto-Revert
 (global-auto-revert-mode 1)
 
-(setq auto-revert-check-vc-info t)
-
 ;;; Compilation
 (setq compilation-scroll-output 'first-error
       compilation-context-lines 0)
