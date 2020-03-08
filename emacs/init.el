@@ -249,7 +249,8 @@
 (setq-default require-final-newline t
               scroll-up-aggressively 0
               scroll-down-aggressively 0
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
 
 (my-add-to-list 'completion-ignored-extensions
                 '("auto/" ".prv/" "_build/" ".ensime_cache/" "target/"
