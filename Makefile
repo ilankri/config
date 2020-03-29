@@ -5,7 +5,6 @@ MKDIR = mkdir -p
 CP = cp -r
 
 srcdir = $(shell pwd)
-aptdir = $(srcdir)/apt
 bashdir = $(srcdir)/bash
 bindir = $(srcdir)/bin
 dockerdir = $(srcdir)/docker
@@ -21,24 +20,18 @@ print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-apt install-bash install-bin	\
-	install-docker install-emacs install-git install-ocaml	\
-	install-ocp install-readline compile-emacs-lisp
+.PHONY: all install clean install-bash install-bin install-docker	\
+	install-emacs install-git install-ocaml install-ocp		\
+	install-readline compile-emacs-lisp
 
 all: install
 
-install: install-apt install-bash install-bin install-docker		\
-		install-emacs install-git install-ocaml install-ocp	\
-		install-readline
+install: install-bash install-bin install-docker install-emacs		\
+		install-git install-ocaml install-ocp install-readline
 
 clean:
 	@echo "Cleaning..."
 	@$(RM) $(elispdir)/*.elc
-	@$(print_done)
-
-install-apt:
-	@$(print_installing) APT
-	@$(CP) $(aptdir) /etc
 	@$(print_done)
 
 install-bash:
