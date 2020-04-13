@@ -70,7 +70,9 @@ install-git:
 
 install-ocaml:
 	@$(print_installing) OCaml
-	@$(LN) $(ocamldir)/ocamlinit.ml ~/.ocamlinit
+	@grep -q "#use \"$(ocamldir)/ocamlinit.ml\"" ~/.ocamlinit	\
+	|| printf "\n#use \"$(ocamldir)/ocamlinit.ml\"\n"		\
+		>> ~/.ocamlinit
 	@$(print_done)
 
 install-ocp:
