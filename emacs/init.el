@@ -317,7 +317,7 @@
 
 (my-global-set-key "j" 'browse-url)
 
-(my-global-set-key "k" 'kill-current-buffer)
+(my-global-set-key "k" 'my-kill-current-buffer)
 
 (my-global-set-key "m" 'blink-matching-open)
 

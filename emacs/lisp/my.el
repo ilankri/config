@@ -205,4 +205,8 @@
   (my-init-package-archives)
   (package-refresh-contents))
 
+(defun my-kill-current-buffer ()
+  (interactive)
+  (kill-buffer))
+
 (provide 'my)
