@@ -53,8 +53,7 @@ install-docker:
 
 install-emacs: compile-emacs-lisp
 	@$(print_installing) Emacs
-	@emacs --batch --eval \
-		"(progn $(head -n 7 emacs/init.el) (package-refresh-contents))"
+	@emacs --batch --load $(elispdir)/my.el --funcall my-init-packages
 	@$(LN) $(emacsdir)/init.el ~/.emacs
 	@$(LN) $(emacsdir)/insert $(elispdir) ~/.emacs.d
 	@$(print_done)

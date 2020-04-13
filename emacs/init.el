@@ -1,39 +1,28 @@
-(require 'package)
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-;; Give a higher priority to the GNU ELPA repository.
-(add-to-list 'package-archive-priorities '("gnu" . 1))
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (magit reason-mode debian-el csv-mode ivy company-go go-guru go-rename
-           rust-mode go-mode markdown-mode ensime company auctex))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;; Ensure that packages are installed.
-(package-install-selected-packages)
-
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 (require 'my)
+
+(my-init-package-archives)
+
+(setq package-selected-packages '(magit
+                                  reason-mode
+                                  debian-el
+                                  csv-mode
+                                  ivy
+                                  company-go
+                                  go-guru
+                                  go-rename
+                                  rust-mode
+                                  go-mode
+                                  markdown-mode
+                                  ensime
+                                  company
+                                  auctex))
+
+(package-initialize)
+
+;; Ensure that packages are installed.
+(package-install-selected-packages)
 
 ;;; Company
 (global-company-mode 1)
