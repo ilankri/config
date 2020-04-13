@@ -1,3 +1,5 @@
+export LC_ALL=en_US.UTF-8
+
 export OCAMLPARAM="_,bin-annot=1"
 # See
 # https://github.com/ocaml/merlin/wiki/Letting-merlin-locate-go-to-stuff-in-.opam.
