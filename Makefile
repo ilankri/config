@@ -82,6 +82,5 @@ install-readline:
 
 compile-emacs-lisp:
 	@echo "Compiling Elisp files..."
-	@emacs --batch --eval '(batch-byte-recompile-directory 0)'	\
-		$(elispdir)
+	@emacs --batch --eval '(batch-byte-recompile-directory 0)' $(elispdir)
 	@$(print_done)
