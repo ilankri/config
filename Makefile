@@ -36,7 +36,11 @@ clean:
 
 install-bash:
 	@$(print_installing) Bash
-	@$(LN) $(bashdir)/bashrc.bash ~/.bashrc
+	@grep -q "if \[ -f $(bashdir)/bashrc.bash ]; then" ~/.bashrc	\
+	|| printf "\nif %s; then\n    %s\nfi\n"				\
+		"[ -f $(bashdir)/bashrc.bash ]"				\
+		". $(bashdir)/bashrc.bash"				\
+		>> ~/.bashrc
 	@$(LN) $(bashdir)/bash_aliases.bash ~/.bash_aliases
 	@$(print_done)
 
