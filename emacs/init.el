@@ -17,6 +17,7 @@
                                   markdown-mode
                                   ensime
                                   company
+                                  gnu-elpa-keyring-update
                                   auctex))
 
 (package-initialize)
