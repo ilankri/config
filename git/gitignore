@@ -12,7 +12,3 @@ TAGS
 auto/
 _region_.prv/
 _region_.tex
-
-# ENSIME files
-.ensime
-.ensime_cache/

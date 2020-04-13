@@ -15,7 +15,7 @@
                                   rust-mode
                                   go-mode
                                   markdown-mode
-                                  ensime
+                                  scala-mode
                                   company
                                   gnu-elpa-keyring-update
                                   auctex))
@@ -181,9 +181,6 @@
 
 (add-hook 'scala-mode-hook 'my-c-trad-comment-on)
 
-;;; ENSIME
-(setq ensime-typecheck-when-idle nil)
-
 ;;; Proof general
 (setq proof-splash-enable nil
       proof-three-window-mode-policy 'hybrid
@@ -240,12 +237,11 @@
               mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
 
 (my-add-to-list 'completion-ignored-extensions
-                '("auto/" ".prv/" "_build/" ".ensime_cache/" "target/"
+                '("auto/" ".prv/" "_build/" "target/"
                   "_client/" "_deps/" "_server/" ".sass-cache/"
                   ".d" ".native" ".byte" ".bc" ".exe" ".pdf"
                   ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
-                  ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"
-                  ".ensime"))
+                  ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
 
 (setq counsel-find-file-ignore-regexp
       (concat (regexp-opt completion-ignored-extensions) "\\'"))
