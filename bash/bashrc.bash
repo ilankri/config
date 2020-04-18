@@ -86,6 +86,3 @@ if [ -n "$DISPLAY" ]; then
     xset b off                  # Turn off system bell.
     my-kbd-config               # Tweak keyboard layout.
 fi
-
-## SSH initialization
-my-ssh-init
