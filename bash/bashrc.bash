@@ -67,9 +67,6 @@ export ALTERNATE_EDITOR=emacs
 export EMAIL=ilankri@protonmail.com
 export OCAMLRUNPARAM=b
 
-# Firefox
-export PATH=~/firefox:$PATH
-
 # npm
 export PATH=$PATH:~/.npm-global/bin
 
