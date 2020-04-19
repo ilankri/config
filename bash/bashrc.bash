@@ -70,11 +70,6 @@ export OCAMLRUNPARAM=b
 # npm
 export PATH=$PATH:~/.npm-global/bin
 
-# Android
-export ANDROID_SDK_ROOT=~/android-sdk-linux
-export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
-export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
-
 # GitHub
 export GITHUB_USER=ilankri
 
