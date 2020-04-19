@@ -59,8 +59,7 @@ shopt -s checkjobs
 shopt -s extglob
 
 export GOPATH=~/go
-export OZHOME=~/oz
-export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/bin:$GOPATH/bin:$OZHOME/bin
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/bin:$GOPATH/bin
 export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/dotfiles/latex:
 export EDITOR='emacsclient -nw'
