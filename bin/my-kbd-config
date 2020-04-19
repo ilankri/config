@@ -2,5 +2,5 @@
 
 # Keyboard configuration
 setxkbmap -option
-setxkbmap -option altwin:ctrl_alt_win -option compose:caps
+setxkbmap -option altwin:ctrl_alt_win -option compose:menu
 xmodmap ~/.xmodmaprc
