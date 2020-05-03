@@ -11,7 +11,7 @@ export OPAMKEEPBUILDDIR=true
 export OPAMWITHDOC=true
 
 function opam-switch-eval() {
-    opam switch $@
+    opam switch "$@"
     eval $(opam env)
 }
 
