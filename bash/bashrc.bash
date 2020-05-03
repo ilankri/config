@@ -1,5 +1,9 @@
 export LC_ALL=en_US.UTF-8
 
+function cd() {
+    builtin cd "$@" && eval $(opam env)
+}
+
 export OCAMLPARAM="_,bin-annot=1"
 # See
 # https://github.com/ocaml/merlin/wiki/Letting-merlin-locate-go-to-stuff-in-.opam.
@@ -14,8 +18,6 @@ function opam-switch-eval() {
     opam switch "$@"
     eval $(opam env)
 }
-
-opam-switch-eval default
 
 ## Git prompt
 
