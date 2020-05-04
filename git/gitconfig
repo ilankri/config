@@ -19,8 +19,11 @@
 [core]
 	excludesFile = ~/.gitignore
 
+[pull]
+	rebase = true
+
 [push]
-	default = simple
+	default = current
 
 [sendemail]
 	smtpEncryption = tls
