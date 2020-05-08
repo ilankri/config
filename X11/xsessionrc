@@ -1,9 +1,14 @@
 #!/bin/sh
 
-# Keyboard configuration
+# Turn off system bell.
+xset b off
+
+# Tweak keyboard layout.
 setxkbmap -option
 setxkbmap -option altwin:ctrl_alt_win -option compose:menu
 
 if [ -f ~/.xmodmaprc ]; then
     xmodmap ~/.xmodmaprc
 fi
+
+xrdb -merge ~/.Xresources

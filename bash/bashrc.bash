@@ -74,8 +74,3 @@ export PATH=$PATH:~/.npm-global/bin
 
 # GitHub
 export GITHUB_USER=ilankri
-
-if [ -n "$DISPLAY" ]; then
-    xset b off                  # Turn off system bell.
-    my-kbd-config               # Tweak keyboard layout.
-fi

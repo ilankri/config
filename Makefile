@@ -16,18 +16,20 @@ ocamldir = $(srcdir)/ocaml
 ocpdir = $(srcdir)/ocp
 ocpinstalldir = ~/.ocp
 readlinedir = $(srcdir)/readline
+x11dir = $(srcdir)/X11
 print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
 .PHONY: all install clean install-bash install-bin install-docker	\
 	install-emacs install-git install-ocaml install-ocp		\
-	install-readline compile-emacs-lisp
+	install-readline install-x11 compile-emacs-lisp
 
 all: install
 
 install: install-bash install-bin install-docker install-emacs		\
-		install-git install-ocaml install-ocp install-readline
+		install-git install-ocaml install-ocp install-readline	\
+		install-x11
 
 clean:
 	@echo "Cleaning..."
@@ -84,6 +86,12 @@ install-ocp:
 install-readline:
 	@$(print_installing) Readline
 	@$(LN) $(readlinedir)/inputrc ~/.inputrc
+	@$(print_done)
+
+install-x11:
+	@$(print_installing) X11
+	@$(LN) $(x11dir)/xsessionrc ~/.xsessionrc
+	@$(LN) $(x11dir)/Xresources ~/.Xresources
 	@$(print_done)
 
 compile-emacs-lisp:
