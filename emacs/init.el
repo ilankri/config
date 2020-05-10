@@ -52,6 +52,10 @@
 
 ;;; Ispell
 
+;; Use hunspell instead of aspell because hunspell has a better French
+;; support.
+(setq ispell-program-name "hunspell")
+
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; Switch to French dictionary when writing mails or LaTeX files.
