@@ -173,7 +173,7 @@
 
 (defun my-message-mode-hook-f ()
   (setq-local whitespace-action nil)
-  (my-set-ispell-key "s" 'ispell-message t))
+  (my-set-ispell-key "o" 'ispell-message t))
 
 (defun my-tab ()
   (interactive)
