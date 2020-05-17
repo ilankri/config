@@ -18,6 +18,7 @@
                                   scala-mode
                                   company
                                   gnu-elpa-keyring-update
+                                  modus-operandi-theme
                                   auctex))
 
 (package-initialize)
@@ -354,6 +355,8 @@
 (add-hook 'message-mode-hook 'my-message-mode-hook-f)
 
 (add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
+
+(load-theme 'modus-operandi t)
 
 ;;; Emacs server
 (server-start)
