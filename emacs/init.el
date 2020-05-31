@@ -226,7 +226,8 @@
       magit-diff-refine-hunk t)
 
 ;;; Markdown
-(setq markdown-command "pandoc")
+(setq markdown-command "pandoc"
+      markdown-fontify-code-blocks-natively t)
 
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
