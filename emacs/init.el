@@ -225,6 +225,9 @@
 (setq git-commit-summary-max-length fill-column
       magit-diff-refine-hunk t)
 
+;;; Markdown
+(setq markdown-command "pandoc")
+
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
       disabled-command-function nil
