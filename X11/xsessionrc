@@ -7,8 +7,4 @@ xset b off
 setxkbmap -option
 setxkbmap -option altwin:ctrl_alt_win -option compose:menu
 
-if [ -f ~/.xmodmaprc ]; then
-    xmodmap ~/.xmodmaprc
-fi
-
 xrdb -merge ~/.Xresources
