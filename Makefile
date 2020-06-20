@@ -6,7 +6,6 @@ CP = cp -r
 
 srcdir = $(shell pwd)
 bashdir = $(srcdir)/bash
-bindir = $(srcdir)/bin
 dockerdir = $(srcdir)/docker
 dockerinstalldir = ~/.docker
 emacsdir = $(srcdir)/emacs
@@ -21,15 +20,14 @@ print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-bin install-docker	\
-	install-emacs install-git install-ocaml install-ocp		\
-	install-readline install-x11 compile-emacs-lisp
+.PHONY: all install clean install-bash install-docker install-emacs	\
+	install-git install-ocaml install-ocp install-readline		\
+	install-x11 compile-emacs-lisp
 
 all: install
 
-install: install-bash install-bin install-docker install-emacs		\
-		install-git install-ocaml install-ocp install-readline	\
-		install-x11
+install: install-bash install-docker install-emacs install-git		\
+		install-ocaml install-ocp install-readline install-x11
 
 clean:
 	@echo "Cleaning..."
@@ -44,11 +42,6 @@ install-bash:
 		". $(bashdir)/bashrc.bash"				\
 		>> ~/.bashrc
 	@$(LN) $(bashdir)/bash_aliases.bash ~/.bash_aliases
-	@$(print_done)
-
-install-bin:
-	@echo "Installing user's bin..."
-	@$(LN) $(bindir) ~
 	@$(print_done)
 
 install-docker:
