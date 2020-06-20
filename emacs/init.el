@@ -364,6 +364,8 @@
 
 (add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
 
+(add-to-list 'default-frame-alist '(font . "Mono 12"))
+
 (load-theme 'modus-operandi t)
 
 ;;; Emacs server

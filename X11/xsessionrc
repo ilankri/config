@@ -6,5 +6,3 @@ xset b off
 # Tweak keyboard layout.
 setxkbmap -option
 setxkbmap -option altwin:ctrl_alt_win -option compose:menu
-
-xrdb -merge ~/.Xresources
