@@ -69,6 +69,11 @@
 (defun my-set-ispell-key (key cmd &optional local)
   (my-set-prefix-key my-ispell-prefix key cmd local))
 
+(defconst my-magit-prefix "g")
+
+(defun my-set-magit-key (key cmd &optional local)
+  (my-set-prefix-key my-magit-prefix key cmd local))
+
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
 

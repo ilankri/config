@@ -317,6 +317,10 @@
 
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
+(my-set-magit-key "f" 'magit-find-file)
+
+(my-set-magit-key "4 f" 'magit-find-file-other-window)
+
 (my-global-set-key "h" 'man)
 
 (my-global-set-key "i" 'my-indent-buffer)
