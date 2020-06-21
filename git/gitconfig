@@ -5,16 +5,18 @@
 	co = checkout
 	force-push = push --force-with-lease
 	hub-open-pr = "!_() { \
-			   hub pull-request -a \"$GITHUB_USER\" -p \"$@\"; \
+			   hub pull-request --assign \"$GITHUB_USER\" --push \
+			       \"$@\"; \
 		       }; \
 		       _"
 	mv-pushed-br = "!_() { \
-			      (test $# -eq 3 && git branch -m \"$2\" \"$3\" \
+			      (test $# -eq 3 \
+			      && git branch --move \"$2\" \"$3\" \
 			      && git push \"$1\" :\"$2\" \"$3\") || exit 1; \
 			  }; \
 			  _"
 	st = status
-	sync = fetch --all -t
+	sync = fetch --all --tags
 
 [core]
 	excludesFile = ~/.gitignore
