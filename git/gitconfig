@@ -5,7 +5,7 @@
 	co = checkout
 	force-push = push --force-with-lease
 	hub-open-pr = "!_() { \
-			   hub pull-request --assign \"$GITHUB_USER\" --push \
+			   hub pull-request --assign=\"$GITHUB_USER\" --push \
 			       \"$@\"; \
 		       }; \
 		       _"
