@@ -9,14 +9,12 @@
                                   debian-el
                                   csv-mode
                                   ivy
-                                  company-go
                                   go-guru
                                   go-rename
                                   rust-mode
                                   go-mode
                                   markdown-mode
                                   scala-mode
-                                  company
                                   gnu-elpa-keyring-update
                                   modus-operandi-theme
                                   auctex))
@@ -25,11 +23,6 @@
 
 ;; Ensure that packages are installed.
 (package-install-selected-packages)
-
-;;; Company
-(global-company-mode 1)
-
-(setq company-show-numbers t)
 
 ;;; OPAM
 (add-to-list 'load-path my-opam-lisp-dir)
@@ -44,10 +37,6 @@
 
 ;;; Go
 (require 'go-guru)
-
-(require 'company-go)
-
-(add-to-list 'company-backends 'company-go)
 
 (add-hook 'go-mode-hook 'my-go-mode-hook-f)
 
