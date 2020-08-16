@@ -26,7 +26,7 @@ my_ps1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]"
 
 # Inspired by
 # http://git.savannah.gnu.org/cgit/bash.git/plain/examples/functions/exitstat.
-function prompt_end () {
+function prompt_end() {
     local status="$?"
     local signal=""
 
