@@ -218,6 +218,9 @@
 (setq markdown-command "pandoc"
       markdown-fontify-code-blocks-natively t)
 
+;;; Ivy
+(setq ivy-display-functions-alist nil)
+
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
       disabled-command-function nil
