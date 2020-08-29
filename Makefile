@@ -84,7 +84,6 @@ install-readline:
 install-x11:
 	@$(print_installing) X11
 	@$(LN) $(x11dir)/xsessionrc ~/.xsessionrc
-	@$(LN) $(x11dir)/Xresources ~/.Xresources
 	@$(print_done)
 
 compile-emacs-lisp:
