@@ -60,7 +60,7 @@ install-emacs: compile-emacs-lisp
 install-git:
 	@$(print_installing) Git
 	@$(LN) $(gitdir)/gitconfig ~/.gitconfig
-	@$(LN) $(gitdir)/gitignore ~/.gitignore
+	@$(LN) $(gitdir)/gitignore ~/.config/git/ignore
 	@$(print_done)
 
 install-ocaml:
