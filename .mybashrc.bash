@@ -63,7 +63,7 @@ shopt -s extglob
 export GOPATH=~/go
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/bin:$GOPATH/bin
 export RLWRAP_HOME=~/.rlwrap
-export TEXINPUTS=.:~/dotfiles/latex:
+export TEXINPUTS=.:~/.latex:
 export EDITOR='emacsclient -nw'
 export ALTERNATE_EDITOR=emacs
 export EMAIL=ilankri@protonmail.com
