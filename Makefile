@@ -21,8 +21,8 @@ clean:
 install-bash:
 	@$(print_installing) Bash
 	@grep -q "if \[ -f ~/.mybashrc.bash ]; then" ~/.bashrc	\
-	|| printf "\nif %s; then\n    %s\nfi\n"				\
-		"[ -f ~/.mybashrc.bash ]"				\
+	|| printf "\nif %s; then\n    %s\nfi\n"			\
+		"[ -f ~/.mybashrc.bash ]"			\
 		". ~/.mybashrc.bash"				\
 		>> ~/.bashrc
 	@$(print_done)
