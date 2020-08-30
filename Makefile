@@ -34,8 +34,8 @@ install-emacs: compile-emacs-lisp
 
 install-ocaml:
 	@$(print_installing) OCaml
-	@grep -q "#use \"~/.myocamlinit.ml\"" ~/.ocamlinit	\
-	|| printf "\n#use \"~/.myocamlinit.ml\"\n"		\
+	@grep -q "#use \"$$HOME/.myocamlinit.ml\"" ~/.ocamlinit	\
+	|| printf "\n#use \"$$HOME/.myocamlinit.ml\"\n"		\
 		>> ~/.ocamlinit
 	@$(print_done)
 
