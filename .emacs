@@ -8,7 +8,7 @@
                                   reason-mode
                                   debian-el
                                   csv-mode
-                                  ivy
+                                  counsel
                                   go-guru
                                   go-rename
                                   rust-mode
