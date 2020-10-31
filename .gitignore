@@ -23,3 +23,6 @@
 !/.ocp/
 !/.ocp/ocp-indent.conf
 !/.inputrc
+!/bin/
+!/bin/my-display-date
+!/bin/my-display-time
