@@ -276,6 +276,8 @@
 
 (scroll-bar-mode 0)
 
+(toggle-frame-fullscreen)
+
 (column-number-mode 1)
 
 (global-subword-mode 1)
