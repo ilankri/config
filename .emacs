@@ -257,6 +257,7 @@
                   ("dune-project\\'" . dune-mode)
                   ("dune-workspace\\'" . dune-mode)
                   ("bash-fc\\'" . sh-mode)
+                  ("\\.bash_aliases\\'" . sh-mode)
                   ("\\.gitignore\\'" . conf-unix-mode)
                   ("\\.dockerignore\\'" . conf-unix-mode)
                   ("\\.ml[ly]\\'" . tuareg-mode)
