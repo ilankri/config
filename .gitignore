@@ -26,3 +26,5 @@
 !/bin/
 !/bin/my-display-date
 !/bin/my-display-time
+!/.gnupg/
+!/.gnupg/gpg-agent.conf

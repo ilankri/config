@@ -4,6 +4,8 @@ function cd() {
     builtin cd "$@" && eval $(opam env)
 }
 
+export GPG_TTY=$(tty)
+
 export OCAMLPARAM="_,bin-annot=1"
 # See
 # https://github.com/ocaml/merlin/wiki/Letting-merlin-locate-go-to-stuff-in-.opam.
