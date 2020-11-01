@@ -18,6 +18,9 @@
 	st = status
 	sync = fetch --all --tags
 
+[commit]
+	gpgSign = true
+
 [pull]
 	rebase = true
 
@@ -30,5 +33,9 @@
 	smtpUser = lankri.idir@gmail.com
 	smtpServerPort = 587
 
+[tag]
+	gpgSign = true
+
 [user]
 	name = Idir Lankri
+	signingKey = 1D0025CBA63B3D50
