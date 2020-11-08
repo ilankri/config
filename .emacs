@@ -24,6 +24,9 @@
 ;; Ensure that packages are installed.
 (package-install-selected-packages)
 
+;;; APT
+(require 'apt-sources)           ; To force update of `auto-mode-alist'.
+
 ;;; OPAM
 (add-to-list 'load-path my-opam-lisp-dir)
 
