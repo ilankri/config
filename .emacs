@@ -218,9 +218,6 @@
 (setq markdown-command "pandoc"
       markdown-fontify-code-blocks-natively t)
 
-;;; Ivy
-(setq ivy-display-functions-alist nil)
-
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
       disabled-command-function nil
@@ -298,6 +295,10 @@
 (ivy-mode 1)
 
 (counsel-mode 1)
+
+;;; Ivy
+(setq ivy-display-functions-alist nil)  ; Should be done after enabling
+                                        ; `counsel-mode'.
 
 ;;; Custom global key bindings
 (my-global-set-key "a" 'ff-get-other-file)
