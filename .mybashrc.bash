@@ -78,3 +78,6 @@ export PATH=$PATH:~/.npm-global/bin
 
 # GitHub
 export GITHUB_USER=ilankri
+
+# GitHub CLI
+eval "$(gh completion -s bash)"
