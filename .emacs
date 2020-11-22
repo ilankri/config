@@ -356,7 +356,7 @@
 
 (my-global-set-key "u" 'winner-undo)
 
-(my-global-set-key "x" 'counsel-git)
+(my-global-set-key "w" 'counsel-git)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
