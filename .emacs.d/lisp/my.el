@@ -212,4 +212,9 @@
   (interactive)
   (kill-buffer))
 
+(defun my-ansi-term ()
+  (interactive)
+  (ansi-term shell-file-name
+             (completing-read "Name: " nil nil nil nil nil "localhost")))
+
 (provide 'my)

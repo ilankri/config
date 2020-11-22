@@ -232,6 +232,7 @@
       display-line-numbers-type 'relative
       view-read-only t
       comint-prompt-read-only t
+      term-buffer-maximum-size 0
       vc-follow-symlinks t
       vc-command-messages t)
 
@@ -357,6 +358,8 @@
 (my-global-set-key "u" 'winner-undo)
 
 (my-global-set-key "w" 'counsel-git)
+
+(my-global-set-key "x" 'my-ansi-term)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
