@@ -5,7 +5,10 @@
 	co = checkout
 	force-push = push --force-with-lease
 	hub-open-pr = "!_() { \
-			   gh pr create --assignee=ilankri \"$@\"; \
+			   local base=$(git rev-parse --abbrev-ref @{upstream} \
+					| cut -d/ -f2); \
+			   gh pr create --assignee=ilankri --base=$base \
+			       \"$@\"; \
 		       }; \
 		       _"
 	mv-pushed-br = "!_() { \
