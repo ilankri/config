@@ -357,9 +357,11 @@
 
 (my-global-set-key "u" 'winner-undo)
 
-(my-global-set-key "w" 'counsel-git)
+(my-global-set-key "x" 'counsel-git)
 
-(my-global-set-key "x" 'my-ansi-term)
+(my-global-set-key "v" 'my-ansi-term)
+
+(my-global-set-key "w" 'whitespace-cleanup)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
