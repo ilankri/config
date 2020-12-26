@@ -74,6 +74,11 @@
 (defun my-set-magit-key (key cmd &optional local)
   (my-set-prefix-key my-magit-prefix key cmd local))
 
+(defconst my-lsp-prefix "l")
+
+(defun my-set-lsp-key (key cmd &optional local)
+  (my-set-prefix-key my-lsp-prefix key cmd local))
+
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
 

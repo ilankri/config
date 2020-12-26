@@ -17,6 +17,7 @@
                                   scala-mode
                                   gnu-elpa-keyring-update
                                   modus-operandi-theme
+                                  lsp-mode
                                   auctex))
 
 (package-initialize)
@@ -42,6 +43,19 @@
 (require 'go-guru)
 
 (add-hook 'go-mode-hook 'my-go-mode-hook-f)
+
+;;; LSP
+(add-hook 'prog-mode-hook 'lsp-deferred)
+
+(setq lsp-headerline-breadcrumb-enable t
+      lsp-headerline-breadcrumb-enable-symbol-numbers t
+      lsp-headerline-breadcrumb-segments '(symbols)
+      lsp-diagnostics-provider :none
+      lsp-enable-symbol-highlighting nil
+      lsp-enable-snippet nil
+      lsp-before-save-edits nil
+      lsp-modeline-code-actions-enable nil
+      lsp-modeline-diagnostics-enable nil)
 
 ;;; Ispell
 
@@ -329,6 +343,8 @@
 (my-global-set-key "j" 'browse-url)
 
 (my-global-set-key "k" 'my-kill-current-buffer)
+
+(my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
 
 (my-global-set-key "m" 'blink-matching-open)
 
