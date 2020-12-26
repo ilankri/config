@@ -226,7 +226,6 @@
       disabled-command-function nil
       auto-mode-case-fold nil
       load-prefer-newer t
-      line-move-visual nil
       track-eol t
       view-read-only t
       comint-prompt-read-only t
