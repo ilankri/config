@@ -228,8 +228,6 @@
       load-prefer-newer t
       line-move-visual nil
       track-eol t
-      display-line-numbers-current-absolute nil
-      display-line-numbers-type 'relative
       view-read-only t
       comint-prompt-read-only t
       term-buffer-maximum-size 0
@@ -241,8 +239,6 @@
               scroll-down-aggressively 0
               indent-tabs-mode nil
               mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
-
-(my-add-hooks '(text-mode-hook prog-mode-hook) 'display-line-numbers-mode)
 
 (my-add-to-list 'completion-ignored-extensions
                 '("auto/" ".prv/" "_build/" "_opam/" "target/"
