@@ -160,19 +160,6 @@
                               ("\\.eliomi\\'" (".eliom"))
                               ("\\.eliom\\'" (".eliomi")))))
 
-(defun my-merlin-locate-other-window ()
-  (interactive)
-  (setq merlin-locate-in-new-window 'always)
-  (merlin-locate)
-  (setq merlin-locate-in-new-window 'never))
-
-(defun my-merlin-mode-hook-f ()
-  (my-undefine-key merlin-mode-map "C-c C-r")
-  (my-define-key merlin-mode-map "C-c ?" 'merlin-document)
-  (my-define-key merlin-mode-map "M-." 'merlin-locate)
-  (my-define-key merlin-mode-map "M-," 'merlin-pop-stack)
-  (my-define-key merlin-mode-map "C-x 4 ." 'my-merlin-locate-other-window))
-
 (defun my-reason-mode-hook-f ()
   (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
                               ("\\.re\\'" (".rei"))))
