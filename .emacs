@@ -87,12 +87,12 @@
 (global-whitespace-mode 1)
 
 ;; Do not display spaces, tabs and newlines marks.
-(setq whitespace-style (set-difference whitespace-style '(tabs
-                                                          spaces
-                                                          newline
-                                                          space-mark
-                                                          tab-mark
-                                                          newline-mark))
+(setq whitespace-style (cl-set-difference whitespace-style '(tabs
+                                                             spaces
+                                                             newline
+                                                             space-mark
+                                                             tab-mark
+                                                             newline-mark))
       whitespace-action '(auto-cleanup))
 
 ;; Turn off whitespace-mode in Dired-like buffers.
