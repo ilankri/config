@@ -4,21 +4,21 @@
 
 (my-init-package-archives)
 
-(setq package-selected-packages '(magit
-                                  reason-mode
-                                  debian-el
-                                  csv-mode
-                                  counsel
-                                  go-guru
-                                  go-rename
-                                  rust-mode
-                                  go-mode
-                                  markdown-mode
-                                  scala-mode
-                                  gnu-elpa-keyring-update
-                                  modus-operandi-theme
-                                  lsp-mode
-                                  auctex))
+(custom-set-variables '(package-selected-packages '(magit
+                                                    reason-mode
+                                                    debian-el
+                                                    csv-mode
+                                                    counsel
+                                                    go-guru
+                                                    go-rename
+                                                    rust-mode
+                                                    go-mode
+                                                    markdown-mode
+                                                    scala-mode
+                                                    gnu-elpa-keyring-update
+                                                    modus-operandi-theme
+                                                    lsp-mode
+                                                    auctex)))
 
 (package-initialize)
 
@@ -45,21 +45,21 @@
 ;;; LSP
 (add-hook 'prog-mode-hook 'lsp-deferred)
 
-(setq lsp-headerline-breadcrumb-enable t
-      lsp-headerline-breadcrumb-enable-symbol-numbers t
-      lsp-headerline-breadcrumb-segments '(symbols)
-      lsp-diagnostics-provider :none
-      lsp-enable-symbol-highlighting nil
-      lsp-enable-snippet nil
-      lsp-before-save-edits nil
-      lsp-modeline-code-actions-enable nil
-      lsp-modeline-diagnostics-enable nil)
+(custom-set-variables '(lsp-headerline-breadcrumb-enable t)
+                      '(lsp-headerline-breadcrumb-enable-symbol-numbers t)
+                      '(lsp-headerline-breadcrumb-segments '(symbols))
+                      '(lsp-diagnostics-provider :none)
+                      '(lsp-enable-symbol-highlighting nil)
+                      '(lsp-enable-snippet nil)
+                      '(lsp-before-save-edits nil)
+                      '(lsp-modeline-code-actions-enable nil)
+                      '(lsp-modeline-diagnostics-enable nil))
 
 ;;; Ispell
 
 ;; Use hunspell instead of aspell because hunspell has a better French
 ;; support.
-(setq ispell-program-name "hunspell")
+(custom-set-variables '(ispell-program-name "hunspell"))
 
 (add-hook 'text-mode-hook 'flyspell-mode)
 
@@ -68,9 +68,9 @@
               'my-ispell-change-to-fr-dictionary)
 
 ;;; Filling
-(setq-default fill-column 72)
+(custom-set-variables '(fill-column 72))
 
-(setq comment-multi-line t)
+(custom-set-variables '(comment-multi-line t))
 
 (add-to-list 'fill-nobreak-predicate 'fill-french-nobreak-p)
 
@@ -80,33 +80,36 @@
 (my-add-hooks '(text-mode-hook c-mode-common-hook) 'auto-fill-mode)
 
 ;;; Mail
-(setq mail-header-separator
-      "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-")
+(custom-set-variables
+ '(mail-header-separator
+   "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"))
 
 ;;; Whitespace
 (global-whitespace-mode 1)
 
 ;; Do not display spaces, tabs and newlines marks.
-(setq whitespace-style (cl-set-difference whitespace-style '(tabs
-                                                             spaces
-                                                             newline
-                                                             space-mark
-                                                             tab-mark
-                                                             newline-mark))
-      whitespace-action '(auto-cleanup))
+(custom-set-variables
+ '(whitespace-style (cl-set-difference whitespace-style '(tabs
+                                                          spaces
+                                                          newline
+                                                          space-mark
+                                                          tab-mark
+                                                          newline-mark)))
+ '(whitespace-action '(auto-cleanup)))
 
 ;; Turn off whitespace-mode in Dired-like buffers.
-(setq whitespace-global-modes '(not dired-mode archive-mode git-rebase-mode))
+(custom-set-variables
+ '(whitespace-global-modes '(not dired-mode archive-mode git-rebase-mode)))
 
 ;;; Auto-Revert
 (global-auto-revert-mode 1)
 
 ;;; Compilation
-(setq compilation-scroll-output 'first-error
-      compilation-context-lines 0)
+(custom-set-variables '(compilation-scroll-output 'first-error)
+                      '(compilation-context-lines 0))
 
 ;;; Ffap
-(setq ffap-machine-p-known 'reject)
+(custom-set-variables '(ffap-machine-p-known 'reject))
 
 ;;; Auto-insert
 
@@ -150,7 +153,8 @@
 (define-auto-insert '(".ocp-indent\\'" . ".ocp-indent file")
   'my-ocp-indent-auto-insert)
 
-(setq auto-insert-directory (my-prefix-by-user-emacs-directory "insert/"))
+(custom-set-variables
+ '(auto-insert-directory (my-prefix-by-user-emacs-directory "insert/")))
 (auto-insert-mode 1)
 
 ;;; Semantic
@@ -170,7 +174,7 @@
 (my-add-hooks '(java-mode-hook c++-mode-hook) 'my-c-trad-comment-on)
 
 ;;; Tuareg
-(setq tuareg-interactive-read-only-input t)
+(custom-set-variables '(tuareg-interactive-read-only-input t))
 
 (add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f)
 
@@ -178,38 +182,38 @@
 (add-hook 'reason-mode-hook 'my-reason-mode-hook-f)
 
 ;;; Scala
-(setq scala-indent:default-run-on-strategy 1)
+(custom-set-variables '(scala-indent:default-run-on-strategy 1))
 
 (add-hook 'scala-mode-hook 'my-c-trad-comment-on)
 
 ;;; Proof general
-(setq proof-splash-enable nil
-      proof-three-window-mode-policy 'hybrid
-      coq-one-command-per-line nil)
+(custom-set-variables '(proof-splash-enable nil)
+                      '(proof-three-window-mode-policy 'hybrid)
+                      '(coq-one-command-per-line nil))
 
 ;;; Asm
-(setq asm-comment-char ?#)
+(custom-set-variables '(asm-comment-char ?#))
 
 ;;; Prolog
 ;; (setq-default prolog-system 'eclipse)
 
 ;;; LaTeX
-(setq TeX-auto-save t
-      TeX-parse-self t
-      LaTeX-section-hook '(LaTeX-section-heading
-                           LaTeX-section-title
-                           LaTeX-section-toc
-                           LaTeX-section-section
-                           LaTeX-section-label)
-      reftex-plug-into-AUCTeX t
-      reftex-enable-partial-scans t
-      reftex-save-parse-info t
-      reftex-use-multiple-selection-buffers t
-      TeX-electric-math (cons "$" "$")
-      TeX-electric-sub-and-superscript t
-      font-latex-fontify-script 'multi-level)
+(custom-set-variables '(TeX-auto-save t)
+                      '(TeX-parse-self t)
+                      '(LaTeX-section-hook '(LaTeX-section-heading
+                                             LaTeX-section-title
+                                             LaTeX-section-toc
+                                             LaTeX-section-section
+                                             LaTeX-section-label))
+                      '(reftex-plug-into-AUCTeX t)
+                      '(reftex-enable-partial-scans t)
+                      '(reftex-save-parse-info t)
+                      '(reftex-use-multiple-selection-buffers t)
+                      '(TeX-electric-math (cons "$" "$"))
+                      '(TeX-electric-sub-and-superscript t)
+                      '(font-latex-fontify-script 'multi-level))
 
-(setq-default TeX-master nil)
+(custom-set-variables '(TeX-master nil))
 
 (my-add-hook 'LaTeX-mode-hook
              '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
@@ -218,32 +222,33 @@
 ;;; Magit
 (require 'magit)
 
-(setq git-commit-summary-max-length fill-column
-      magit-diff-refine-hunk t)
+(custom-set-variables '(git-commit-summary-max-length fill-column)
+                      '(magit-diff-refine-hunk t))
 
 ;;; Markdown
-(setq markdown-command "pandoc"
-      markdown-fontify-code-blocks-natively t)
+(custom-set-variables '(markdown-command "pandoc")
+                      '(markdown-fontify-code-blocks-natively t))
 
 ;;; Miscellaneous settings
 (setq disabled-command-function nil)
 
-(setq inhibit-startup-screen t
-      custom-file "~/.emacs-custom.el"
-      auto-mode-case-fold nil
-      load-prefer-newer t
-      track-eol t
-      view-read-only t
-      comint-prompt-read-only t
-      term-buffer-maximum-size 0
-      vc-follow-symlinks t
-      vc-command-messages t)
+(custom-set-variables '(inhibit-startup-screen t)
+                      '(custom-file "~/.emacs-custom.el")
+                      '(auto-mode-case-fold nil)
+                      '(load-prefer-newer t)
+                      '(track-eol t)
+                      '(view-read-only t)
+                      '(comint-prompt-read-only t)
+                      '(term-buffer-maximum-size 0)
+                      '(vc-follow-symlinks t)
+                      '(vc-command-messages t))
 
-(setq-default require-final-newline t
-              scroll-up-aggressively 0
-              scroll-down-aggressively 0
-              indent-tabs-mode nil
-              mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
+(custom-set-variables
+ '(require-final-newline t)
+ '(scroll-up-aggressively 0)
+ '(scroll-down-aggressively 0)
+ '(indent-tabs-mode nil)
+ '(mode-line-format (remove '(vc-mode vc-mode) mode-line-format)))
 
 (my-add-to-list 'completion-ignored-extensions
                 '("auto/" ".prv/" "_build/" "_opam/" "target/"
@@ -252,8 +257,9 @@
                   ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
                   ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
 
-(setq counsel-find-file-ignore-regexp
-      (concat (regexp-opt completion-ignored-extensions) "\\'"))
+(custom-set-variables
+ '(counsel-find-file-ignore-regexp
+   (concat (regexp-opt completion-ignored-extensions) "\\'")))
 
 ;; Hack to open files like Makefile.local or Dockerfile.test with the
 ;; right mode.
@@ -308,7 +314,8 @@
 (counsel-mode 1)
 
 ;;; Ivy
-(setq ivy-display-functions-alist nil)  ; Should be done after enabling
+(custom-set-variables '(ivy-display-functions-alist nil))
+                                        ; Should be done after enabling
                                         ; `counsel-mode'.
 
 ;;; Custom global key bindings

@@ -134,9 +134,9 @@
 
 ;;; Hook functions
 (defun my-c-initialization-hook-f ()
-  (setq c-default-style '((java-mode . "java")
-                          (awk-mode . "awk")
-                          (other . "my-linux"))))
+  (custom-set-variables '(c-default-style '((java-mode . "java")
+                                            (awk-mode . "awk")
+                                            (other . "my-linux")))))
 
 (defun my-tuareg-mode-hook-f ()
   (setq-local comment-style 'indent)
