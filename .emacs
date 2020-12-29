@@ -227,6 +227,7 @@
 
 ;;; Miscellaneous settings
 (setq inhibit-startup-screen t
+      custom-file "~/.emacs-custom.el"
       disabled-command-function nil
       auto-mode-case-fold nil
       load-prefer-newer t
