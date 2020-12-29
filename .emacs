@@ -226,9 +226,10 @@
       markdown-fontify-code-blocks-natively t)
 
 ;;; Miscellaneous settings
+(setq disabled-command-function nil)
+
 (setq inhibit-startup-screen t
       custom-file "~/.emacs-custom.el"
-      disabled-command-function nil
       auto-mode-case-fold nil
       load-prefer-newer t
       track-eol t
