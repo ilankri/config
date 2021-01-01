@@ -227,7 +227,10 @@
 
 ;;; Markdown
 (custom-set-variables '(markdown-command "pandoc")
+                      '(markdown-asymmetric-header t)
                       '(markdown-fontify-code-blocks-natively t))
+
+(add-hook 'markdown-mode-hook 'my-markdown-mode-hook-f)
 
 ;;; Miscellaneous settings
 (setq disabled-command-function nil)

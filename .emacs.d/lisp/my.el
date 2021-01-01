@@ -209,4 +209,7 @@
   (ansi-term shell-file-name
              (completing-read "Name: " nil nil nil nil nil "localhost")))
 
+(defun my-markdown-mode-hook-f ()
+  (add-hook 'before-save-hook 'markdown-cleanup-list-numbers t t))
+
 (provide 'my)
