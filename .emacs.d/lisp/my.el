@@ -155,6 +155,7 @@
   (my-undefine-key tuareg-mode-map "C-c C-h")
   (my-undefine-key tuareg-mode-map "M-q")
   (my-define-key tuareg-mode-map "C-c ?" 'caml-help)
+  (add-hook 'before-save-hook 'ocamlformat-before-save t t)
   (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
                               ("\\.ml\\'" (".mli"))
                               ("\\.eliomi\\'" (".eliom"))

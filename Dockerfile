@@ -16,7 +16,7 @@ RUN adduser ilankri
 USER ilankri
 RUN opam init --auto-setup --disable-sandboxing --yes
 RUN opam update --yes && \
-    opam install --yes caml-mode ocaml-lsp-server ocp-indent tuareg
+    opam install --yes caml-mode ocaml-lsp-server ocamlformat ocp-indent tuareg
 WORKDIR /home/ilankri
 COPY --chown=ilankri . .
 RUN make

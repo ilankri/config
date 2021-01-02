@@ -37,6 +37,8 @@
 
 (require 'dune)
 
+(require 'ocamlformat)
+
 ;;; Go
 (require 'go-guru)
 
