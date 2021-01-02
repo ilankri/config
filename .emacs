@@ -348,8 +348,6 @@
 
 (my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
 
-(my-global-set-key "y" 'blink-matching-open)
-
 (my-global-set-key "n" 'windmove-down)
 
 (my-set-ispell-key "c" 'ispell-comments-and-strings)
@@ -375,6 +373,8 @@
 (my-global-set-key "v" 'my-ansi-term)
 
 (my-global-set-key "w" 'whitespace-cleanup)
+
+(my-global-set-key "y" 'blink-matching-open)
 
 ;; Enable smerge-mode when necessary.
 (add-hook 'find-file-hook 'my-try-smerge t)
