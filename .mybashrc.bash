@@ -21,6 +21,8 @@ function opam-switch-eval() {
     eval $(opam env)
 }
 
+eval $(opam env)
+
 ## Git prompt
 
 # Username and host in green and working directory in blue.
