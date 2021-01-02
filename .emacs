@@ -348,7 +348,7 @@
 
 (my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
 
-(my-global-set-key "m" 'blink-matching-open)
+(my-global-set-key "y" 'blink-matching-open)
 
 (my-global-set-key "n" 'windmove-down)
 
