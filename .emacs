@@ -346,7 +346,11 @@
 
 (my-global-set-key "k" 'my-kill-current-buffer)
 
+(my-set-lsp-key "h" 'lsp-describe-thing-at-point)
+
 (my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
+
+(my-global-set-key "m" 'imenu)
 
 (my-global-set-key "n" 'windmove-down)
 
