@@ -1,5 +1,6 @@
 SHELL = /bin/sh
 RM = rm -f
+DOCKER_IMAGE_TAG = ilankri-dotfiles
 
 elispdir = ~/.emacs.d/lisp
 print_installing = printf "Installing %s config...\n"
@@ -7,7 +8,7 @@ print_done = echo "Done"
 
 .SUFFIXES:
 .PHONY: all install clean install-bash install-emacs install-ocaml	\
-	compile-emacs-lisp
+	compile-emacs-lisp docker-build docker-debug-emacs-init
 
 all: install
 
@@ -43,3 +44,11 @@ compile-emacs-lisp:
 	@echo "Compiling Elisp files..."
 	@emacs --batch --eval '(batch-byte-recompile-directory 0)' $(elispdir)
 	@$(print_done)
+
+docker-build:
+	docker build --tag $(DOCKER_IMAGE_TAG) .
+
+
+docker-debug-emacs-init: docker-build
+	docker run --interactive --rm --tty $(DOCKER_IMAGE_TAG)	\
+		bash -ic emacs --debug-init
