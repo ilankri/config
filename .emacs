@@ -54,6 +54,7 @@
                       '(lsp-enable-symbol-highlighting nil)
                       '(lsp-enable-snippet nil)
                       '(lsp-before-save-edits nil)
+                      '(lsp-signature-auto-activate nil)
                       '(lsp-modeline-code-actions-enable nil)
                       '(lsp-modeline-diagnostics-enable nil))
 
