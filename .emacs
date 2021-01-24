@@ -353,6 +353,8 @@
 
 (my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
 
+(my-set-lsp-key "r" 'lsp-rename)
+
 (my-global-set-key "m" 'imenu)
 
 (my-global-set-key "n" 'windmove-down)
