@@ -80,3 +80,6 @@ export PATH=$PATH:~/.npm-global/bin
 
 # GitHub CLI
 eval "$(gh completion -s bash)"
+
+## SSH initialization
+my-ssh-init
