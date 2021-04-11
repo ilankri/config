@@ -16,11 +16,6 @@ export OPAMDOWNLOADJOBS=$(nproc)
 export OPAMKEEPBUILDDIR=true
 export OPAMWITHDOC=true
 
-function opam-switch-eval() {
-    opam switch "$@"
-    eval $(opam env)
-}
-
 eval $(opam env)
 
 ## Git prompt
