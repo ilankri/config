@@ -18,6 +18,7 @@
                                                     gnu-elpa-keyring-update
                                                     modus-operandi-theme
                                                     lsp-mode
+                                                    yaml-mode
                                                     auctex)))
 
 (package-initialize)
