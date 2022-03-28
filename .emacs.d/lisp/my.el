@@ -36,7 +36,8 @@
 ;; started) where OPAM stores Emacs Lisp files.
 (defconst my-opam-lisp-dir
   (let ((opam-share
-         (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+         (ignore-errors (car (process-lines
+                              "opam" "var" "--cli=2.1" "share")))))
     (when (and opam-share (file-directory-p opam-share))
       (expand-file-name "emacs/site-lisp/" opam-share))))
 
