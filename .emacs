@@ -19,6 +19,10 @@
                                                     modus-operandi-theme
                                                     lsp-mode
                                                     yaml-mode
+                                                    tuareg
+                                                    ocp-indent
+                                                    dune
+                                                    ocamlformat
                                                     auctex)))
 
 (package-initialize)
@@ -28,11 +32,6 @@
 
 ;;; APT
 (require 'apt-sources)           ; To force update of `auto-mode-alist'.
-
-;;; OPAM
-(add-to-list 'load-path my-opam-lisp-dir)
-
-(load (concat my-opam-lisp-dir "tuareg-site-file"))
 
 (require 'ocp-indent)
 

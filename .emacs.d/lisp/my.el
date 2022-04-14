@@ -30,17 +30,6 @@
 (defun my-prefix-by-user-emacs-directory (file)
   (concat user-emacs-directory file))
 
-;;; OPAM
-
-;; Directory name (depends on the active OPAM switch when Emacs was
-;; started) where OPAM stores Emacs Lisp files.
-(defconst my-opam-lisp-dir
-  (let ((opam-share
-         (ignore-errors (car (process-lines
-                              "opam" "var" "--cli=2.1" "share")))))
-    (when (and opam-share (file-directory-p opam-share))
-      (expand-file-name "emacs/site-lisp/" opam-share))))
-
 ;;; Auxiliary functions
 (defun my-user-key (key)
   (let ((user-prefix-key "C-c"))

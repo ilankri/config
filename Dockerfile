@@ -15,8 +15,7 @@ RUN locale-gen en_US.UTF-8
 RUN adduser ilankri
 USER ilankri
 RUN opam init --auto-setup --disable-sandboxing --yes
-RUN opam update --yes && \
-    opam install --yes caml-mode ocaml-lsp-server ocamlformat ocp-indent tuareg
+RUN opam update --yes && opam install --yes ocaml-lsp-server
 WORKDIR /home/ilankri
 COPY --chown=ilankri . .
 RUN make
