@@ -11,6 +11,7 @@ export OPAMJOBS=$(nproc)
 export OPAMDOWNLOADJOBS=$(nproc)
 export OPAMKEEPBUILDDIR=true
 export OPAMWITHDOC=true
+export PATH=$PATH:$(opam var --switch=default bin)
 
 ## Git prompt
 
