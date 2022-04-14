@@ -208,7 +208,7 @@
 
 (defun my-ansi-term ()
   (interactive)
-  (ansi-term shell-file-name
+  (ansi-term (getenv "ESHELL")
              (completing-read "Name: " nil nil nil nil nil "localhost")))
 
 (defun my-markdown-mode-hook-f ()

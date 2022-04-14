@@ -16,4 +16,5 @@
 !.inputrc
 !bin/my-display-date
 !bin/my-display-time
+!bin/my-eshell
 !.gnupg/gpg-agent.conf

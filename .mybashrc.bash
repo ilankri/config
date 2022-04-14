@@ -59,6 +59,7 @@ export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/.latex:
 export EDITOR=emacsclient
 export ALTERNATE_EDITOR=emacs
+export ESHELL=my-eshell
 export BROWSER=firefox
 export PAGER=less
 export EMAIL=ilankri@protonmail.com

@@ -30,5 +30,6 @@
 !/bin/
 !/bin/my-display-date
 !/bin/my-display-time
+!/bin/my-eshell
 !/.gnupg/
 !/.gnupg/gpg-agent.conf
