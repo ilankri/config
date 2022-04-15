@@ -35,7 +35,15 @@ function prompt_end() {
     fi
 }
 
-export PROMPT_COMMAND='_opam_env_hook;__git_ps1 $my_ps1 "$(prompt_end) "'
+function odig_env_hook() {
+    export ODIG_CACHE_DIR=$(opam var prefix)/var/cache/odig
+    export ODIG_DOC_DIR=$(opam var doc)
+    export ODIG_LIB_DIR=$(opam var lib)
+    export ODIG_SHARE_DIR=$(opam var share)
+}
+
+export PROMPT_COMMAND='_opam_env_hook;odig_env_hook;\
+                       __git_ps1 $my_ps1 "$(prompt_end) "'
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
