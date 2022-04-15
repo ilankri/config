@@ -81,4 +81,4 @@ export PATH=$PATH:~/.npm-global/bin
 eval "$(gh completion -s bash)"
 
 ## SSH initialization
-my-ssh-init
+. my-ssh-init

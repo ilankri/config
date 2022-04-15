@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Start SSH agent if it has not already been done.
+if [ -z "$SSH_AGENT_PID" ]; then
+    eval $(ssh-agent)
+fi
+
 # Add SSH key to agent.
 ssh-add -l > /dev/null
 if [ "$?" = 1 ]; then
