@@ -20,4 +20,4 @@ RUN opam update --yes && opam install --yes ocaml-lsp-server
 WORKDIR /home/ilankri
 COPY --chown=ilankri . .
 RUN make
-CMD ["bash"]
+CMD ["bash", "--login"]

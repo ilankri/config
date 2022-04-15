@@ -51,4 +51,4 @@ docker-build:
 
 docker-debug-emacs-init: docker-build
 	docker run --interactive --rm --tty $(DOCKER_IMAGE_TAG)	\
-		bash -ic emacs --debug-init
+		bash -icl emacs --debug-init
