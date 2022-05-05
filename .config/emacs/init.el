@@ -239,7 +239,8 @@
 (setq disabled-command-function nil)
 
 (custom-set-variables '(inhibit-startup-screen t)
-                      '(custom-file "~/.emacs-custom.el")
+                      '(custom-file
+                        (my-prefix-by-user-emacs-directory ".custom.el"))
                       '(auto-mode-case-fold nil)
                       '(load-prefer-newer t)
                       '(track-eol t)

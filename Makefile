@@ -2,7 +2,7 @@ SHELL = /bin/sh
 RM = rm -f
 DOCKER_IMAGE_TAG = ilankri-dotfiles
 
-elispdir = ~/.emacs.d/lisp
+elispdir = ~/.config/emacs/lisp
 print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 

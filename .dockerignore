@@ -4,10 +4,10 @@
 !.bash_aliases
 !.mybashrc.bash
 !.docker/config.json
-!.emacs
-!.emacs.d/insert/**
-!.emacs.d/lisp/my.el
 !.gitconfig
+!.config/emacs/init.el
+!.config/emacs/insert/**
+!.config/emacs/lisp/my.el
 !.config/gh/config.yml
 !.config/git/ignore
 !.latex/preamble.tex
