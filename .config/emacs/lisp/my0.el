@@ -606,4 +606,4 @@
   ;; Emacs server
   (server-start))
 
-(provide 'my)
+(provide 'my0)

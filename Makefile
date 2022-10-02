@@ -16,7 +16,7 @@ install: install-bash install-emacs install-ocaml
 
 clean:
 	@echo "Cleaning..."
-	@$(RM) $(elispdir)/*.elc
+	@$(MAKE) -C $(elispdir) clean
 	@$(print_done)
 
 install-bash:
@@ -30,7 +30,7 @@ install-bash:
 
 install-emacs: compile-emacs-lisp
 	@$(print_installing) Emacs
-	@emacs --batch --load $(elispdir)/my.el --funcall my-init-packages
+	@emacs --batch --load $(elispdir)/my0.el --funcall my-init-packages
 	@$(print_done)
 
 install-ocaml:
@@ -42,7 +42,7 @@ install-ocaml:
 
 compile-emacs-lisp:
 	@echo "Compiling Elisp files..."
-	@emacs --batch --eval '(batch-byte-recompile-directory 0)' $(elispdir)
+	@$(MAKE) -C $(elispdir) build
 	@$(print_done)
 
 docker-build:

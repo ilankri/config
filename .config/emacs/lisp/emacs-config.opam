@@ -1,0 +1,13 @@
+opam-version: "2.0"
+synopsis: "Emacs configuration"
+maintainer: "Idir Lankri <ilankri@protonmail.com>"
+authors: "Idir Lankri <ilankri@protonmail.com>"
+homepage: "https://gitlab.com/ilankri/dotfiles"
+bug-reports: "https://gitlab.com/ilankri/dotfiles/-/issues"
+depends: [
+  "ocaml" {>= "5.0.0" & < "5.1.0"}
+  "dune" {>= "3.6.1" & < "4.0.0"}
+  "ecaml" {>= "v0.15.0" & < "v0.16.0"}
+  "sexplib0" {>= "v0.15.1" & < "v0.16.0"}
+  "ocamlformat" {dev & = "0.24.1"}
+]

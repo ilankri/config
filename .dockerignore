@@ -6,7 +6,15 @@
 !.docker/config.json
 !.config/emacs/init.el
 !.config/emacs/insert/**
-!.config/emacs/lisp/my.el
+!.config/emacs/lisp/.ocamlformat
+!.config/emacs/lisp/Makefile
+!.config/emacs/lisp/dune
+!.config/emacs/lisp/dune-project
+!.config/emacs/lisp/ecamlx.ml
+!.config/emacs/lisp/ecamlx.mli
+!.config/emacs/lisp/emacs-config.opam
+!.config/emacs/lisp/my.ml
+!.config/emacs/lisp/my0.el
 !.config/gh/config.yml
 !.config/git/config
 !.config/git/ignore
