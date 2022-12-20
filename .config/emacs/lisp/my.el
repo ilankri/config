@@ -64,10 +64,10 @@
 (defun my-set-magit-key (key cmd &optional local)
   (my-set-prefix-key my-magit-prefix key cmd local))
 
-(defconst my-lsp-prefix "l")
+(defconst my-eglot-prefix "l")
 
-(defun my-set-lsp-key (key cmd &optional local)
-  (my-set-prefix-key my-lsp-prefix key cmd local))
+(defun my-set-eglot-key (key cmd &optional local)
+  (my-set-prefix-key my-eglot-prefix key cmd local))
 
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
@@ -219,7 +219,7 @@
                                                       scala-mode
                                                       gnu-elpa-keyring-update
                                                       modus-operandi-theme
-                                                      lsp-mode
+                                                      eglot
                                                       yaml-mode
                                                       tuareg
                                                       ocp-indent
@@ -246,19 +246,14 @@
 
   (add-hook 'go-mode-hook 'my-go-mode-hook-f)
 
-  ;; LSP
-  (add-hook 'prog-mode-hook 'lsp-deferred)
+  ;; Eglot
+  (add-hook 'prog-mode-hook 'eglot-ensure)
 
-  (custom-set-variables '(lsp-headerline-breadcrumb-enable t)
-                        '(lsp-headerline-breadcrumb-enable-symbol-numbers t)
-                        '(lsp-headerline-breadcrumb-segments '(symbols))
-                        '(lsp-diagnostics-provider :none)
-                        '(lsp-enable-symbol-highlighting nil)
-                        '(lsp-enable-snippet nil)
-                        '(lsp-before-save-edits nil)
-                        '(lsp-signature-auto-activate nil)
-                        '(lsp-modeline-code-actions-enable nil)
-                        '(lsp-modeline-diagnostics-enable nil))
+  (custom-set-variables
+   '(eglot-autoshutdown t)
+   '(eglot-ignored-server-capabilities '(:documentHighlightProvider)))
+
+  (setq eglot-stay-out-of '(flymake))
 
   ;; Ispell
 
@@ -448,6 +443,7 @@
                         '(load-prefer-newer t)
                         '(track-eol t)
                         '(view-read-only t)
+                        '(eldoc-echo-area-use-multiline-p nil)
                         '(comint-prompt-read-only t)
                         '(term-buffer-maximum-size 0)
                         '(vc-follow-symlinks t)
@@ -553,11 +549,7 @@
 
   (my-global-set-key "k" 'my-kill-current-buffer)
 
-  (my-set-lsp-key "h" 'lsp-describe-thing-at-point)
-
-  (my-set-lsp-key "n" 'lsp-breadcrumb-narrow-to-symbol)
-
-  (my-set-lsp-key "r" 'lsp-rename)
+  (my-set-eglot-key "r" 'eglot-rename)
 
   (my-global-set-key "m" 'imenu)
 
