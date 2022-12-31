@@ -81,5 +81,8 @@ export PATH=$PATH:~/.npm-global/bin
 # GitHub CLI
 eval "$(gh completion -s bash)"
 
+# sbt
+export SBT_NATIVE_CLIENT=true
+
 ## SSH initialization
 . my-ssh-init
