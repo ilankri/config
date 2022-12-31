@@ -157,6 +157,11 @@
   (add-hook 'before-save-hook #'refmt t t))
 
 (defun my-scala-mode-hook-f ()
+  (setq-local indent-line-function 'indent-relative)
+  (remove-hook 'post-self-insert-hook
+               'scala-indent:indent-on-special-words t)
+  ;; Hacks for Scala 3
+
   (my-c-trad-comment-on))
 
 (defun my-go-mode-hook-f ()
