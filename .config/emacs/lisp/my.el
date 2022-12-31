@@ -304,6 +304,8 @@
   (custom-set-variables '(compilation-scroll-output 'first-error)
                         '(compilation-context-lines 0))
 
+  (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
   ;; Ffap
   (custom-set-variables '(ffap-machine-p-known 'reject))
 
