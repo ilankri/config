@@ -215,7 +215,6 @@
                                                       markdown-mode
                                                       scala-mode
                                                       gnu-elpa-keyring-update
-                                                      modus-operandi-theme
                                                       eglot
                                                       yaml-mode
                                                       tuareg
@@ -586,7 +585,7 @@
 
   (add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
 
-  (load-theme 'modus-operandi t)
+  (load-theme 'modus-operandi)
 
   ;; Emacs server
   (server-start))
