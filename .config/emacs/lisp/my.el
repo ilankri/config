@@ -440,7 +440,6 @@
                         '(custom-file
                           (my-prefix-by-user-emacs-directory ".custom.el"))
                         '(auto-mode-case-fold nil)
-                        '(load-prefer-newer t)
                         '(track-eol t)
                         '(view-read-only t)
                         '(eldoc-echo-area-use-multiline-p nil)
