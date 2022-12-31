@@ -165,7 +165,7 @@
   (my-c-trad-comment-on))
 
 (defun my-go-mode-hook-f ()
-  (add-hook 'before-save-hook 'gofmt nil t))
+  (add-hook 'before-save-hook 'gofmt t t))
 
 (defun my-message-mode-hook-f ()
   (setq-local whitespace-action nil)
