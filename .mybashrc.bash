@@ -45,8 +45,7 @@ function odig_env_hook() {
     return $status
 }
 
-export PROMPT_COMMAND='_opam_env_hook;odig_env_hook;\
-                       __git_ps1 $my_ps1 "$(prompt_end) "'
+export PROMPT_COMMAND='odig_env_hook; __git_ps1 $my_ps1 "$(prompt_end) "'
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
