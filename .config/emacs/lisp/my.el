@@ -182,10 +182,7 @@
 (defun my-init-package-archives ()
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-  ;; Give a higher priority to the GNU ELPA repository.
-  (add-to-list 'package-archive-priorities '("gnu" . 1)))
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
 
 (defun my-init-packages ()
   (my-init-package-archives)
