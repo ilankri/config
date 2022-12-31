@@ -37,9 +37,12 @@ function prompt_end() {
 }
 
 function odig_env_hook() {
+    local status="$?"
+
     export ODIG_CACHE_DIR=$(opam var prefix)/var/cache/odig
     export ODIG_DOC_DIR=$(opam var doc)
     export ODIG_LIB_DIR=$(opam var lib)
+    return $status
 }
 
 export PROMPT_COMMAND='_opam_env_hook;odig_env_hook;\
