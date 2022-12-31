@@ -156,6 +156,9 @@
                               ("\\.re\\'" (".rei"))))
   (add-hook 'before-save-hook #'refmt t t))
 
+(defun my-scala-mode-hook-f ()
+  (my-c-trad-comment-on))
+
 (defun my-go-mode-hook-f ()
   (add-hook 'before-save-hook 'gofmt nil t))
 
@@ -383,7 +386,7 @@
   ;; Scala
   (custom-set-variables '(scala-indent:default-run-on-strategy 1))
 
-  (add-hook 'scala-mode-hook 'my-c-trad-comment-on)
+  (add-hook 'scala-mode-hook 'my-scala-mode-hook-f)
 
   ;; Proof general
   (custom-set-variables '(proof-splash-enable nil)
