@@ -145,7 +145,6 @@
   (my-undefine-key tuareg-mode-map "C-c C-h")
   (my-undefine-key tuareg-mode-map "M-q")
   (my-define-key tuareg-mode-map "C-c ?" 'caml-help)
-  (add-hook 'before-save-hook 'ocamlformat-before-save t t)
   (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
                               ("\\.ml\\'" (".mli"))
                               ("\\.eliomi\\'" (".eliom"))
@@ -153,8 +152,7 @@
 
 (defun my-reason-mode-hook-f ()
   (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
-                              ("\\.re\\'" (".rei"))))
-  (add-hook 'before-save-hook #'refmt t t))
+                              ("\\.re\\'" (".rei")))))
 
 (defun my-scala-mode-hook-f ()
   (setq-local indent-line-function 'indent-relative)
@@ -163,9 +161,6 @@
   ;; Hacks for Scala 3
 
   (my-c-trad-comment-on))
-
-(defun my-go-mode-hook-f ()
-  (add-hook 'before-save-hook 'gofmt t t))
 
 (defun my-message-mode-hook-f ()
   (setq-local whitespace-action nil)
@@ -228,7 +223,6 @@
                                                       tuareg
                                                       ocp-indent
                                                       dune
-                                                      ocamlformat
                                                       auctex)))
 
   (package-initialize)
@@ -243,15 +237,17 @@
 
   (require 'dune)
 
-  (require 'ocamlformat)
-
   ;; Go
   (require 'go-guru)
 
-  (add-hook 'go-mode-hook 'my-go-mode-hook-f)
-
   ;; Eglot
-  (add-hook 'prog-mode-hook 'eglot-ensure)
+  (defun my-eglot-format-buffer-before-save ()
+    (defun my-eglot-maybe-format-buffer ()
+      (when (eglot-managed-p) (eglot-format-buffer)))
+    (add-hook 'before-save-hook 'my-eglot-maybe-format-buffer t t))
+
+  (my-add-hook 'prog-mode-hook
+               '(eglot-ensure my-eglot-format-buffer-before-save))
 
   (custom-set-variables
    '(eglot-autoshutdown t)
