@@ -571,6 +571,8 @@
 
   (my-global-set-key "k" 'my-kill-current-buffer)
 
+  (my-set-eglot-key "a" 'eglot-code-actions)
+
   (my-set-eglot-key "r" 'eglot-rename)
 
   (my-global-set-key "m" 'imenu)
