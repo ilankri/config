@@ -211,8 +211,6 @@
                                                       debian-el
                                                       csv-mode
                                                       counsel
-                                                      go-guru
-                                                      go-rename
                                                       rust-mode
                                                       go-mode
                                                       markdown-mode
@@ -236,9 +234,6 @@
   (require 'ocp-indent)
 
   (require 'dune)
-
-  ;; Go
-  (require 'go-guru)
 
   ;; Eglot
   (defun my-eglot-format-buffer-before-save ()
@@ -323,6 +318,8 @@
        1 2 my-scala3-end-column 1)
       ;; Scala 3
       ))
+
+  (require 'compile)
 
   (my-add-to-list 'compilation-error-regexp-alist
                   my-scala-compilation-error-regexp-matchers)
