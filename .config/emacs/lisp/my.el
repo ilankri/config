@@ -410,9 +410,6 @@
   ;; Asm
   (custom-set-variables '(asm-comment-char ?#))
 
-  ;; Prolog
-  ;; (setq-default prolog-system 'eclipse)
-
   ;; LaTeX
   (custom-set-variables '(TeX-auto-save t)
                         '(TeX-parse-self t)
@@ -484,7 +481,6 @@
 
   (my-add-to-list 'auto-mode-alist
                   '(("README\\'" . text-mode)
-                    ;; ("\\.pl\\'" . prolog-mode)
                     ("dune-project\\'" . dune-mode)
                     ("dune-workspace\\'" . dune-mode)
                     ("bash-fc\\'" . sh-mode)
