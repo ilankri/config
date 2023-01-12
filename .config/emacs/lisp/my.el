@@ -459,13 +459,11 @@
                         '(comint-prompt-read-only t)
                         '(term-buffer-maximum-size 0)
                         '(vc-follow-symlinks t)
-                        '(vc-command-messages t))
-
-  (custom-set-variables
-   '(require-final-newline t)
-   '(scroll-up-aggressively 0)
-   '(scroll-down-aggressively 0)
-   '(indent-tabs-mode nil))
+                        '(vc-command-messages t)
+                        '(require-final-newline t)
+                        '(scroll-up-aggressively 0)
+                        '(scroll-down-aggressively 0)
+                        '(indent-tabs-mode nil))
 
   (my-add-to-list 'completion-ignored-extensions
                   '("auto/" ".prv/" "_build/" "_opam/" "target/"
