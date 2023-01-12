@@ -454,6 +454,7 @@
                         '(auto-mode-case-fold nil)
                         '(track-eol t)
                         '(completions-format 'one-column)
+                        '(enable-recursive-minibuffers t)
                         '(view-read-only t)
                         '(eldoc-echo-area-use-multiline-p nil)
                         '(comint-prompt-read-only t)
@@ -520,6 +521,8 @@
   (winner-mode 1)
 
   (fido-vertical-mode 1)
+
+  (minibuffer-depth-indicate-mode 1)
 
   ;; Custom global key bindings
   (my-global-set-key "a" 'ff-get-other-file)
