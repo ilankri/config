@@ -465,8 +465,7 @@
    '(require-final-newline t)
    '(scroll-up-aggressively 0)
    '(scroll-down-aggressively 0)
-   '(indent-tabs-mode nil)
-   '(mode-line-format (remove '(vc-mode vc-mode) mode-line-format)))
+   '(indent-tabs-mode nil))
 
   (my-add-to-list 'completion-ignored-extensions
                   '("auto/" ".prv/" "_build/" "_opam/" "target/"
