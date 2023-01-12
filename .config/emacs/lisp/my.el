@@ -81,7 +81,7 @@
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
-           (ivy-completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
+           (completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
            "/" filename)))
 
 (defun my-makefile-auto-insert ()
@@ -210,7 +210,6 @@
                                                       reason-mode
                                                       debian-el
                                                       csv-mode
-                                                      counsel
                                                       rust-mode
                                                       go-mode
                                                       markdown-mode
@@ -457,6 +456,7 @@
                           (my-prefix-by-user-emacs-directory ".custom.el"))
                         '(auto-mode-case-fold nil)
                         '(track-eol t)
+                        '(completions-format 'one-column)
                         '(view-read-only t)
                         '(eldoc-echo-area-use-multiline-p nil)
                         '(comint-prompt-read-only t)
@@ -477,10 +477,6 @@
                     ".d" ".native" ".byte" ".bc" ".exe" ".pdf"
                     ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
                     ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
-
-  (custom-set-variables
-   '(counsel-find-file-ignore-regexp
-     (concat (regexp-opt completion-ignored-extensions) "\\'")))
 
   ;; Hack to open files like Makefile.local or Dockerfile.test with the
   ;; right mode.
@@ -530,14 +526,7 @@
 
   (winner-mode 1)
 
-  (ivy-mode 1)
-
-  (counsel-mode 1)
-
-  ;; Ivy
-  (custom-set-variables '(ivy-display-functions-alist nil))
-                                        ; Should be done after enabling
-                                        ; `counsel-mode'.
+  (fido-vertical-mode 1)
 
   ;; Custom global key bindings
   (my-global-set-key "a" 'ff-get-other-file)
@@ -590,7 +579,7 @@
 
   (my-global-set-key "u" 'winner-undo)
 
-  (my-global-set-key "x" 'counsel-git)
+  (my-global-set-key "x" 'switch-to-completions)
 
   (my-global-set-key "v" 'my-ansi-term)
 
