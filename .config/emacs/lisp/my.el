@@ -220,6 +220,7 @@
                                                       tuareg
                                                       ocp-indent
                                                       dune
+                                                      git-modes
                                                       dockerfile-mode
                                                       auctex)))
 
@@ -484,8 +485,7 @@
                     ("dune-workspace\\'" . dune-mode)
                     ("bash-fc\\'" . sh-mode)
                     ("\\.bash_aliases\\'" . sh-mode)
-                    ("\\.gitignore\\'" . conf-unix-mode)
-                    ("\\.dockerignore\\'" . conf-unix-mode)
+                    ("\\.dockerignore\\'" . gitignore-mode)
                     ("\\.ml[ly]\\'" . tuareg-mode)
                     ("\\.top\\'" . tuareg-mode)
                     ("\\.ocamlinit\\'" . tuareg-mode)
