@@ -220,6 +220,7 @@
                                                       tuareg
                                                       ocp-indent
                                                       dune
+                                                      dockerfile-mode
                                                       auctex)))
 
   (package-initialize)
@@ -489,7 +490,6 @@
                     ("\\.top\\'" . tuareg-mode)
                     ("\\.ocamlinit\\'" . tuareg-mode)
                     ("\\.ocp-indent\\'" . conf-unix-mode)
-                    ("Dockerfile\\'" . conf-space-mode)
                     ("_tags\\'" . conf-colon-mode)
                     ("_log\\'" . conf-unix-mode)
                     ("\\.merlin\\'" . conf-space-mode)
