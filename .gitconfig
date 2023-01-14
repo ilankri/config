@@ -17,6 +17,7 @@
 			      && git push \"$1\" :\"$2\" \"$3\") || exit 1; \
 			  }; \
 			  _"
+	patch = add --edit
 	st = status
 	sync = fetch --all --tags
 
