@@ -59,11 +59,6 @@
 (defun my-set-ispell-key (key cmd &optional local)
   (my-set-prefix-key my-ispell-prefix key cmd local))
 
-(defconst my-magit-prefix "g")
-
-(defun my-set-magit-key (key cmd &optional local)
-  (my-set-prefix-key my-magit-prefix key cmd local))
-
 (defconst my-eglot-prefix "l")
 
 (defun my-set-eglot-key (key cmd &optional local)
@@ -171,6 +166,11 @@
   (setq-local whitespace-action nil)
   (my-set-ispell-key "o" 'ispell-message t))
 
+(defun my-git-commit-setup-hook-f ()
+  (setq-local diff-refine 'navigation
+              whitespace-action nil)
+  (diff-minor-mode 1))
+
 (defun my-tab ()
   (interactive)
   (insert-char ?\t))
@@ -212,6 +212,7 @@
   (my-init-package-archives)
 
   (custom-set-variables '(package-selected-packages '(magit
+                                                      git-commit
                                                       reason-mode
                                                       debian-el
                                                       csv-mode
@@ -440,10 +441,15 @@
                               reftex-mode))
 
   ;; Magit
-  (require 'magit)
+  (require 'git-commit)
+
+  (setq magit-bind-magit-project-status nil)
 
   (custom-set-variables '(git-commit-summary-max-length fill-column)
-                        '(magit-diff-refine-hunk t))
+                        '(magit-commit-show-diff nil)
+                        '(magit-define-global-key-bindings nil))
+
+  (add-hook 'git-commit-setup-hook 'my-git-commit-setup-hook-f)
 
   ;; Markdown
   (custom-set-variables '(markdown-command "pandoc")
@@ -538,14 +544,6 @@
   (my-global-set-key "c" 'my-compile)
 
   (my-global-set-key "f" 'windmove-right)
-
-  (global-set-key (kbd "C-x g") 'magit-status)
-
-  (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-
-  (my-set-magit-key "f" 'magit-find-file)
-
-  (my-set-magit-key "4 f" 'magit-find-file-other-window)
 
   (my-global-set-key "h" 'man)
 
