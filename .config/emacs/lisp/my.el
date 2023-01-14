@@ -162,6 +162,11 @@
 
   (my-c-trad-comment-on))
 
+(defun my-diff-mode-hook ()
+  (setq-local inhibit-read-only t
+              view-read-only nil
+              whitespace-action nil))
+
 (defun my-message-mode-hook-f ()
   (setq-local whitespace-action nil)
   (my-set-ispell-key "o" 'ispell-message t))
@@ -458,6 +463,7 @@
                         '(completions-format 'one-column)
                         '(enable-recursive-minibuffers t)
                         '(view-read-only t)
+                        '(diff-default-read-only t)
                         '(eldoc-echo-area-use-multiline-p nil)
                         '(comint-prompt-read-only t)
                         '(term-buffer-maximum-size 0)
@@ -585,6 +591,8 @@
 
   ;; Enable smerge-mode when necessary.
   (add-hook 'find-file-hook 'my-try-smerge t)
+
+  (add-hook 'diff-mode-hook 'my-diff-mode-hook)
 
   (add-hook 'conf-mode-hook 'my-indent-tabs-mode-on)
 
