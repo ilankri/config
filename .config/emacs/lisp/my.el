@@ -203,7 +203,7 @@
 (defun my-ansi-term ()
   (interactive)
   (ansi-term (getenv "ESHELL")
-             (completing-read "Name: " nil nil nil nil nil "localhost")))
+             (completing-read "Name: " nil nil nil nil nil "terminal")))
 
 (defun my-markdown-mode-hook-f ()
   (add-hook 'before-save-hook 'markdown-cleanup-list-numbers t t))
