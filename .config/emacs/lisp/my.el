@@ -202,8 +202,10 @@
 
 (defun my-ansi-term ()
   (interactive)
-  (ansi-term (getenv "ESHELL")
-             (completing-read "Name: " nil nil nil nil nil "terminal")))
+  (let ((default-buffer-name "terminal"))
+    (ansi-term (getenv "ESHELL")
+               (completing-read
+                "Name: " nil nil nil nil nil default-buffer-name))))
 
 (defun my-markdown-mode-hook-f ()
   (add-hook 'before-save-hook 'markdown-cleanup-list-numbers t t))
