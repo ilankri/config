@@ -139,11 +139,7 @@
       (setq-local indent-region-function 'ocp-indent-region)))
   (my-undefine-key tuareg-mode-map "C-c C-h")
   (my-undefine-key tuareg-mode-map "M-q")
-  (my-define-key tuareg-mode-map "C-c ?" 'caml-help)
-  (setq ff-other-file-alist '(("\\.mli\\'" (".ml"))
-                              ("\\.ml\\'" (".mli"))
-                              ("\\.eliomi\\'" (".eliom"))
-                              ("\\.eliom\\'" (".eliomi")))))
+  (my-define-key tuareg-mode-map "C-c ?" 'caml-help))
 
 (defun my-reason-mode-hook-f ()
   (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
