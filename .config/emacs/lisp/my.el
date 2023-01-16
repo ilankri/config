@@ -252,8 +252,9 @@
       (when (eglot-managed-p) (eglot-format-buffer)))
     (add-hook 'before-save-hook 'my-eglot-maybe-format-buffer t t))
 
-  (my-add-hook 'prog-mode-hook
-               '(eglot-ensure my-eglot-format-buffer-before-save))
+  (my-add-hooks '(scala-mode-hook tuareg-mode-hook) 'eglot-ensure)
+
+  (add-hook 'prog-mode-hook 'my-eglot-format-buffer-before-save)
 
   (custom-set-variables
    '(eglot-autoshutdown t)
