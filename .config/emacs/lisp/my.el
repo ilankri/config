@@ -469,6 +469,7 @@
                         '(custom-file
                           (my-prefix-by-user-emacs-directory ".custom.el"))
                         '(auto-mode-case-fold nil)
+                        '(initial-buffer-choice 'my-ansi-term)
                         '(track-eol t)
                         '(completions-format 'one-column)
                         '(enable-recursive-minibuffers t)
