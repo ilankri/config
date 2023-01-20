@@ -463,6 +463,7 @@
   (setq disabled-command-function nil)
 
   (custom-set-variables '(inhibit-startup-screen t)
+                        '(mode-line-compact 'long)
                         '(custom-file
                           (my-prefix-by-user-emacs-directory ".custom.el"))
                         '(auto-mode-case-fold nil)
