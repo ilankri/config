@@ -4,11 +4,11 @@
 !.bash_aliases
 !.mybashrc.bash
 !.docker/config.json
-!.gitconfig
 !.config/emacs/init.el
 !.config/emacs/insert/**
 !.config/emacs/lisp/my.el
 !.config/gh/config.yml
+!.config/git/config
 !.config/git/ignore
 !.latex/preamble.tex
 !.myocamlinit.ml
