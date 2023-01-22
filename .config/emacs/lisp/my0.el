@@ -599,9 +599,6 @@
 
   (add-hook 'message-mode-hook 'my-message-mode-hook-f)
 
-  (add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
-
-  ;; Emacs server
-  (server-start))
+  (add-hook 'csv-mode-hook 'my-csv-mode-hook-f))
 
 (provide 'my0)

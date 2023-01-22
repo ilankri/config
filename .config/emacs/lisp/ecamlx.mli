@@ -17,3 +17,7 @@ val defun :
 module Custom : sig
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
 end
+
+module Server : sig
+  val start : ?leave_dead:bool -> ?inhibit_prompt:bool -> unit -> unit
+end

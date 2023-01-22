@@ -15,6 +15,10 @@ let init =
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
   Ecamlx.Custom.load_theme "modus-operandi";
+
+  (* Emacs server *)
+  Ecamlx.Server.start ();
+
   Ecaml.Defun.return ()
 
 let () =
