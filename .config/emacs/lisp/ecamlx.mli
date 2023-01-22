@@ -13,3 +13,7 @@ val defun :
   returns:'a Ecaml.Value.Type.t ->
   'a Ecaml.Defun.t ->
   unit
+
+module Custom : sig
+  val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
+end

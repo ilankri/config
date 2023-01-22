@@ -601,8 +601,6 @@
 
   (add-hook 'csv-mode-hook 'my-csv-mode-hook-f)
 
-  (load-theme 'modus-operandi)
-
   ;; Emacs server
   (server-start))
 
