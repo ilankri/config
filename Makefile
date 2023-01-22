@@ -1,5 +1,4 @@
 SHELL = /bin/sh
-RM = rm -f
 DOCKER_IMAGE_TAG = ilankri-dotfiles
 
 elispdir = ~/.config/emacs/lisp
