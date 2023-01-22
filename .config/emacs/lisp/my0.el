@@ -167,14 +167,9 @@
               whitespace-action nil)
   (diff-minor-mode 1))
 
-(defun my-tab ()
-  (interactive)
-  (insert-char ?\t))
-
 (defun my-csv-mode-hook-f ()
   (setq-local whitespace-style (remove 'lines whitespace-style))
-  (setq-local whitespace-action nil)
-  (my-define-key csv-mode-map "TAB" 'my-tab))
+  (setq-local whitespace-action nil))
 
 (defun my-git-grep ()
   (interactive)
