@@ -41,6 +41,10 @@ module Hook = struct
 end
 
 module Major_mode = struct
+  module Conf =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-mode"
+           (position ~__POS__))
+
   module Csv =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "csv-mode"
            (position ~__POS__))
@@ -63,6 +67,12 @@ module Server = struct
       "server-start" <: nil_or bool @-> nil_or bool @-> return nil
     in
     start leave_dead inhibit_prompt
+end
+
+module Indent = struct
+  let tabs_mode =
+    let open Ecaml.Customization.Wrap in
+    "indent-tabs-mode" <: bool
 end
 
 module Whitespace = struct

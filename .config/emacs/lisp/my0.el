@@ -24,9 +24,6 @@
     (set-window-buffer-start-and-point w1 w2buf w2start w2pt)
     (set-window-buffer-start-and-point w2 w1buf w1start w1pt)))
 
-(defun my-indent-tabs-mode-on ()
-  (setq indent-tabs-mode t))
-
 (defun my-prefix-by-user-emacs-directory (file)
   (concat user-emacs-directory file))
 
@@ -585,8 +582,6 @@
   (add-hook 'find-file-hook 'my-try-smerge t)
 
   (add-hook 'diff-mode-hook 'my-diff-mode-hook)
-
-  (add-hook 'conf-mode-hook 'my-indent-tabs-mode-on)
 
   (add-hook 'message-mode-hook 'my-message-mode-hook-f))
 

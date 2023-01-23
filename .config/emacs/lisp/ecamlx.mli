@@ -33,11 +33,16 @@ module Hook : sig
 end
 
 module Major_mode : sig
+  module Conf : Ecaml.Major_mode.S_with_lazy_keymap
   module Csv : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
 module Custom : sig
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
+end
+
+module Indent : sig
+  val tabs_mode : bool Ecaml.Customization.t
 end
 
 module Server : sig
