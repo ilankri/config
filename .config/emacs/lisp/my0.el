@@ -150,7 +150,7 @@
 
   (my-c-trad-comment-on))
 
-(defun my-diff-mode-hook ()
+(defun my-diff-mode-hook-f ()
   (setq-local inhibit-read-only t
               view-read-only nil
               whitespace-action nil))
@@ -581,7 +581,7 @@
   ;; Enable smerge-mode when necessary.
   (add-hook 'find-file-hook 'my-try-smerge t)
 
-  (add-hook 'diff-mode-hook 'my-diff-mode-hook)
+  (add-hook 'diff-mode-hook 'my-diff-mode-hook-f)
 
   (add-hook 'message-mode-hook 'my-message-mode-hook-f))
 
