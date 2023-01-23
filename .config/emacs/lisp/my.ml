@@ -1,11 +1,10 @@
 let library_name = "my"
+let prefix_name name = Format.sprintf "%s-%s" library_name name
 
 let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
     ?interactive ?disabled ?evil_config ~returns f =
-  Ecamlx.defun
-    ~name:(Format.sprintf "%s-%s" library_name name)
-    ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile ?interactive
-    ?disabled ?evil_config ~returns f
+  Ecamlx.defun ~name:(prefix_name name) ~__POS__ ?docstring ?define_keys
+    ?obsoletes ?should_profile ?interactive ?disabled ?evil_config ~returns f
 
 let init =
   let init =
