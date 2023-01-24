@@ -22,7 +22,7 @@ module Value = struct
 end
 
 module Current_buffer = struct
-  let set_buffer_local variable value =
+  let set_customization_buffer_local variable value =
     let variable = Ecaml.Customization.var variable in
     Ecaml.Current_buffer.set_buffer_local
       (Ecaml.Buffer_local.wrap_existing ~make_buffer_local_always:true

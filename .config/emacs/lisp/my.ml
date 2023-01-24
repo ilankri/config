@@ -14,17 +14,20 @@ let indent_tabs_mode_on =
   hook_defun ~name:"indent-tabs-mode-on" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
-      Ecamlx.Current_buffer.set_buffer_local Ecamlx.Indent.tabs_mode true)
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Indent.tabs_mode true)
 
 let csv_mode_hook_f =
   hook_defun ~name:"csv-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
-      Ecamlx.Current_buffer.set_buffer_local Ecamlx.Whitespace.style
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Whitespace.style
         (List.filter
            (fun x -> x <> Ecamlx.Whitespace.Style.Lines)
            (Ecaml.Customization.value Ecamlx.Whitespace.style));
-      Ecamlx.Current_buffer.set_buffer_local Ecamlx.Whitespace.action [])
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Whitespace.action [])
 
 let init =
   let init =
