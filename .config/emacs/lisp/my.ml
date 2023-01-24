@@ -29,6 +29,17 @@ let csv_mode_hook_f =
       Ecamlx.Current_buffer.set_customization_buffer_local
         Ecamlx.Whitespace.action [])
 
+let diff_mode_hook_f =
+  hook_defun ~name:"diff-mode-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecamlx.Current_buffer.set_buffer_local
+        Ecamlx.Current_buffer.inhibit_read_only true;
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Files.view_read_only false;
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Whitespace.action [])
+
 let init =
   let init =
     let open Ecaml.Funcall.Wrap in
@@ -36,6 +47,9 @@ let init =
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Diff.major_mode)
+    diff_mode_hook_f;
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Conf.major_mode)
     indent_tabs_mode_on;

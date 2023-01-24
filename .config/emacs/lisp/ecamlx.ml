@@ -22,6 +22,10 @@ module Value = struct
 end
 
 module Current_buffer = struct
+  let inhibit_read_only =
+    let open Ecaml.Var.Wrap in
+    "inhibit-read-only" <: bool
+
   let set_buffer_local variable value =
     Ecaml.Current_buffer.set_buffer_local
       (Ecaml.Buffer_local.wrap_existing ~make_buffer_local_always:true
@@ -51,6 +55,10 @@ module Major_mode = struct
   module Csv =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "csv-mode"
            (position ~__POS__))
+
+  module Diff =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
+           (position ~__POS__))
 end
 
 module Custom = struct
@@ -61,6 +69,12 @@ module Custom = struct
       <: Ecaml.Symbol.t @-> nil_or bool @-> nil_or bool @-> return nil
     in
     load_theme (Ecaml.Symbol.intern theme) no_confirm no_enable
+end
+
+module Files = struct
+  let view_read_only =
+    let open Ecaml.Customization.Wrap in
+    "view-read-only" <: bool
 end
 
 module Server = struct

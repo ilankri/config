@@ -15,6 +15,8 @@ val defun :
   unit
 
 module Current_buffer : sig
+  val inhibit_read_only : bool Ecaml.Var.t
+  val set_buffer_local : 'a Ecaml.Var.t -> 'a -> unit
   val set_customization_buffer_local : 'a Ecaml.Customization.t -> 'a -> unit
 end
 
@@ -35,10 +37,15 @@ end
 module Major_mode : sig
   module Conf : Ecaml.Major_mode.S_with_lazy_keymap
   module Csv : Ecaml.Major_mode.S_with_lazy_keymap
+  module Diff : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
 module Custom : sig
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
+end
+
+module Files : sig
+  val view_read_only : bool Ecaml.Customization.t
 end
 
 module Indent : sig
