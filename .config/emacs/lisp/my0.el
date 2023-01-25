@@ -392,9 +392,6 @@
                         '(proof-three-window-mode-policy 'hybrid)
                         '(coq-one-command-per-line nil))
 
-  ;; Asm
-  (custom-set-variables '(asm-comment-char ?#))
-
   ;; LaTeX
   (custom-set-variables '(TeX-auto-save t)
                         '(TeX-parse-self t)
