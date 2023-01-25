@@ -21,6 +21,8 @@ module Current_buffer : sig
 end
 
 module Hook : sig
+  val find_file : Ecaml.Hook.normal Ecaml.Hook.t
+
   module Function : sig
     val create :
       name:string ->
@@ -40,6 +42,10 @@ module Major_mode : sig
   module Diff : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
+module Minor_mode : sig
+  val smerge : Ecaml.Minor_mode.t
+end
+
 module Custom : sig
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
 end
@@ -54,6 +60,11 @@ end
 
 module Server : sig
   val start : ?leave_dead:bool -> ?inhibit_prompt:bool -> unit -> unit
+end
+
+module Smerge_mode : sig
+  val feature : Ecaml.Symbol.t
+  val begin_re : Ecaml.Regexp.t Ecaml.Var.t
 end
 
 module Whitespace : sig

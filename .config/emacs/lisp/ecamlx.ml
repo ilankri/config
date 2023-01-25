@@ -39,6 +39,10 @@ module Current_buffer = struct
 end
 
 module Hook = struct
+  let find_file =
+    let open Ecaml.Hook.Wrap in
+    "find-file-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+
   module Function = struct
     let create ~name ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
       Ecaml.Hook.Function.create (Ecaml.Symbol.intern name) (position ~__POS__)
@@ -59,6 +63,14 @@ module Major_mode = struct
   module Diff =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
            (position ~__POS__))
+end
+
+module Minor_mode = struct
+  let make name =
+    let name = Ecaml.Symbol.intern name in
+    { Ecaml.Minor_mode.function_name = name; variable_name = name }
+
+  let smerge = make "smerge-mode"
 end
 
 module Custom = struct
@@ -90,6 +102,14 @@ module Indent = struct
   let tabs_mode =
     let open Ecaml.Customization.Wrap in
     "indent-tabs-mode" <: bool
+end
+
+module Smerge_mode = struct
+  let feature = Ecaml.Symbol.intern "smerge-mode"
+
+  let begin_re =
+    let open Ecaml.Var.Wrap in
+    "smerge-begin-re" <: Ecaml.Regexp.t
 end
 
 module Whitespace = struct

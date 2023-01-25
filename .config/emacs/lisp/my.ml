@@ -17,6 +17,18 @@ let indent_tabs_mode_on =
       Ecamlx.Current_buffer.set_customization_buffer_local
         Ecamlx.Indent.tabs_mode true)
 
+let try_smerge =
+  hook_defun ~name:"try-smerge" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecaml.Feature.require Ecamlx.Smerge_mode.feature;
+      Ecaml.Current_buffer.save_excursion Ecaml.Sync_or_async.Sync @@ fun () ->
+      Ecaml.Point.goto_min ();
+      if
+        Ecaml.Point.search_forward_regexp
+          (Ecaml.Var.default_value_exn Ecamlx.Smerge_mode.begin_re)
+      then Ecaml.Minor_mode.enable Ecamlx.Minor_mode.smerge)
+
 let csv_mode_hook_f =
   hook_defun ~name:"csv-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
@@ -47,6 +59,10 @@ let init =
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
+
+  (* Enable smerge-mode when necessary.  *)
+  Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
+
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Diff.major_mode)
     diff_mode_hook_f;
