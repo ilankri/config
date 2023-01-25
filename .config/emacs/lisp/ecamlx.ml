@@ -63,6 +63,10 @@ module Major_mode = struct
   module Diff =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
            (position ~__POS__))
+
+  module Markdown =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "markdown-mode"
+           (position ~__POS__))
 end
 
 module Minor_mode = struct
@@ -102,6 +106,24 @@ module Indent = struct
   let tabs_mode =
     let open Ecaml.Customization.Wrap in
     "indent-tabs-mode" <: bool
+end
+
+module Markdown_mode = struct
+  let cleanup_list_numbers =
+    let open Ecaml.Funcall.Wrap in
+    "markdown-cleanup-list-numbers" <: nullary @-> return nil
+
+  let command =
+    let open Ecaml.Customization.Wrap in
+    "markdown-command" <: string
+
+  let asymmetric_header =
+    let open Ecaml.Customization.Wrap in
+    "markdown-asymmetric-header" <: bool
+
+  let fontify_code_blocks_natively =
+    let open Ecaml.Customization.Wrap in
+    "markdown-fontify-code-blocks-natively" <: bool
 end
 
 module Smerge_mode = struct

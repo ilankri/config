@@ -40,6 +40,7 @@ module Major_mode : sig
   module Conf : Ecaml.Major_mode.S_with_lazy_keymap
   module Csv : Ecaml.Major_mode.S_with_lazy_keymap
   module Diff : Ecaml.Major_mode.S_with_lazy_keymap
+  module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
 module Minor_mode : sig
@@ -56,6 +57,13 @@ end
 
 module Indent : sig
   val tabs_mode : bool Ecaml.Customization.t
+end
+
+module Markdown_mode : sig
+  val cleanup_list_numbers : unit -> unit
+  val command : string Ecaml.Customization.t
+  val asymmetric_header : bool Ecaml.Customization.t
+  val fontify_code_blocks_natively : bool Ecaml.Customization.t
 end
 
 module Server : sig

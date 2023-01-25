@@ -181,9 +181,6 @@
                     "Name: " nil nil nil nil nil default-buffer-name)
                  default-buffer-name))))
 
-(defun my-markdown-mode-hook-f ()
-  (add-hook 'before-save-hook 'markdown-cleanup-list-numbers t t))
-
 (defun my-init ()
   (my-init-package-archives)
 
@@ -424,13 +421,6 @@
                         '(magit-define-global-key-bindings nil))
 
   (add-hook 'git-commit-setup-hook 'my-git-commit-setup-hook-f)
-
-  ;; Markdown
-  (custom-set-variables '(markdown-command "pandoc")
-                        '(markdown-asymmetric-header t)
-                        '(markdown-fontify-code-blocks-natively t))
-
-  (add-hook 'markdown-mode-hook 'my-markdown-mode-hook-f)
 
   ;; Miscellaneous settings
   (setq disabled-command-function nil)

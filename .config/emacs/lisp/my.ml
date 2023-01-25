@@ -52,6 +52,17 @@ let diff_mode_hook_f =
       Ecamlx.Current_buffer.set_customization_buffer_local
         Ecamlx.Whitespace.action [])
 
+let markdown_mode_hook_f =
+  hook_defun ~name:"markdown-mode-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecaml.Hook.add ~buffer_local:true ~where:Ecaml.Hook.Where.End
+        Ecaml.Hook.before_save
+        (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
+           ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+           ~returns:Ecaml.Value.Type.unit
+           Ecamlx.Markdown_mode.cleanup_list_numbers))
+
 let init =
   let init =
     let open Ecaml.Funcall.Wrap in
@@ -59,6 +70,15 @@ let init =
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
+
+  (* Markdown *)
+  Ecaml.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";
+  Ecaml.Customization.set_value Ecamlx.Markdown_mode.asymmetric_header true;
+  Ecaml.Customization.set_value
+    Ecamlx.Markdown_mode.fontify_code_blocks_natively true;
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Markdown.major_mode)
+    markdown_mode_hook_f;
 
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
