@@ -71,6 +71,40 @@ let init =
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
 
+  (* Whitespace *)
+  Ecaml.Minor_mode.enable Ecamlx.Minor_mode.global_whitespace;
+
+  (* Do not display spaces, tabs and newlines marks.  *)
+  Ecamlx.Customization.set_value Ecamlx.Whitespace.style
+    (List.filter
+       (fun x ->
+         not
+         @@ List.mem x
+              [
+                Ecamlx.Whitespace.Style.Tabs;
+                Ecamlx.Whitespace.Style.Spaces;
+                Ecamlx.Whitespace.Style.Newline;
+                Ecamlx.Whitespace.Style.Space_mark;
+                Ecamlx.Whitespace.Style.Tab_mark;
+                Ecamlx.Whitespace.Style.Newline_mark;
+              ])
+       (Ecaml.Customization.value Ecamlx.Whitespace.style));
+
+  Ecamlx.Customization.set_value Ecamlx.Whitespace.action
+    [ Ecamlx.Whitespace.Action.Auto_cleanup ];
+
+  (* Turn off whitespace-mode in Dired-like buffers.  *)
+  Ecamlx.Customization.set_value Ecamlx.Whitespace.global_modes
+    (Ecamlx.Whitespace.Global_modes.All
+       {
+         except =
+           [
+             Ecaml.Major_mode.Dired.major_mode;
+             Ecamlx.Major_mode.Archive.major_mode;
+             Ecamlx.Major_mode.Git_rebase.major_mode;
+           ];
+       });
+
   (* Markdown *)
   Ecamlx.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";
   Ecamlx.Customization.set_value Ecamlx.Markdown_mode.asymmetric_header true;

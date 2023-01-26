@@ -260,23 +260,6 @@
    '(mail-header-separator
      "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"))
 
-  ;; Whitespace
-  (global-whitespace-mode 1)
-
-  ;; Do not display spaces, tabs and newlines marks.
-  (custom-set-variables
-   '(whitespace-style (cl-set-difference whitespace-style '(tabs
-                                                            spaces
-                                                            newline
-                                                            space-mark
-                                                            tab-mark
-                                                            newline-mark)))
-   '(whitespace-action '(auto-cleanup)))
-
-  ;; Turn off whitespace-mode in Dired-like buffers.
-  (custom-set-variables
-   '(whitespace-global-modes '(not dired-mode archive-mode git-rebase-mode)))
-
   ;; Auto-Revert
   (global-auto-revert-mode 1)
 

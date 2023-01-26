@@ -41,14 +41,17 @@ module Hook : sig
 end
 
 module Major_mode : sig
+  module Archive : Ecaml.Major_mode.S_with_lazy_keymap
   module Conf : Ecaml.Major_mode.S_with_lazy_keymap
   module Csv : Ecaml.Major_mode.S_with_lazy_keymap
   module Diff : Ecaml.Major_mode.S_with_lazy_keymap
+  module Git_rebase : Ecaml.Major_mode.S_with_lazy_keymap
   module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
 module Minor_mode : sig
   val smerge : Ecaml.Minor_mode.t
+  val global_whitespace : Ecaml.Minor_mode.t
 end
 
 module Custom : sig
@@ -114,4 +117,12 @@ module Whitespace : sig
   end
 
   val action : Action.t list Ecaml.Customization.t
+
+  module Global_modes : sig
+    type t =
+      | All of { except : Ecaml.Major_mode.t list }
+      | Only of Ecaml.Major_mode.t list
+  end
+
+  val global_modes : Global_modes.t Ecaml.Customization.t
 end

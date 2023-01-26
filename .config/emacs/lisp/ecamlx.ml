@@ -69,6 +69,10 @@ module Hook = struct
 end
 
 module Major_mode = struct
+  module Archive =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "archive-mode"
+           (position ~__POS__))
+
   module Conf =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-mode"
            (position ~__POS__))
@@ -79,6 +83,10 @@ module Major_mode = struct
 
   module Diff =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
+           (position ~__POS__))
+
+  module Git_rebase =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "git-rebase-mode"
            (position ~__POS__))
 
   module Markdown =
@@ -92,6 +100,7 @@ module Minor_mode = struct
     { Ecaml.Minor_mode.function_name = name; variable_name = name }
 
   let smerge = make "smerge-mode"
+  let global_whitespace = make "global-whitespace-mode"
 end
 
 module Custom = struct
@@ -276,4 +285,54 @@ module Whitespace = struct
   let action =
     let open Ecaml.Customization.Wrap in
     "whitespace-action" <: list Action.type_
+
+  module Global_modes = struct
+    type t =
+      | All of { except : Ecaml.Major_mode.t list }
+      | Only of Ecaml.Major_mode.t list
+
+    let type_ =
+      let not_ = Ecaml.Value.intern "not" in
+      let to_ value =
+        if Ecaml.Value.eq value Ecaml.Value.t then All { except = [] }
+        else
+          match Ecaml.Value.to_list_exn ~f:Ecaml.Symbol.of_value_exn value with
+          | [] -> Only []
+          | maybe_not :: except as major_modes ->
+              if Ecaml.Value.eq (maybe_not :> Ecaml.Value.t) not_ then
+                let except =
+                  List.map
+                    (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__))
+                    except
+                in
+                All { except }
+              else
+                let major_modes =
+                  List.map
+                    (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__))
+                    major_modes
+                in
+                Only major_modes
+      in
+
+      let from = function
+        | All { except = [] } -> Ecaml.Value.t
+        | All { except = _ :: _ as except } ->
+            Ecaml.Value.list
+              (not_
+              :: (List.map Ecaml.Major_mode.symbol except :> Ecaml.Value.t list)
+              )
+        | Only major_modes ->
+            Ecaml.Value.list
+              (List.map Ecaml.Major_mode.symbol major_modes
+                :> Ecaml.Value.t list)
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "whitespace-global-modes")
+        to_sexp to_ from
+  end
+
+  let global_modes =
+    let open Ecaml.Customization.Wrap in
+    "whitespace-global-modes" <: Global_modes.type_
 end
