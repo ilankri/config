@@ -72,9 +72,9 @@ let init =
   init ();
 
   (* Markdown *)
-  Ecaml.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";
-  Ecaml.Customization.set_value Ecamlx.Markdown_mode.asymmetric_header true;
-  Ecaml.Customization.set_value
+  Ecamlx.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";
+  Ecamlx.Customization.set_value Ecamlx.Markdown_mode.asymmetric_header true;
+  Ecamlx.Customization.set_value
     Ecamlx.Markdown_mode.fontify_code_blocks_natively true;
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Markdown.major_mode)

@@ -20,6 +20,10 @@ module Current_buffer : sig
   val set_customization_buffer_local : 'a Ecaml.Customization.t -> 'a -> unit
 end
 
+module Customization : sig
+  val set_value : 'a Ecaml.Customization.t -> 'a -> unit
+end
+
 module Hook : sig
   val find_file : Ecaml.Hook.normal Ecaml.Hook.t
 
