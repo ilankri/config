@@ -255,11 +255,6 @@
   ;; deals with auto-fill.
   (my-add-hooks '(text-mode-hook c-mode-common-hook) 'auto-fill-mode)
 
-  ;; Mail
-  (custom-set-variables
-   '(mail-header-separator
-     "-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"))
-
   ;; Auto-Revert
   (global-auto-revert-mode 1)
 
