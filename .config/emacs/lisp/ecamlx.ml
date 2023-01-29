@@ -21,23 +21,6 @@ module Value = struct
   end
 end
 
-module Current_buffer = struct
-  let inhibit_read_only =
-    let open Ecaml.Var.Wrap in
-    "inhibit-read-only" <: bool
-
-  let set_buffer_local variable value =
-    Ecaml.Current_buffer.set_buffer_local
-      (Ecaml.Buffer_local.wrap_existing ~make_buffer_local_always:true
-         (Ecaml.Var.symbol variable)
-         (Ecaml.Var.type_ variable))
-      value
-
-  let set_customization_buffer_local variable value =
-    let variable = Ecaml.Customization.var variable in
-    set_buffer_local variable value
-end
-
 module Customization = struct
   let set_value variable value_ =
     let custom_set_variables =
@@ -53,6 +36,23 @@ module Customization = struct
            |> Ecaml.Value.Type.to_value variable.Ecaml.Var.type_
            |> Ecaml.Form.quote |> Ecaml.Form.to_value;
          ]
+end
+
+module Current_buffer = struct
+  let inhibit_read_only =
+    let open Ecaml.Var.Wrap in
+    "inhibit-read-only" <: bool
+
+  let set_buffer_local variable value =
+    Ecaml.Current_buffer.set_buffer_local
+      (Ecaml.Buffer_local.wrap_existing ~make_buffer_local_always:true
+         (Ecaml.Var.symbol variable)
+         (Ecaml.Var.type_ variable))
+      value
+
+  let set_customization_buffer_local variable value =
+    let variable = Ecaml.Customization.var variable in
+    set_buffer_local variable value
 end
 
 module Hook = struct
