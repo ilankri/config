@@ -95,9 +95,10 @@ module Major_mode = struct
 end
 
 module Minor_mode = struct
-  let make name =
-    let name = Ecaml.Symbol.intern name in
-    { Ecaml.Minor_mode.function_name = name; variable_name = name }
+  let make ?variable_name function_name =
+    let variable_name = Option.map Ecaml.Symbol.intern variable_name in
+    let function_name = Ecaml.Symbol.intern function_name in
+    Ecaml.Minor_mode.create ?variable_name function_name
 
   let smerge = make "smerge-mode"
   let global_whitespace = make "global-whitespace-mode"
