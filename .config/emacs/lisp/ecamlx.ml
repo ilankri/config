@@ -36,9 +36,18 @@ module Customization = struct
            |> Ecaml.Value.Type.to_value variable.Ecaml.Var.type_
            |> Ecaml.Form.quote |> Ecaml.Form.to_value;
          ]
+
+  let from_variable variable =
+    let open Ecaml.Customization.Wrap in
+    variable |> Ecaml.Var.symbol |> Ecaml.Symbol.name
+    <: Ecaml.Var.type_ variable
 end
 
 module Current_buffer = struct
+  let fill_column =
+    Ecaml.Current_buffer.fill_column |> Ecaml.Buffer_local.var
+    |> Customization.from_variable
+
   let inhibit_read_only =
     let open Ecaml.Var.Wrap in
     "inhibit-read-only" <: bool
@@ -53,6 +62,21 @@ module Current_buffer = struct
   let set_customization_buffer_local variable value =
     let variable = Ecaml.Customization.var variable in
     set_buffer_local variable value
+end
+
+module Comment = struct
+  let multi_line =
+    let open Ecaml.Customization.Wrap in
+    "comment-multi-line" <: bool
+end
+
+module Fill = struct
+  let nobreak_predicate =
+    let open Ecaml.Customization.Wrap in
+    "fill-nobreak-predicate" <: list Ecaml.Function.t
+
+  let french_nobreak_p =
+    "fill-french-nobreak-p" |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
 end
 
 module Hook = struct
@@ -100,6 +124,7 @@ module Minor_mode = struct
     let function_name = Ecaml.Symbol.intern function_name in
     Ecaml.Minor_mode.create ?variable_name function_name
 
+  let auto_fill = make "auto-fill-mode"
   let smerge = make "smerge-mode"
   let global_whitespace = make "global-whitespace-mode"
 end
@@ -112,6 +137,12 @@ module Custom = struct
       <: Ecaml.Symbol.t @-> nil_or bool @-> nil_or bool @-> return nil
     in
     load_theme (Ecaml.Symbol.intern theme) no_confirm no_enable
+end
+
+module Cc_mode = struct
+  let common_hook =
+    let open Ecaml.Hook.Wrap in
+    "c-mode-common-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 end
 
 module Files = struct

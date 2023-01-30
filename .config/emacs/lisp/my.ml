@@ -71,6 +71,28 @@ let init =
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
 
+  (* Filling *)
+  Ecamlx.Customization.set_value Ecamlx.Current_buffer.fill_column 72;
+  Ecamlx.Customization.set_value Ecamlx.Comment.multi_line true;
+  Ecamlx.Customization.set_value Ecamlx.Fill.nobreak_predicate
+    (Ecamlx.Fill.french_nobreak_p
+    :: Ecaml.Customization.value Ecamlx.Fill.nobreak_predicate);
+
+  (* auto-fill-mode is only enabled in CC mode (and not in all program
+     modes) because it seems to be the only program mode that properly
+     deals with auto-fill. *)
+  List.iter
+    (fun hook ->
+      Ecaml.Hook.add hook
+        (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
+           ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+           ~returns:Ecaml.Value.Type.unit (fun () ->
+             Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_fill)))
+    [
+      Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Text.major_mode;
+      Ecamlx.Cc_mode.common_hook;
+    ];
+
   (* Whitespace *)
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.global_whitespace;
 

@@ -15,6 +15,7 @@ val defun :
   unit
 
 module Current_buffer : sig
+  val fill_column : int Ecaml.Customization.t
   val inhibit_read_only : bool Ecaml.Var.t
   val set_buffer_local : 'a Ecaml.Var.t -> 'a -> unit
   val set_customization_buffer_local : 'a Ecaml.Customization.t -> 'a -> unit
@@ -22,6 +23,15 @@ end
 
 module Customization : sig
   val set_value : 'a Ecaml.Customization.t -> 'a -> unit
+end
+
+module Comment : sig
+  val multi_line : bool Ecaml.Customization.t
+end
+
+module Fill : sig
+  val nobreak_predicate : Ecaml.Function.t list Ecaml.Customization.t
+  val french_nobreak_p : Ecaml.Function.t
 end
 
 module Hook : sig
@@ -50,12 +60,17 @@ module Major_mode : sig
 end
 
 module Minor_mode : sig
+  val auto_fill : Ecaml.Minor_mode.t
   val smerge : Ecaml.Minor_mode.t
   val global_whitespace : Ecaml.Minor_mode.t
 end
 
 module Custom : sig
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
+end
+
+module Cc_mode : sig
+  val common_hook : Ecaml.Hook.normal Ecaml.Hook.t
 end
 
 module Files : sig

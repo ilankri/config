@@ -243,18 +243,6 @@
   (my-add-hooks '(message-mode-hook LaTeX-mode-hook)
                 'my-ispell-change-to-fr-dictionary)
 
-  ;; Filling
-  (custom-set-variables '(fill-column 72))
-
-  (custom-set-variables '(comment-multi-line t))
-
-  (add-to-list 'fill-nobreak-predicate 'fill-french-nobreak-p)
-
-  ;; auto-fill-mode is only enabled in CC mode (and not in all program
-  ;; modes) because it seems to be the only program mode that properly
-  ;; deals with auto-fill.
-  (my-add-hooks '(text-mode-hook c-mode-common-hook) 'auto-fill-mode)
-
   ;; Auto-Revert
   (global-auto-revert-mode 1)
 
