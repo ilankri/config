@@ -322,9 +322,7 @@
   (auto-insert-mode 1)
 
   ;; Semantic
-  (my-add-to-list
-   'semantic-default-submodes
-   '(global-semantic-stickyfunc-mode global-semantic-mru-bookmark-mode))
+  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
 
   (semantic-mode 1)
 
