@@ -125,6 +125,7 @@ module Minor_mode = struct
     Ecaml.Minor_mode.create ?variable_name function_name
 
   let auto_fill = make "auto-fill-mode"
+  let semantic = make "semantic-mode"
   let smerge = make "smerge-mode"
   let global_whitespace = make "global-whitespace-mode"
 end
@@ -149,6 +150,27 @@ module Files = struct
   let view_read_only =
     let open Ecaml.Customization.Wrap in
     "view-read-only" <: bool
+end
+
+module Semantic = struct
+  module Submode = struct
+    type t = Ecaml.Minor_mode.t
+
+    let global_stickyfunc = Minor_mode.make "global-semantic-stickyfunc-mode"
+
+    let type_ =
+      let to_ value = value |> Ecaml.Value.prin1_to_string |> Minor_mode.make in
+      let from minor_mode =
+        (Ecaml.Minor_mode.function_name minor_mode :> Ecaml.Value.t)
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "semantic-submodes") to_sexp
+        to_ from
+  end
+
+  let default_submodes =
+    let open Ecaml.Customization.Wrap in
+    "semantic-default-submodes" <: list Submode.type_
 end
 
 module Server = struct

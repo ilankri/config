@@ -321,11 +321,6 @@
    '(auto-insert-directory (my-prefix-by-user-emacs-directory "insert/")))
   (auto-insert-mode 1)
 
-  ;; Semantic
-  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-
-  (semantic-mode 1)
-
   ;; CC mode
   (c-add-style "my-linux" '("linux" (indent-tabs-mode . t)))
 

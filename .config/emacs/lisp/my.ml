@@ -71,6 +71,12 @@ let init =
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init ();
 
+  (* Semantic *)
+  Ecamlx.Customization.set_value Ecamlx.Semantic.default_submodes
+    (Ecamlx.Semantic.Submode.global_stickyfunc
+    :: Ecaml.Customization.value Ecamlx.Semantic.default_submodes);
+  Ecaml.Minor_mode.enable Ecamlx.Minor_mode.semantic;
+
   (* Filling *)
   Ecamlx.Customization.set_value Ecamlx.Current_buffer.fill_column 72;
   Ecamlx.Customization.set_value Ecamlx.Comment.multi_line true;

@@ -61,6 +61,7 @@ end
 
 module Minor_mode : sig
   val auto_fill : Ecaml.Minor_mode.t
+  val semantic : Ecaml.Minor_mode.t
   val smerge : Ecaml.Minor_mode.t
   val global_whitespace : Ecaml.Minor_mode.t
 end
@@ -86,6 +87,16 @@ module Markdown_mode : sig
   val command : string Ecaml.Customization.t
   val asymmetric_header : bool Ecaml.Customization.t
   val fontify_code_blocks_natively : bool Ecaml.Customization.t
+end
+
+module Semantic : sig
+  module Submode : sig
+    type t
+
+    val global_stickyfunc : t
+  end
+
+  val default_submodes : Submode.t list Ecaml.Customization.t
 end
 
 module Server : sig
