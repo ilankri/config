@@ -38,9 +38,6 @@
 (defun my-undefine-key (keymap key)
   (my-define-key keymap key nil))
 
-(defun my-define-user-key (keymap key cmd)
-  (my-define-key keymap (my-user-key key) cmd))
-
 (defun my-global-set-key (key cmd)
   (global-set-key (kbd (my-user-key key)) cmd))
 
