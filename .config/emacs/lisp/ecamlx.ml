@@ -10,6 +10,16 @@ let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
     ?define_keys ?obsoletes ?should_profile ?interactive ?disabled ?evil_config
     (Ecaml.Returns.Returns returns) f
 
+let global_set_key =
+  let open Ecaml.Funcall.Wrap in
+  "global-set-key"
+  <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
+
+let local_set_key =
+  let open Ecaml.Funcall.Wrap in
+  "local-set-key"
+  <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
+
 module Value = struct
   module Type = struct
     let enum (type a) name (module Type : Enum.S with type t = a) =
@@ -19,6 +29,14 @@ module Value = struct
           value |> Type.sexp_of_t |> Sexplib0.Sexp.to_string
           |> Ecaml.Value.intern)
   end
+end
+
+module Command = struct
+  let from_string name =
+    name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
+
+  let blink_matching_open = from_string "blink-matching-open"
+  let switch_to_completions = from_string "switch-to-completions"
 end
 
 module Customization = struct
@@ -116,6 +134,10 @@ module Major_mode = struct
   module Markdown =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "markdown-mode"
            (position ~__POS__))
+
+  module Message =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "message-mode"
+           (position ~__POS__))
 end
 
 module Minor_mode = struct
@@ -128,6 +150,12 @@ module Minor_mode = struct
   let semantic = make "semantic-mode"
   let smerge = make "smerge-mode"
   let global_whitespace = make "global-whitespace-mode"
+end
+
+module Browse_url = struct
+  module Command = struct
+    let browse_url = Command.from_string "browse-url"
+  end
 end
 
 module Custom = struct
@@ -146,10 +174,45 @@ module Cc_mode = struct
     "c-mode-common-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 end
 
+module Eglot = struct
+  let feature = Ecaml.Symbol.intern "eglot"
+
+  module Command = struct
+    let code_actions () =
+      Ecaml.Feature.require feature;
+      Command.from_string "eglot-code-actions"
+
+    let rename () =
+      Ecaml.Feature.require feature;
+      Command.from_string "eglot-rename"
+  end
+end
+
 module Files = struct
   let view_read_only =
     let open Ecaml.Customization.Wrap in
     "view-read-only" <: bool
+end
+
+module Find_file = struct
+  module Command = struct
+    let get_other_file = Command.from_string "ff-get-other-file"
+  end
+end
+
+module Imenu = struct
+  module Command = struct
+    let imenu = Command.from_string "imenu"
+  end
+end
+
+module Ispell = struct
+  module Command = struct
+    let message = Command.from_string "ispell-message"
+    let comments_and_strings = Command.from_string "ispell-comments-and-strings"
+    let change_dictionary = Command.from_string "ispell-change-dictionary"
+    let ispell = Command.from_string "ispell"
+  end
 end
 
 module Semantic = struct
@@ -206,6 +269,12 @@ module Markdown_mode = struct
     "markdown-fontify-code-blocks-natively" <: bool
 end
 
+module Man = struct
+  module Command = struct
+    let man = Command.from_string "man"
+  end
+end
+
 module Smerge_mode = struct
   let feature = Ecaml.Symbol.intern "smerge-mode"
 
@@ -215,6 +284,10 @@ module Smerge_mode = struct
 end
 
 module Whitespace = struct
+  module Command = struct
+    let cleanup = Command.from_string "whitespace-cleanup"
+  end
+
   module Style = struct
     type indentation_char = Tab | Space
 
@@ -389,4 +462,23 @@ module Whitespace = struct
   let global_modes =
     let open Ecaml.Customization.Wrap in
     "whitespace-global-modes" <: Global_modes.type_
+end
+
+module Windmove = struct
+  module Command = struct
+    let left = Command.from_string "windmove-left"
+    let right = Command.from_string "windmove-right"
+    let up = Command.from_string "windmove-up"
+    let down = Command.from_string "windmove-down"
+  end
+end
+
+module Winner = struct
+  let feature = Ecaml.Symbol.intern "winner"
+
+  module Command = struct
+    let undo () =
+      Ecaml.Feature.require feature;
+      Command.from_string "winner-undo"
+  end
 end

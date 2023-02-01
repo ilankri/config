@@ -14,6 +14,14 @@ val defun :
   'a Ecaml.Defun.t ->
   unit
 
+val global_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+val local_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+
+module Command : sig
+  val blink_matching_open : Ecaml.Command.t
+  val switch_to_completions : Ecaml.Command.t
+end
+
 module Current_buffer : sig
   val fill_column : int Ecaml.Customization.t
   val inhibit_read_only : bool Ecaml.Var.t
@@ -57,6 +65,7 @@ module Major_mode : sig
   module Diff : Ecaml.Major_mode.S_with_lazy_keymap
   module Git_rebase : Ecaml.Major_mode.S_with_lazy_keymap
   module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
+  module Message : Ecaml.Major_mode.S_with_lazy_keymap
 end
 
 module Minor_mode : sig
@@ -64,6 +73,12 @@ module Minor_mode : sig
   val semantic : Ecaml.Minor_mode.t
   val smerge : Ecaml.Minor_mode.t
   val global_whitespace : Ecaml.Minor_mode.t
+end
+
+module Browse_url : sig
+  module Command : sig
+    val browse_url : Ecaml.Command.t
+  end
 end
 
 module Custom : sig
@@ -74,12 +89,46 @@ module Cc_mode : sig
   val common_hook : Ecaml.Hook.normal Ecaml.Hook.t
 end
 
+module Eglot : sig
+  module Command : sig
+    val code_actions : unit -> Ecaml.Command.t
+    val rename : unit -> Ecaml.Command.t
+  end
+end
+
 module Files : sig
   val view_read_only : bool Ecaml.Customization.t
 end
 
+module Find_file : sig
+  module Command : sig
+    val get_other_file : Ecaml.Command.t
+  end
+end
+
+module Imenu : sig
+  module Command : sig
+    val imenu : Ecaml.Command.t
+  end
+end
+
 module Indent : sig
   val tabs_mode : bool Ecaml.Customization.t
+end
+
+module Ispell : sig
+  module Command : sig
+    val message : Ecaml.Command.t
+    val comments_and_strings : Ecaml.Command.t
+    val change_dictionary : Ecaml.Command.t
+    val ispell : Ecaml.Command.t
+  end
+end
+
+module Man : sig
+  module Command : sig
+    val man : Ecaml.Command.t
+  end
 end
 
 module Markdown_mode : sig
@@ -109,6 +158,10 @@ module Smerge_mode : sig
 end
 
 module Whitespace : sig
+  module Command : sig
+    val cleanup : Ecaml.Command.t
+  end
+
   module Style : sig
     type indentation_char = Tab | Space
 
@@ -151,4 +204,19 @@ module Whitespace : sig
   end
 
   val global_modes : Global_modes.t Ecaml.Customization.t
+end
+
+module Windmove : sig
+  module Command : sig
+    val left : Ecaml.Command.t
+    val right : Ecaml.Command.t
+    val up : Ecaml.Command.t
+    val down : Ecaml.Command.t
+  end
+end
+
+module Winner : sig
+  module Command : sig
+    val undo : unit -> Ecaml.Command.t
+  end
 end

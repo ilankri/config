@@ -28,30 +28,6 @@
   (concat user-emacs-directory file))
 
 ;;; Auxiliary functions
-(defun my-user-key (key)
-  (let ((user-prefix-key "C-c"))
-    (concat user-prefix-key " " key)))
-
-(defun my-global-set-key (key cmd)
-  (global-set-key (kbd (my-user-key key)) cmd))
-
-(defun my-local-set-key (key cmd)
-  (local-set-key (kbd (my-user-key key)) cmd))
-
-(defun my-set-prefix-key (prefix key cmd &optional local)
-  (let* ((key (concat prefix " " key)))
-    (if local (my-local-set-key key cmd) (my-global-set-key key cmd))))
-
-(defconst my-ispell-prefix "o")
-
-(defun my-set-ispell-key (key cmd &optional local)
-  (my-set-prefix-key my-ispell-prefix key cmd local))
-
-(defconst my-eglot-prefix "l")
-
-(defun my-set-eglot-key (key cmd &optional local)
-  (my-set-prefix-key my-eglot-prefix key cmd local))
-
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
 
@@ -128,10 +104,6 @@
   ;; Hacks for Scala 3
 
   (my-c-trad-comment-on))
-
-(defun my-message-mode-hook-f ()
-  (setq-local whitespace-action nil)
-  (my-set-ispell-key "o" 'ispell-message t))
 
 (defun my-git-commit-setup-hook-f ()
   (setq-local diff-refine 'navigation
@@ -445,59 +417,6 @@
 
   (fido-vertical-mode 1)
 
-  (minibuffer-depth-indicate-mode 1)
-
-  ;; Custom global key bindings
-  (my-global-set-key "a" 'ff-get-other-file)
-
-  (my-global-set-key "b" 'windmove-left)
-
-  (my-global-set-key "c" 'my-compile)
-
-  (my-global-set-key "f" 'windmove-right)
-
-  (my-global-set-key "h" 'man)
-
-  (my-global-set-key "i" 'my-indent-buffer)
-
-  (my-global-set-key "j" 'browse-url)
-
-  (my-global-set-key "k" 'my-kill-current-buffer)
-
-  (my-set-eglot-key "a" 'eglot-code-actions)
-
-  (my-set-eglot-key "r" 'eglot-rename)
-
-  (my-global-set-key "m" 'imenu)
-
-  (my-global-set-key "n" 'windmove-down)
-
-  (my-set-ispell-key "c" 'ispell-comments-and-strings)
-
-  (my-set-ispell-key "d" 'ispell-change-dictionary)
-
-  (my-set-ispell-key "e" 'my-ispell-en)
-
-  (my-set-ispell-key "f" 'my-ispell-fr)
-
-  (my-set-ispell-key "o" 'ispell)
-
-  (my-global-set-key "p" 'windmove-up)
-
-  (my-global-set-key "s" 'my-git-grep)
-
-  (my-global-set-key "t" 'my-transpose-windows)
-
-  (my-global-set-key "u" 'winner-undo)
-
-  (my-global-set-key "x" 'switch-to-completions)
-
-  (my-global-set-key "v" 'my-ansi-term)
-
-  (my-global-set-key "w" 'whitespace-cleanup)
-
-  (my-global-set-key "y" 'blink-matching-open)
-
-  (add-hook 'message-mode-hook 'my-message-mode-hook-f))
+  (minibuffer-depth-indicate-mode 1))
 
 (provide 'my0)

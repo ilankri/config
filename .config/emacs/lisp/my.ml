@@ -10,6 +10,34 @@ let hook_defun ~name ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
   Ecamlx.Hook.Function.create ~name:(prefix_name name) ~__POS__ ?docstring
     ?should_profile ~hook_type ~returns f
 
+let user_key key = Ecaml.Key_sequence.create_exn @@ Format.sprintf "C-c %s" key
+let global_set_key key command = Ecamlx.global_set_key (user_key key) command
+let local_set_key key command = Ecamlx.local_set_key (user_key key) command
+
+let set_prefix_key ?(local = false) ~prefix key command =
+  let key = Format.sprintf "%s %s" prefix key in
+  (if local then local_set_key else global_set_key) key command
+
+let set_ispell_key ?local key command =
+  set_prefix_key ?local ~prefix:"o" key command
+
+let set_eglot_key ?local key command =
+  set_prefix_key ?local ~prefix:"l" key command
+
+module Command = struct
+  let from_string name =
+    prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
+
+  let ispell_en () = from_string "ispell-en"
+  let ispell_fr () = from_string "ispell-fr"
+  let compile () = from_string "compile"
+  let indent_buffer () = from_string "indent-buffer"
+  let kill_buffer () = from_string "kill-current-buffer"
+  let git_grep () = from_string "git-grep"
+  let transpose_windows () = from_string "transpose-windows"
+  let ansi_term () = from_string "ansi-term"
+end
+
 let indent_tabs_mode_on =
   hook_defun ~name:"indent-tabs-mode-on" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
@@ -62,6 +90,14 @@ let markdown_mode_hook_f =
            ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
            ~returns:Ecaml.Value.Type.unit
            Ecamlx.Markdown_mode.cleanup_list_numbers))
+
+let message_mode_hook_f =
+  hook_defun ~name:"message-mode-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Whitespace.action [];
+      set_ispell_key ~local:true "o" Ecamlx.Ispell.Command.message)
 
 let init =
   let init =
@@ -152,9 +188,39 @@ let init =
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Conf.major_mode)
     indent_tabs_mode_on;
   Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Message.major_mode)
+    message_mode_hook_f;
+  Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Csv.major_mode)
     csv_mode_hook_f;
   Ecamlx.Custom.load_theme "modus-operandi";
+
+  (* Custom global key bindings *)
+  global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
+  global_set_key "c" (Command.compile ());
+  global_set_key "b" Ecamlx.Windmove.Command.left;
+  global_set_key "f" Ecamlx.Windmove.Command.right;
+  global_set_key "h" Ecamlx.Man.Command.man;
+  global_set_key "i" (Command.indent_buffer ());
+  global_set_key "j" Ecamlx.Browse_url.Command.browse_url;
+  global_set_key "k" (Command.kill_buffer ());
+  set_eglot_key "a" (Ecamlx.Eglot.Command.code_actions ());
+  set_eglot_key "r" (Ecamlx.Eglot.Command.rename ());
+  global_set_key "m" Ecamlx.Imenu.Command.imenu;
+  global_set_key "n" Ecamlx.Windmove.Command.down;
+  set_ispell_key "c" Ecamlx.Ispell.Command.comments_and_strings;
+  set_ispell_key "d" Ecamlx.Ispell.Command.change_dictionary;
+  set_ispell_key "e" (Command.ispell_en ());
+  set_ispell_key "f" (Command.ispell_fr ());
+  set_ispell_key "o" Ecamlx.Ispell.Command.ispell;
+  global_set_key "p" Ecamlx.Windmove.Command.up;
+  global_set_key "s" (Command.git_grep ());
+  global_set_key "t" (Command.transpose_windows ());
+  global_set_key "u" (Ecamlx.Winner.Command.undo ());
+  global_set_key "x" Ecamlx.Command.switch_to_completions;
+  global_set_key "v" (Command.ansi_term ());
+  global_set_key "w" Ecamlx.Whitespace.Command.cleanup;
+  global_set_key "y" Ecamlx.Command.blink_matching_open;
 
   (* Emacs server *)
   Ecamlx.Server.start ();
