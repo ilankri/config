@@ -32,12 +32,6 @@
   (let ((user-prefix-key "C-c"))
     (concat user-prefix-key " " key)))
 
-(defun my-define-key (keymap key cmd)
-  (define-key keymap (kbd key) cmd))
-
-(defun my-undefine-key (keymap key)
-  (my-define-key keymap key nil))
-
 (defun my-global-set-key (key cmd)
   (global-set-key (kbd (my-user-key key)) cmd))
 
@@ -120,8 +114,8 @@
     (when (string-equal ext "mly")
       (setq-local indent-line-function 'ocp-indent-line)
       (setq-local indent-region-function 'ocp-indent-region)))
-  (my-undefine-key tuareg-mode-map "C-c C-h")
-  (my-define-key tuareg-mode-map "C-c ?" 'caml-help))
+  (local-unset-key (kbd "C-c C-h"))
+  (local-set-key (kbd "C-c ?") 'caml-help))
 
 (defun my-reason-mode-hook-f ()
   (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
