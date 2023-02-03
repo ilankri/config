@@ -38,6 +38,18 @@ module Command = struct
   let ansi_term () = from_string "ansi-term"
 end
 
+let init_package_archives () =
+  Ecaml.Feature.require Ecamlx.Package.feature;
+  Ecamlx.Customization.set_value Ecamlx.Package.archives
+    (Ecaml.Customization.value Ecamlx.Package.archives
+    @ [ ("melpa-stable", "https://stable.melpa.org/packages/") ])
+
+let _init_packages =
+  defun ~name:"init-packages" ~__POS__ ~returns:Ecaml.Value.Type.unit
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| init_package_archives >>| fun () ->
+    Ecamlx.Package.refresh_contents ())
+
 let indent_tabs_mode_on =
   hook_defun ~name:"indent-tabs-mode-on" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
@@ -105,6 +117,34 @@ let init =
     "my-init" <: nullary @-> return nil
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
+  init_package_archives ();
+  Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
+    (List.map Ecaml.Symbol.intern
+       [
+         "magit";
+         "git-commit";
+         "reason-mode";
+         "debian-el";
+         "csv-mode";
+         "rust-mode";
+         "go-mode";
+         "markdown-mode";
+         "scala-mode";
+         "gnu-elpa-keyring-update";
+         "eglot";
+         "yaml-mode";
+         "tuareg";
+         "ocp-indent";
+         "dune";
+         "git-modes";
+         "dockerfile-mode";
+         "auctex";
+       ]);
+  Ecamlx.Package.initialize ();
+
+  (* Ensure that packages are installed.  *)
+  Ecamlx.Package.install_selected_packages ();
+
   init ();
 
   (* Semantic *)

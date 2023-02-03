@@ -117,15 +117,6 @@
   (let ((current-prefix-arg '(4)))
     (vc-git-grep (grep-read-regexp) "" (vc-root-dir))))
 
-(defun my-init-package-archives ()
-  (require 'package)
-  (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
-
-(defun my-init-packages ()
-  (my-init-package-archives)
-  (package-refresh-contents))
-
 (defun my-kill-current-buffer ()
   (interactive)
   (kill-buffer))
@@ -140,32 +131,6 @@
                  default-buffer-name))))
 
 (defun my-init ()
-  (my-init-package-archives)
-
-  (custom-set-variables '(package-selected-packages '(magit
-                                                      git-commit
-                                                      reason-mode
-                                                      debian-el
-                                                      csv-mode
-                                                      rust-mode
-                                                      go-mode
-                                                      markdown-mode
-                                                      scala-mode
-                                                      gnu-elpa-keyring-update
-                                                      eglot
-                                                      yaml-mode
-                                                      tuareg
-                                                      ocp-indent
-                                                      dune
-                                                      git-modes
-                                                      dockerfile-mode
-                                                      auctex)))
-
-  (package-initialize)
-
-  ;; Ensure that packages are installed.
-  (package-install-selected-packages)
-
   ;; APT
   (require 'apt-sources)           ; To force update of `auto-mode-alist'.
 

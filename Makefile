@@ -29,7 +29,8 @@ install-bash:
 
 install-emacs: compile-emacs-lisp
 	@$(print_installing) Emacs
-	@emacs --batch --load $(elispdir)/my0.el --funcall my-init-packages
+	@emacs --batch --directory $(elispdir) --load $(elispdir)/my.so	\
+		--funcall my-init-packages
 	@$(print_done)
 
 install-ocaml:
