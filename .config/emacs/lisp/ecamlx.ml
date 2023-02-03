@@ -97,6 +97,15 @@ module Fill = struct
     "fill-french-nobreak-p" |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
 end
 
+module Frame = struct
+  let toggle_fullscreen ?frame () =
+    let toggle_fullscreen =
+      let open Ecaml.Funcall.Wrap in
+      "toggle-frame-fullscreen" <: nil_or Ecaml.Frame.type_ @-> return nil
+    in
+    toggle_fullscreen frame
+end
+
 module Hook = struct
   let find_file =
     let open Ecaml.Hook.Wrap in

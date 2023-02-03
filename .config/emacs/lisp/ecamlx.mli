@@ -42,6 +42,10 @@ module Fill : sig
   val french_nobreak_p : Ecaml.Function.t
 end
 
+module Frame : sig
+  val toggle_fullscreen : ?frame:Ecaml.Frame.t -> unit -> unit
+end
+
 module Hook : sig
   val find_file : Ecaml.Hook.normal Ecaml.Hook.t
 

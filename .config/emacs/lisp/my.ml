@@ -242,6 +242,8 @@ let init =
       Ecamlx.Minor_mode.minibuffer_depth_indicate;
     ];
 
+  Ecamlx.Frame.toggle_fullscreen ();
+
   (* Emacs server *)
   Ecamlx.Server.start ();
 

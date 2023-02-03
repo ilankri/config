@@ -389,8 +389,6 @@
                     ("_log\\'" . conf-unix-mode)
                     ("\\.merlin\\'" . conf-space-mode)
                     ("\\.mrconfig\\'" . conf-unix-mode)
-                    ("\\.eml\\'" . message-mode)))
-
-  (toggle-frame-fullscreen))
+                    ("\\.eml\\'" . message-mode))))
 
 (provide 'my0)
