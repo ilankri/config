@@ -73,6 +73,19 @@ module Minor_mode : sig
   val semantic : Ecaml.Minor_mode.t
   val smerge : Ecaml.Minor_mode.t
   val global_whitespace : Ecaml.Minor_mode.t
+  val tool_bar : Ecaml.Minor_mode.t
+  val menu_bar : Ecaml.Minor_mode.t
+  val scroll_bar : Ecaml.Minor_mode.t
+  val column_number : Ecaml.Minor_mode.t
+  val global_subword : Ecaml.Minor_mode.t
+  val delete_selection : Ecaml.Minor_mode.t
+  val electric_indent : Ecaml.Minor_mode.t
+  val electric_pair : Ecaml.Minor_mode.t
+  val show_paren : Ecaml.Minor_mode.t
+  val savehist : Ecaml.Minor_mode.t
+  val winner : Ecaml.Minor_mode.t
+  val fido_vertical : Ecaml.Minor_mode.t
+  val minibuffer_depth_indicate : Ecaml.Minor_mode.t
 end
 
 module Browse_url : sig

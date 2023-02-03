@@ -222,6 +222,26 @@ let init =
   global_set_key "w" Ecamlx.Whitespace.Command.cleanup;
   global_set_key "y" Ecamlx.Command.blink_matching_open;
 
+  List.iter Ecaml.Minor_mode.disable
+    [
+      Ecamlx.Minor_mode.tool_bar;
+      Ecamlx.Minor_mode.menu_bar;
+      Ecamlx.Minor_mode.scroll_bar;
+    ];
+  List.iter Ecaml.Minor_mode.enable
+    [
+      Ecamlx.Minor_mode.column_number;
+      Ecamlx.Minor_mode.global_subword;
+      Ecamlx.Minor_mode.delete_selection;
+      Ecamlx.Minor_mode.electric_indent;
+      Ecamlx.Minor_mode.electric_pair;
+      Ecamlx.Minor_mode.show_paren;
+      Ecamlx.Minor_mode.savehist;
+      Ecamlx.Minor_mode.winner;
+      Ecamlx.Minor_mode.fido_vertical;
+      Ecamlx.Minor_mode.minibuffer_depth_indicate;
+    ];
+
   (* Emacs server *)
   Ecamlx.Server.start ();
 

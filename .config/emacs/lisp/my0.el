@@ -391,32 +391,6 @@
                     ("\\.mrconfig\\'" . conf-unix-mode)
                     ("\\.eml\\'" . message-mode)))
 
-  (tool-bar-mode 0)
-
-  (menu-bar-mode 0)
-
-  (scroll-bar-mode 0)
-
-  (toggle-frame-fullscreen)
-
-  (column-number-mode 1)
-
-  (global-subword-mode 1)
-
-  (delete-selection-mode 1)
-
-  (electric-indent-mode 1)
-
-  (electric-pair-mode 1)
-
-  (show-paren-mode 1)
-
-  (savehist-mode 1)
-
-  (winner-mode 1)
-
-  (fido-vertical-mode 1)
-
-  (minibuffer-depth-indicate-mode 1))
+  (toggle-frame-fullscreen))
 
 (provide 'my0)
