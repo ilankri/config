@@ -112,9 +112,11 @@ let message_mode_hook_f =
       set_ispell_key ~local:true "o" Ecamlx.Ispell.Command.message)
 
 let init =
+  let open Ecaml.Defun.Let_syntax in
+  return () >>| fun () ->
   let init =
     let open Ecaml.Funcall.Wrap in
-    "my-init" <: nullary @-> return nil
+    "my-init" <: nullary @-> Ecaml.Funcall.Wrap.return nil
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
@@ -285,9 +287,7 @@ let init =
   Ecamlx.Frame.toggle_fullscreen ();
 
   (* Emacs server *)
-  Ecamlx.Server.start ();
-
-  Ecaml.Defun.return ()
+  Ecamlx.Server.start ()
 
 let () =
   defun ~name:"init" ~__POS__ ~returns:Ecaml.Value.Type.unit init;
