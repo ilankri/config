@@ -90,6 +90,7 @@ module Minor_mode : sig
   val winner : Ecaml.Minor_mode.t
   val fido_vertical : Ecaml.Minor_mode.t
   val minibuffer_depth_indicate : Ecaml.Minor_mode.t
+  val global_auto_revert : Ecaml.Minor_mode.t
 end
 
 module Browse_url : sig

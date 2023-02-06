@@ -172,6 +172,7 @@ module Minor_mode = struct
   let winner = make "winner-mode"
   let fido_vertical = make "fido-vertical-mode"
   let minibuffer_depth_indicate = make "minibuffer-depth-indicate-mode"
+  let global_auto_revert = make "global-auto-revert-mode"
 end
 
 module Browse_url = struct

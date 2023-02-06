@@ -282,6 +282,7 @@ let init =
       Ecamlx.Minor_mode.winner;
       Ecamlx.Minor_mode.fido_vertical;
       Ecamlx.Minor_mode.minibuffer_depth_indicate;
+      Ecamlx.Minor_mode.global_auto_revert;
     ];
 
   Ecamlx.Frame.toggle_fullscreen ();

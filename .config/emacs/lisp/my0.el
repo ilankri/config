@@ -166,9 +166,6 @@
   (my-add-hooks '(message-mode-hook LaTeX-mode-hook)
                 'my-ispell-change-to-fr-dictionary)
 
-  ;; Auto-Revert
-  (global-auto-revert-mode 1)
-
   ;; Compilation
   (custom-set-variables '(compilation-scroll-output 'first-error)
                         '(compilation-context-lines 0))
