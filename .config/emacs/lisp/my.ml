@@ -81,6 +81,16 @@ let csv_mode_hook_f =
       Ecamlx.Current_buffer.set_customization_buffer_local
         Ecamlx.Whitespace.action [])
 
+let git_commit_setup_hook_f =
+  hook_defun ~name:"git-commit-setup-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Diff_mode.refine (Some Ecamlx.Diff_mode.Refine.Navigation);
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Whitespace.action [];
+      Ecaml.Minor_mode.enable Ecamlx.Minor_mode.diff)
+
 let diff_mode_hook_f =
   hook_defun ~name:"diff-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
@@ -222,6 +232,15 @@ let init =
 
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
+
+  (* Magit *)
+  Ecaml.Feature.require Ecamlx.Git_commit.feature;
+  Ecaml.Var.set_default_value Ecamlx.Magit.bind_magit_project_status false;
+  Ecamlx.Customization.set_value Ecamlx.Git_commit.summary_max_length
+    (Ecaml.Customization.value Ecamlx.Current_buffer.fill_column);
+  Ecamlx.Customization.set_value Ecamlx.Magit.commit_show_diff false;
+  Ecamlx.Customization.set_value Ecamlx.Magit.define_global_key_bindings false;
+  Ecaml.Hook.add Ecamlx.Git_commit.setup_hook git_commit_setup_hook_f;
 
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Diff.major_mode)

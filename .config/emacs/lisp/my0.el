@@ -105,11 +105,6 @@
 
   (my-c-trad-comment-on))
 
-(defun my-git-commit-setup-hook-f ()
-  (setq-local diff-refine 'navigation
-              whitespace-action nil)
-  (diff-minor-mode 1))
-
 (defun my-git-grep ()
   (interactive)
   (require 'grep)
@@ -289,17 +284,6 @@
   (my-add-hook 'LaTeX-mode-hook
                '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
                               reftex-mode))
-
-  ;; Magit
-  (require 'git-commit)
-
-  (setq magit-bind-magit-project-status nil)
-
-  (custom-set-variables '(git-commit-summary-max-length fill-column)
-                        '(magit-commit-show-diff nil)
-                        '(magit-define-global-key-bindings nil))
-
-  (add-hook 'git-commit-setup-hook 'my-git-commit-setup-hook-f)
 
   ;; Miscellaneous settings
   (setq disabled-command-function nil)

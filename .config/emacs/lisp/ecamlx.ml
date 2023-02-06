@@ -173,6 +173,7 @@ module Minor_mode = struct
   let fido_vertical = make "fido-vertical-mode"
   let minibuffer_depth_indicate = make "minibuffer-depth-indicate-mode"
   let global_auto_revert = make "global-auto-revert-mode"
+  let diff = make "diff-minor-mode"
 end
 
 module Browse_url = struct
@@ -195,6 +196,32 @@ module Cc_mode = struct
   let common_hook =
     let open Ecaml.Hook.Wrap in
     "c-mode-common-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+end
+
+module Diff_mode = struct
+  module Refine = struct
+    type t = Font_lock | Navigation
+
+    let type_ =
+      let module Type = struct
+        type nonrec t = t
+
+        let all = [ Font_lock; Navigation ]
+
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | Font_lock -> "font-lock"
+            | Navigation -> "navigation"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "diff-refine" (module Type)
+  end
+
+  let refine =
+    let open Ecaml.Customization.Wrap in
+    "diff-refine" <: nil_or Refine.type_
 end
 
 module Eglot = struct
@@ -221,6 +248,18 @@ module Find_file = struct
   module Command = struct
     let get_other_file = Command.from_string "ff-get-other-file"
   end
+end
+
+module Git_commit = struct
+  let feature = Ecaml.Symbol.intern "git-commit"
+
+  let summary_max_length =
+    let open Ecaml.Customization.Wrap in
+    "git-commit-summary-max-length" <: int
+
+  let setup_hook =
+    let open Ecaml.Hook.Wrap in
+    "git-commit-setup-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 end
 
 module Imenu = struct
@@ -272,6 +311,20 @@ module Indent = struct
   let tabs_mode =
     let open Ecaml.Customization.Wrap in
     "indent-tabs-mode" <: bool
+end
+
+module Magit = struct
+  let bind_magit_project_status =
+    let open Ecaml.Var.Wrap in
+    "magit-bind-magit-project-status" <: bool
+
+  let commit_show_diff =
+    let open Ecaml.Customization.Wrap in
+    "magit-commit-show-diff" <: bool
+
+  let define_global_key_bindings =
+    let open Ecaml.Customization.Wrap in
+    "magit-define-global-key-bindings" <: bool
 end
 
 module Markdown_mode = struct

@@ -91,6 +91,7 @@ module Minor_mode : sig
   val fido_vertical : Ecaml.Minor_mode.t
   val minibuffer_depth_indicate : Ecaml.Minor_mode.t
   val global_auto_revert : Ecaml.Minor_mode.t
+  val diff : Ecaml.Minor_mode.t
 end
 
 module Browse_url : sig
@@ -105,6 +106,14 @@ end
 
 module Cc_mode : sig
   val common_hook : Ecaml.Hook.normal Ecaml.Hook.t
+end
+
+module Diff_mode : sig
+  module Refine : sig
+    type t = Font_lock | Navigation
+  end
+
+  val refine : Refine.t option Ecaml.Customization.t
 end
 
 module Eglot : sig
@@ -122,6 +131,12 @@ module Find_file : sig
   module Command : sig
     val get_other_file : Ecaml.Command.t
   end
+end
+
+module Git_commit : sig
+  val feature : Ecaml.Feature.t
+  val summary_max_length : int Ecaml.Customization.t
+  val setup_hook : Ecaml.Hook.normal Ecaml.Hook.t
 end
 
 module Imenu : sig
@@ -147,6 +162,12 @@ module Man : sig
   module Command : sig
     val man : Ecaml.Command.t
   end
+end
+
+module Magit : sig
+  val bind_magit_project_status : bool Ecaml.Var.t
+  val commit_show_diff : bool Ecaml.Customization.t
+  val define_global_key_bindings : bool Ecaml.Customization.t
 end
 
 module Markdown_mode : sig
