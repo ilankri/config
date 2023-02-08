@@ -31,6 +31,28 @@ module Value = struct
   end
 end
 
+let mode_line_compact =
+  let type_ =
+    let module Type = struct
+      type t = [ `Never | `Always | `Long ]
+
+      let all = [ `Never; `Always; `Long ]
+
+      let sexp_of_t value =
+        let atom =
+          match value with `Never -> "nil" | `Always -> "t" | `Long -> "long"
+        in
+        Sexplib0.Sexp.Atom atom
+    end in
+    Value.Type.enum "mode-line-compact" (module Type)
+  in
+  let open Ecaml.Customization.Wrap in
+  "mode-line-compact" <: type_
+
+let track_eol =
+  let open Ecaml.Customization.Wrap in
+  "track-eol" <: bool
+
 module Command = struct
   let from_string name =
     name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
@@ -80,6 +102,14 @@ module Current_buffer = struct
   let set_customization_buffer_local variable value =
     let variable = Ecaml.Customization.var variable in
     set_buffer_local variable value
+
+  let scroll_up_aggressively =
+    let open Ecaml.Customization.Wrap in
+    "scroll-up-aggressively" <: nil_or Ecaml.Customization.Wrap.float
+
+  let scroll_down_aggressively =
+    let open Ecaml.Customization.Wrap in
+    "scroll-down-aggressively" <: nil_or Ecaml.Customization.Wrap.float
 end
 
 module Comment = struct
@@ -190,12 +220,22 @@ module Custom = struct
       <: Ecaml.Symbol.t @-> nil_or bool @-> nil_or bool @-> return nil
     in
     load_theme (Ecaml.Symbol.intern theme) no_confirm no_enable
+
+  let file =
+    let open Ecaml.Customization.Wrap in
+    "custom-file" <: nil_or string
 end
 
 module Cc_mode = struct
   let common_hook =
     let open Ecaml.Hook.Wrap in
     "c-mode-common-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+end
+
+module Comint = struct
+  let prompt_read_only =
+    let open Ecaml.Customization.Wrap in
+    "comint-prompt-read-only" <: bool
 end
 
 module Diff_mode = struct
@@ -222,6 +262,42 @@ module Diff_mode = struct
   let refine =
     let open Ecaml.Customization.Wrap in
     "diff-refine" <: nil_or Refine.type_
+
+  let default_read_only =
+    let open Ecaml.Customization.Wrap in
+    "diff-default-read-only" <: bool
+end
+
+module Eldoc = struct
+  let echo_area_use_multiline_p =
+    let type_ =
+      let truncate_sym_name_if_fit =
+        Ecaml.Value.intern "truncate-sym-name-if-fit"
+      in
+      let to_ value =
+        if Ecaml.Value.eq value Ecaml.Value.t then `Always
+        else if Ecaml.Value.eq value Ecaml.Value.nil then `Never
+        else if Ecaml.Value.eq value truncate_sym_name_if_fit then
+          `Truncate_sym_name_if_fit
+        else if Ecaml.Value.is_integer value then
+          `Number_of_lines (Ecaml.Value.to_int_exn value)
+        else if Ecaml.Value.is_float value then
+          `Fraction_of_frame_height (Ecaml.Value.to_float_exn value)
+        else assert false
+      in
+      let from = function
+        | `Always -> Ecaml.Value.t
+        | `Never -> Ecaml.Value.nil
+        | `Truncate_sym_name_if_fit -> truncate_sym_name_if_fit
+        | `Number_of_lines i -> Ecaml.Value.of_int_exn i
+        | `Fraction_of_frame_height f -> Ecaml.Value.of_float f
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create
+        (Sexplib0.Sexp.Atom "eldoc-echo-area-use-multiline-p") to_sexp to_ from
+    in
+    let open Ecaml.Customization.Wrap in
+    "eldoc-echo-area-use-multiline-p" <: type_
 end
 
 module Eglot = struct
@@ -242,6 +318,33 @@ module Files = struct
   let view_read_only =
     let open Ecaml.Customization.Wrap in
     "view-read-only" <: bool
+
+  let auto_mode_case_fold =
+    let open Ecaml.Customization.Wrap in
+    "auto-mode-case-fold" <: bool
+
+  let require_final_newline =
+    let type_ =
+      let module Type = struct
+        type t = [ `Visit | `Save | `Visit_save | `Never | `Ask ]
+
+        let all = [ `Visit; `Save; `Visit_save; `Never; `Ask ]
+
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | `Visit -> "visit"
+            | `Save -> "t"
+            | `Visit_save -> "visit-save"
+            | `Never -> "nil"
+            | `Ask -> "ask"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "require-final-newline" (module Type)
+    in
+    let open Ecaml.Customization.Wrap in
+    "require-final-newline" <: type_
 end
 
 module Find_file = struct
@@ -351,6 +454,39 @@ module Man = struct
   end
 end
 
+module Minibuffer = struct
+  let completions_format =
+    let type_ =
+      let module Type = struct
+        type t = [ `Horizontal | `Vertical | `One_column ]
+
+        let all = [ `Horizontal; `Vertical; `One_column ]
+
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | `Horizontal -> "horizontal"
+            | `Vertical -> "vertical"
+            | `One_column -> "one-column"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "completions-format" (module Type)
+    in
+    let open Ecaml.Customization.Wrap in
+    "completions-format" <: type_
+
+  let enable_recursive_minibuffers =
+    let open Ecaml.Customization.Wrap in
+    "enable-recursive-minibuffers" <: bool
+end
+
+module Novice = struct
+  let disabled_command_function =
+    let open Ecaml.Var.Wrap in
+    "disabled-command-function" <: nil_or Ecaml.Function.t
+end
+
 module Package = struct
   let feature = Ecaml.Symbol.intern "package"
 
@@ -384,12 +520,71 @@ module Package = struct
     ignore (install_selected_packages no_confirm)
 end
 
+module Startup = struct
+  let initial_buffer_choice =
+    let type_ =
+      let to_ value =
+        if Ecaml.Value.eq value Ecaml.Value.t then `Scratch
+        else if Ecaml.Value.is_string value then
+          `File (Ecaml.Value.to_utf8_bytes_exn value)
+        else `Function (Ecaml.Function.of_value_exn value)
+      in
+      let from = function
+        | `Scratch -> Ecaml.Value.t
+        | `File s -> Ecaml.Value.of_utf8_bytes s
+        | `Function f -> Ecaml.Function.to_value f
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "initial-buffer-choice")
+        to_sexp to_ from
+    in
+    let open Ecaml.Customization.Wrap in
+    "initial-buffer-choice" <: nil_or type_
+
+  let inhibit_startup_screen =
+    let open Ecaml.Customization.Wrap in
+    "inhibit-startup-screen" <: bool
+end
+
 module Smerge_mode = struct
   let feature = Ecaml.Symbol.intern "smerge-mode"
 
   let begin_re =
     let open Ecaml.Var.Wrap in
     "smerge-begin-re" <: Ecaml.Regexp.t
+end
+
+module Term = struct
+  let buffer_maximum_size =
+    let open Ecaml.Customization.Wrap in
+    "term-buffer-maximum-size" <: int
+end
+
+module Vc = struct
+  let follow_symlinks =
+    let type_ =
+      let module Type = struct
+        type t = [ `Ask | `Visit_link_and_warn | `Follow_link ]
+
+        let all = [ `Ask; `Visit_link_and_warn; `Follow_link ]
+
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | `Ask -> "ask"
+            | `Visit_link_and_warn -> "nil"
+            | `Follow_link -> "t"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "vc-follow-symlinks" (module Type)
+    in
+    let open Ecaml.Customization.Wrap in
+    "vc-follow-symlinks" <: type_
+
+  let command_messages =
+    let open Ecaml.Customization.Wrap in
+    "vc-command-messages" <: bool
 end
 
 module Whitespace = struct

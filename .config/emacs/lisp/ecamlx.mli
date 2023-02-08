@@ -16,6 +16,8 @@ val defun :
 
 val global_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
 val local_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+val mode_line_compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
+val track_eol : bool Ecaml.Customization.t
 
 module Command : sig
   val blink_matching_open : Ecaml.Command.t
@@ -27,6 +29,8 @@ module Current_buffer : sig
   val inhibit_read_only : bool Ecaml.Var.t
   val set_buffer_local : 'a Ecaml.Var.t -> 'a -> unit
   val set_customization_buffer_local : 'a Ecaml.Customization.t -> 'a -> unit
+  val scroll_up_aggressively : float option Ecaml.Customization.t
+  val scroll_down_aggressively : float option Ecaml.Customization.t
 end
 
 module Customization : sig
@@ -101,11 +105,16 @@ module Browse_url : sig
 end
 
 module Custom : sig
+  val file : string option Ecaml.Customization.t
   val load_theme : ?no_confirm:bool -> ?no_enable:bool -> string -> unit
 end
 
 module Cc_mode : sig
   val common_hook : Ecaml.Hook.normal Ecaml.Hook.t
+end
+
+module Comint : sig
+  val prompt_read_only : bool Ecaml.Customization.t
 end
 
 module Diff_mode : sig
@@ -114,6 +123,7 @@ module Diff_mode : sig
   end
 
   val refine : Refine.t option Ecaml.Customization.t
+  val default_read_only : bool Ecaml.Customization.t
 end
 
 module Eglot : sig
@@ -123,8 +133,22 @@ module Eglot : sig
   end
 end
 
+module Eldoc : sig
+  val echo_area_use_multiline_p :
+    [ `Never
+    | `Always
+    | `Truncate_sym_name_if_fit
+    | `Fraction_of_frame_height of float
+    | `Number_of_lines of int ]
+    Ecaml.Customization.t
+end
+
 module Files : sig
+  val auto_mode_case_fold : bool Ecaml.Customization.t
   val view_read_only : bool Ecaml.Customization.t
+
+  val require_final_newline :
+    [ `Visit | `Save | `Visit_save | `Never | `Ask ] Ecaml.Customization.t
 end
 
 module Find_file : sig
@@ -177,6 +201,17 @@ module Markdown_mode : sig
   val fontify_code_blocks_natively : bool Ecaml.Customization.t
 end
 
+module Minibuffer : sig
+  val completions_format :
+    [ `Horizontal | `Vertical | `One_column ] Ecaml.Customization.t
+
+  val enable_recursive_minibuffers : bool Ecaml.Customization.t
+end
+
+module Novice : sig
+  val disabled_command_function : Ecaml.Function.t option Ecaml.Var.t
+end
+
 module Package : sig
   val feature : Ecaml.Feature.t
   val archives : (string * string) list Ecaml.Customization.t
@@ -203,6 +238,25 @@ end
 module Smerge_mode : sig
   val feature : Ecaml.Symbol.t
   val begin_re : Ecaml.Regexp.t Ecaml.Var.t
+end
+
+module Startup : sig
+  val initial_buffer_choice :
+    [ `Scratch | `File of string | `Function of Ecaml.Function.t ] option
+    Ecaml.Customization.t
+
+  val inhibit_startup_screen : bool Ecaml.Customization.t
+end
+
+module Term : sig
+  val buffer_maximum_size : int Ecaml.Customization.t
+end
+
+module Vc : sig
+  val follow_symlinks :
+    [ `Ask | `Visit_link_and_warn | `Follow_link ] Ecaml.Customization.t
+
+  val command_messages : bool Ecaml.Customization.t
 end
 
 module Whitespace : sig

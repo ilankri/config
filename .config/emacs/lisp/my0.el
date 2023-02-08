@@ -285,30 +285,6 @@
                '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
                               reftex-mode))
 
-  ;; Miscellaneous settings
-  (setq disabled-command-function nil)
-
-  (custom-set-variables '(inhibit-startup-screen t)
-                        '(mode-line-compact 'long)
-                        '(custom-file
-                          (my-prefix-by-user-emacs-directory ".custom.el"))
-                        '(auto-mode-case-fold nil)
-                        '(initial-buffer-choice 'my-ansi-term)
-                        '(track-eol t)
-                        '(completions-format 'one-column)
-                        '(enable-recursive-minibuffers t)
-                        '(view-read-only t)
-                        '(diff-default-read-only t)
-                        '(eldoc-echo-area-use-multiline-p nil)
-                        '(comint-prompt-read-only t)
-                        '(term-buffer-maximum-size 0)
-                        '(vc-follow-symlinks t)
-                        '(vc-command-messages t)
-                        '(require-final-newline t)
-                        '(scroll-up-aggressively 0)
-                        '(scroll-down-aggressively 0)
-                        '(indent-tabs-mode nil))
-
   (my-add-to-list 'completion-ignored-extensions
                   '("auto/" ".prv/" "_build/" "_opam/" "target/"
                     "_client/" "_deps/" "_server/" ".sass-cache/"

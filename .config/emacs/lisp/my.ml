@@ -38,6 +38,10 @@ module Command = struct
   let ansi_term () = from_string "ansi-term"
 end
 
+let prefix_by_user_emacs_directory =
+  let open Ecaml.Funcall.Wrap in
+  prefix_name "prefix-by-user-emacs-directory" <: string @-> return string
+
 let init_package_archives () =
   Ecaml.Feature.require Ecamlx.Package.feature;
   Ecamlx.Customization.set_value Ecamlx.Package.archives
@@ -255,6 +259,37 @@ let init =
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Csv.major_mode)
     csv_mode_hook_f;
   Ecamlx.Custom.load_theme "modus-operandi";
+
+  (* Miscellaneous settings *)
+  Ecaml.Var.set_default_value Ecamlx.Novice.disabled_command_function None;
+  Ecamlx.Customization.set_value Ecamlx.Startup.inhibit_startup_screen true;
+  Ecamlx.Customization.set_value Ecamlx.mode_line_compact `Long;
+  Ecamlx.Customization.set_value Ecamlx.Custom.file
+    (Some (prefix_by_user_emacs_directory ".custom.el"));
+  Ecamlx.Customization.set_value Ecamlx.Files.auto_mode_case_fold false;
+  Ecamlx.Customization.set_value Ecamlx.Startup.initial_buffer_choice
+    (Some
+       (`Function
+         (Ecaml.Function.of_value_exn @@ Ecaml.Command.to_value
+        @@ Command.ansi_term ())));
+  Ecamlx.Customization.set_value Ecamlx.track_eol true;
+  Ecamlx.Customization.set_value Ecamlx.Minibuffer.completions_format
+    `One_column;
+  Ecamlx.Customization.set_value Ecamlx.Minibuffer.enable_recursive_minibuffers
+    true;
+  Ecamlx.Customization.set_value Ecamlx.Files.view_read_only true;
+  Ecamlx.Customization.set_value Ecamlx.Diff_mode.default_read_only true;
+  Ecamlx.Customization.set_value Ecamlx.Eldoc.echo_area_use_multiline_p `Never;
+  Ecamlx.Customization.set_value Ecamlx.Comint.prompt_read_only true;
+  Ecamlx.Customization.set_value Ecamlx.Term.buffer_maximum_size 0;
+  Ecamlx.Customization.set_value Ecamlx.Vc.follow_symlinks `Follow_link;
+  Ecamlx.Customization.set_value Ecamlx.Vc.command_messages true;
+  Ecamlx.Customization.set_value Ecamlx.Files.require_final_newline `Save;
+  Ecamlx.Customization.set_value Ecamlx.Current_buffer.scroll_up_aggressively
+    (Some 0.);
+  Ecamlx.Customization.set_value Ecamlx.Current_buffer.scroll_down_aggressively
+    (Some 0.);
+  Ecamlx.Customization.set_value Ecamlx.Indent.tabs_mode false;
 
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
