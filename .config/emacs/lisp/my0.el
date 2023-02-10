@@ -116,15 +116,6 @@
   (interactive)
   (kill-buffer))
 
-(defun my-ansi-term (&optional arg)
-  (interactive "P")
-  (let ((default-buffer-name "terminal"))
-    (ansi-term (getenv "ESHELL")
-               (if arg
-                   (completing-read
-                    "Name: " nil nil nil nil nil default-buffer-name)
-                 default-buffer-name))))
-
 (defun my-init ()
   ;; APT
   (require 'apt-sources)           ; To force update of `auto-mode-alist'.

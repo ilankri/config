@@ -18,6 +18,7 @@ val global_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
 val local_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
 val mode_line_compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
 val track_eol : bool Ecaml.Customization.t
+val shell_file_name : string Ecaml.Customization.t
 
 module Command : sig
   val blink_matching_open : Ecaml.Command.t
@@ -250,6 +251,7 @@ end
 
 module Term : sig
   val buffer_maximum_size : int Ecaml.Customization.t
+  val ansi_term : ?new_buffer_name:string -> string -> Ecaml.Buffer.t
 end
 
 module Vc : sig

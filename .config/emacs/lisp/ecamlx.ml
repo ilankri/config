@@ -53,6 +53,10 @@ let track_eol =
   let open Ecaml.Customization.Wrap in
   "track-eol" <: bool
 
+let shell_file_name =
+  let open Ecaml.Customization.Wrap in
+  "shell-file-name" <: string
+
 module Command = struct
   let from_string name =
     name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
@@ -558,6 +562,13 @@ module Term = struct
   let buffer_maximum_size =
     let open Ecaml.Customization.Wrap in
     "term-buffer-maximum-size" <: int
+
+  let ansi_term ?new_buffer_name program =
+    let ansi_term =
+      let open Ecaml.Funcall.Wrap in
+      "ansi-term" <: string @-> nil_or string @-> return Ecaml.Buffer.type_
+    in
+    ansi_term program new_buffer_name
 end
 
 module Vc = struct

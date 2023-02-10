@@ -24,6 +24,27 @@ let set_ispell_key ?local key command =
 let set_eglot_key ?local key command =
   set_prefix_key ?local ~prefix:"l" key command
 
+let _ansi_term =
+  defun ~name:"ansi-term" ~__POS__
+    ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Buffer.type_)
+    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+    (let open Ecaml.Defun.Let_syntax in
+    Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
+    >>| fun arg ->
+    let default_buffer_name = "terminal" in
+    let new_buffer_name =
+      if arg then
+        Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
+          ~collection:(Ecaml.Completing.Collection.create_elisp [])
+          ~default:default_buffer_name ~prompt:"Name: " ()
+      else Async_kernel.return default_buffer_name
+    in
+    Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
+        Ecamlx.Term.ansi_term ~new_buffer_name
+          (Option.value
+             ~default:(Ecaml.Customization.value Ecamlx.shell_file_name)
+             (Ecaml.System.getenv ~var:"ESHELL"))))
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
