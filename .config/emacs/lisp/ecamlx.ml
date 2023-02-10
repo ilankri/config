@@ -8,7 +8,7 @@ let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
   Ecaml.defun (Ecaml.Symbol.intern name) (position ~__POS__)
     ~docstring:(Option.value ~default:"None" docstring)
     ?define_keys ?obsoletes ?should_profile ?interactive ?disabled ?evil_config
-    (Ecaml.Returns.Returns returns) f
+    returns f
 
 let global_set_key =
   let open Ecaml.Funcall.Wrap in

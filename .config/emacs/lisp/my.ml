@@ -49,7 +49,8 @@ let init_package_archives () =
     @ [ ("melpa-stable", "https://stable.melpa.org/packages/") ])
 
 let _init_packages =
-  defun ~name:"init-packages" ~__POS__ ~returns:Ecaml.Value.Type.unit
+  defun ~name:"init-packages" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
     (let open Ecaml.Defun.Let_syntax in
     return () >>| init_package_archives >>| fun () ->
     Ecamlx.Package.refresh_contents ())
@@ -345,5 +346,6 @@ let init =
   Ecamlx.Server.start ()
 
 let () =
-  defun ~name:"init" ~__POS__ ~returns:Ecaml.Value.Type.unit init;
+  defun ~name:"init" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit) init;
   Ecaml.provide @@ Ecaml.Symbol.intern library_name

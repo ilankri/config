@@ -10,7 +10,7 @@ val defun :
   ?interactive:Ecaml.Defun.Interactive.t ->
   ?disabled:bool ->
   ?evil_config:Ecaml.Evil.Config.t ->
-  returns:'a Ecaml.Value.Type.t ->
+  returns:(_, 'a) Ecaml.Returns.t ->
   'a Ecaml.Defun.t ->
   unit
 
