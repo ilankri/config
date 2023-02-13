@@ -285,7 +285,7 @@
 
   ;; Hack to open files like Makefile.local or Dockerfile.test with the
   ;; right mode.
-  (add-to-list 'auto-mode-alist '("\\.[^\\.].*\\'" nil t) t)
+  (add-to-list 'auto-mode-alist '("\\.[^/]*\\'" nil t) t)
 
   (my-add-to-list 'auto-mode-alist
                   '(("README\\'" . text-mode)
