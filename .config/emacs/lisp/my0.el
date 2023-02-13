@@ -289,7 +289,6 @@
 
   (my-add-to-list 'auto-mode-alist
                   '(("README\\'" . text-mode)
-                    ("dune-project\\'" . dune-mode)
                     ("dune-workspace\\'" . dune-mode)
                     ("bash-fc\\'" . sh-mode)
                     ("\\.bash_aliases\\'" . sh-mode)
