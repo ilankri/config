@@ -29,9 +29,10 @@
 !/.config/git/
 !/.config/git/config
 !/.config/git/ignore
+!/.config/ocaml/
+!/.config/ocaml/init.ml
 !/.latex/
 !/.latex/preamble.tex
-!/.myocamlinit.ml
 !/.ocp/
 !/.ocp/ocp-indent.conf
 !/.inputrc

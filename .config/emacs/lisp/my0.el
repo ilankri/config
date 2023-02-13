@@ -296,7 +296,6 @@
                     ("\\.dockerignore\\'" . gitignore-mode)
                     ("\\.ml[ly]\\'" . tuareg-mode)
                     ("\\.top\\'" . tuareg-mode)
-                    ("\\.ocamlinit\\'" . tuareg-mode)
                     ("\\.ocp-indent\\'" . conf-unix-mode)
                     ("_tags\\'" . conf-colon-mode)
                     ("_log\\'" . conf-unix-mode)

@@ -6,12 +6,12 @@ print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-emacs install-ocaml	\
-	compile-emacs-lisp docker-build docker-debug-emacs-init
+.PHONY: all install clean install-bash install-emacs compile-emacs-lisp	\
+	docker-build docker-debug-emacs-init
 
 all: install
 
-install: install-bash install-emacs install-ocaml
+install: install-bash install-emacs
 
 clean:
 	@echo "Cleaning..."
@@ -31,13 +31,6 @@ install-emacs: compile-emacs-lisp
 	@$(print_installing) Emacs
 	@emacs --batch --directory $(elispdir) --load $(elispdir)/my.so	\
 		--funcall my-init-packages
-	@$(print_done)
-
-install-ocaml:
-	@$(print_installing) OCaml
-	@grep -q "#use \"$$HOME/.myocamlinit.ml\"" ~/.ocamlinit	\
-	|| printf "\n#use \"$$HOME/.myocamlinit.ml\"\n"		\
-		>> ~/.ocamlinit
 	@$(print_done)
 
 compile-emacs-lisp:
