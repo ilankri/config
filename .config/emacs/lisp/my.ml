@@ -59,6 +59,23 @@ module Command = struct
   let ansi_term () = from_string "ansi-term"
 end
 
+let _scala3_end_column =
+  defun ~name:"scala3-end-column" ~__POS__
+    ~returns:
+      (Ecaml.Returns.Returns (Ecaml.Value.Type.nil_or Ecaml.Value.Type.int))
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| fun () ->
+    Option.map
+      (fun column -> column |> String.trim |> int_of_string |> succ)
+      (Ecamlx.Regexp.match_string 3))
+
+module Function = struct
+  let from_string name =
+    prefix_name name |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
+
+  let scala3_end_column () = from_string "scala3-end-column"
+end
+
 let prefix_by_user_emacs_directory =
   let open Ecaml.Funcall.Wrap in
   prefix_name "prefix-by-user-emacs-directory" <: string @-> return string
@@ -246,6 +263,110 @@ let init =
              Ecamlx.Major_mode.Git_rebase.major_mode;
            ];
        });
+
+  (* Compilation *)
+  Ecamlx.Customization.set_value Ecamlx.Compilation.scroll_output `First_error;
+  Ecamlx.Customization.set_value Ecamlx.Compilation.context_lines
+    (`Number_of_lines 0);
+  Ecaml.Hook.add Ecamlx.Compilation.filter_hook
+    (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
+       ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+       ~returns:Ecaml.Value.Type.unit Ecamlx.Ansi_color.compilation_filter);
+  Ecaml.Feature.require Ecamlx.Compilation.feature;
+  Ecamlx.Customization.set_value Ecamlx.Compilation.error_regexp_alist
+    (List.map
+       (fun error_matcher -> `Error_matcher error_matcher)
+       [
+         {
+           Ecamlx.Compilation.Error_matcher.regexp =
+             Ecaml.Regexp.of_pattern
+               "^\\[error\\] \\(.+\\):\\([0-9]+\\):\\([0-9]+\\):";
+           file = `Subexpression (1, []);
+           line =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 2;
+                 end_ = None;
+               };
+           column =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 3;
+                 end_ = None;
+               };
+           type_ = Ecamlx.Compilation.Error_matcher.Explicit `Error;
+           hyperlink = None;
+           highlights = [];
+         };
+         {
+           Ecamlx.Compilation.Error_matcher.regexp =
+             Ecaml.Regexp.of_pattern
+               "^\\[warn\\] \\(.+\\):\\([0-9]+\\):\\([0-9]+\\):";
+           file = `Subexpression (1, []);
+           line =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 2;
+                 end_ = None;
+               };
+           column =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 3;
+                 end_ = None;
+               };
+           type_ = Ecamlx.Compilation.Error_matcher.Explicit `Warning;
+           hyperlink = None;
+           highlights = [];
+         };
+         (* sbt with Scala 2 *)
+         {
+           Ecamlx.Compilation.Error_matcher.regexp =
+             Ecaml.Regexp.of_pattern
+               ".*Error: \\(.+\\):\\([0-9]+\\):\\([0-9]+\\)";
+           file = `Subexpression (1, []);
+           line =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 2;
+                 end_ = None;
+               };
+           column =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start =
+                   `Function (Function.scala3_end_column ());
+                 end_ = None;
+               };
+           type_ = Ecamlx.Compilation.Error_matcher.Explicit `Error;
+           hyperlink = None;
+           highlights = [];
+         };
+         {
+           Ecamlx.Compilation.Error_matcher.regexp =
+             Ecaml.Regexp.of_pattern
+               ".*Warning: \\(.+\\):\\([0-9]+\\):\\([0-9]+\\)";
+           file = `Subexpression (1, []);
+           line =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start = `Subexpression 2;
+                 end_ = None;
+               };
+           column =
+             Some
+               {
+                 Ecamlx.Compilation.Error_matcher.start =
+                   `Function (Function.scala3_end_column ());
+                 end_ = None;
+               };
+           type_ = Ecamlx.Compilation.Error_matcher.Explicit `Warning;
+           hyperlink = None;
+           highlights = [];
+         };
+         (* Scala 3 *)
+       ]
+    @ Ecaml.Customization.value Ecamlx.Compilation.error_regexp_alist);
 
   (* Markdown *)
   Ecamlx.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";

@@ -152,31 +152,6 @@
   (my-add-hooks '(message-mode-hook LaTeX-mode-hook)
                 'my-ispell-change-to-fr-dictionary)
 
-  ;; Compilation
-  (custom-set-variables '(compilation-scroll-output 'first-error)
-                        '(compilation-context-lines 0))
-
-  (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
-
-  (defun my-scala3-end-column ()
-    (+ (string-to-number (match-string 3)) 1))
-
-  (defconst my-scala-compilation-error-regexp-matchers
-    '(("^\\[error\\] \\(.+\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3 2)
-      ("^\\[warn\\] \\(.+\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3 1)
-      ;; sbt with Scala 2
-
-      (".*Error: \\(.+\\):\\([0-9]+\\):\\([0-9]+\\)" 1 2 my-scala3-end-column 2)
-      (".*Warning: \\(.+\\):\\([0-9]+\\):\\([0-9]+\\)"
-       1 2 my-scala3-end-column 1)
-      ;; Scala 3
-      ))
-
-  (require 'compile)
-
-  (my-add-to-list 'compilation-error-regexp-alist
-                  my-scala-compilation-error-regexp-matchers)
-
   ;; Ffap
   (custom-set-variables '(ffap-machine-p-known 'reject))
 
