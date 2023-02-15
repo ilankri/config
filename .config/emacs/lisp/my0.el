@@ -281,23 +281,6 @@
                     "_client/" "_deps/" "_server/" ".sass-cache/"
                     ".d" ".native" ".byte" ".bc" ".exe" ".pdf"
                     ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
-                    ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex"))
-
-  ;; Hack to open files like Makefile.local or Dockerfile.test with the
-  ;; right mode.
-  (add-to-list 'auto-mode-alist '("\\.[^/]*\\'" nil t) t)
-
-  (my-add-to-list 'auto-mode-alist
-                  '(("README\\'" . text-mode)
-                    ("dune-workspace\\'" . dune-mode)
-                    ("bash-fc\\'" . sh-mode)
-                    ("\\.bash_aliases\\'" . sh-mode)
-                    ("\\.dockerignore\\'" . gitignore-mode)
-                    ("\\.ml[ly]\\'" . tuareg-mode)
-                    ("\\.ocp-indent\\'" . conf-unix-mode)
-                    ("_tags\\'" . conf-colon-mode)
-                    ("\\.merlin\\'" . conf-space-mode)
-                    ("\\.mrconfig\\'" . conf-unix-mode)
-                    ("\\.eml\\'" . message-mode))))
+                    ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex")))
 
 (provide 'my0)

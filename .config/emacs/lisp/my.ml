@@ -282,6 +282,42 @@ let init =
     csv_mode_hook_f;
   Ecamlx.Custom.load_theme "modus-operandi";
 
+  (* Hack to open files like Makefile.local or Dockerfile.test with the
+     right mode. *)
+  Ecaml.Var.set_default_value Ecaml.Auto_mode_alist.auto_mode_alist
+    (Ecaml.Var.default_value_exn Ecaml.Auto_mode_alist.auto_mode_alist
+    @ [
+        {
+          Ecaml.Auto_mode_alist.Entry.filename_match =
+            Ecaml.Regexp.of_pattern "\\.[^/]*\\'";
+          function_ = None;
+          delete_suffix_and_recur = true;
+        };
+      ]);
+
+  Ecaml.Auto_mode_alist.add
+    (List.map
+       (fun (pattern, major_mode) ->
+         {
+           Ecaml.Auto_mode_alist.Entry.filename_match =
+             Ecaml.Regexp.of_pattern pattern;
+           function_ = Some (Ecaml.Major_mode.symbol major_mode);
+           delete_suffix_and_recur = false;
+         })
+       [
+         ("README\\'", Ecaml.Major_mode.Text.major_mode);
+         ("dune-workspace\\'", Ecamlx.Major_mode.Dune.major_mode);
+         ("bash-fc\\'", Ecamlx.Major_mode.Sh.major_mode);
+         ("\\.bash_aliases\\'", Ecamlx.Major_mode.Sh.major_mode);
+         ("\\.dockerignore\\'", Ecamlx.Major_mode.Gitignore.major_mode);
+         ("\\.ml[ly]\\'", Ecaml.Major_mode.Tuareg.major_mode);
+         ("\\.ocp-indent\\'", Ecamlx.Major_mode.Conf_unix.major_mode);
+         ("_tags\\'", Ecamlx.Major_mode.Conf_colon.major_mode);
+         ("\\.merlin\\'", Ecamlx.Major_mode.Conf_space.major_mode);
+         ("\\.mrconfig\\'", Ecamlx.Major_mode.Conf_unix.major_mode);
+         ("\\.eml\\'", Ecamlx.Major_mode.Message.major_mode);
+       ]);
+
   (* Miscellaneous settings *)
   Ecaml.Var.set_default_value Ecamlx.Novice.disabled_command_function None;
   Ecamlx.Customization.set_value Ecamlx.Startup.inhibit_startup_screen true;

@@ -162,6 +162,18 @@ module Major_mode = struct
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-mode"
            (position ~__POS__))
 
+  module Conf_colon =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-colon-mode"
+           (position ~__POS__))
+
+  module Conf_space =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-space-mode"
+           (position ~__POS__))
+
+  module Conf_unix =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-unix-mode"
+           (position ~__POS__))
+
   module Csv =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "csv-mode"
            (position ~__POS__))
@@ -170,8 +182,16 @@ module Major_mode = struct
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
            (position ~__POS__))
 
+  module Dune =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "dune-mode"
+           (position ~__POS__))
+
   module Git_rebase =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "git-rebase-mode"
+           (position ~__POS__))
+
+  module Gitignore =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "gitignore-mode"
            (position ~__POS__))
 
   module Markdown =
@@ -180,6 +200,10 @@ module Major_mode = struct
 
   module Message =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "message-mode"
+           (position ~__POS__))
+
+  module Sh =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "sh-mode"
            (position ~__POS__))
 end
 
