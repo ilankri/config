@@ -282,6 +282,35 @@ let init =
     csv_mode_hook_f;
   Ecamlx.Custom.load_theme "modus-operandi";
 
+  Ecamlx.Customization.set_value Ecamlx.Dired.completion_ignored_extensions
+    ([
+       "auto/";
+       ".prv/";
+       "_build/";
+       "_opam/";
+       "target/";
+       "_client/";
+       "_deps/";
+       "_server/";
+       ".sass-cache/";
+       ".d";
+       ".native";
+       ".byte";
+       ".bc";
+       ".exe";
+       ".pdf";
+       ".out";
+       ".fls";
+       ".synctex.gz";
+       ".rel";
+       ".unq";
+       ".tns";
+       ".emacs.desktop";
+       ".emacs.desktop.lock";
+       "_region_.tex";
+     ]
+    @ Ecaml.Customization.value Ecamlx.Dired.completion_ignored_extensions);
+
   (* Hack to open files like Makefile.local or Dockerfile.test with the
      right mode. *)
   Ecaml.Var.set_default_value Ecaml.Auto_mode_alist.auto_mode_alist

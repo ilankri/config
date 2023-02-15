@@ -133,6 +133,10 @@ module Diff_mode : sig
   val default_read_only : bool Ecaml.Customization.t
 end
 
+module Dired : sig
+  val completion_ignored_extensions : string list Ecaml.Customization.t
+end
+
 module Eglot : sig
   module Command : sig
     val code_actions : unit -> Ecaml.Command.t

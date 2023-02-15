@@ -296,6 +296,12 @@ module Diff_mode = struct
     "diff-default-read-only" <: bool
 end
 
+module Dired = struct
+  let completion_ignored_extensions =
+    let open Ecaml.Customization.Wrap in
+    "completion-ignored-extensions" <: list string
+end
+
 module Eldoc = struct
   let echo_area_use_multiline_p =
     let type_ =

@@ -274,13 +274,6 @@
 
   (my-add-hook 'LaTeX-mode-hook
                '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
-                              reftex-mode))
-
-  (my-add-to-list 'completion-ignored-extensions
-                  '("auto/" ".prv/" "_build/" "_opam/" "target/"
-                    "_client/" "_deps/" "_server/" ".sass-cache/"
-                    ".d" ".native" ".byte" ".bc" ".exe" ".pdf"
-                    ".out" ".fls" ".synctex.gz" ".rel" ".unq" ".tns"
-                    ".emacs.desktop" ".emacs.desktop.lock" "_region_.tex")))
+                              reftex-mode)))
 
 (provide 'my0)
