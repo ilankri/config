@@ -148,15 +148,15 @@ let diff_mode_hook_f =
         Ecamlx.Whitespace.action [])
 
 let markdown_mode_hook_f =
+  let cleanup_list_numbers =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit Ecamlx.Markdown_mode.cleanup_list_numbers
+  in
   hook_defun ~name:"markdown-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
       Ecaml.Hook.add ~buffer_local:true ~where:Ecaml.Hook.Where.End
-        Ecaml.Hook.before_save
-        (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
-           ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
-           ~returns:Ecaml.Value.Type.unit
-           Ecamlx.Markdown_mode.cleanup_list_numbers))
+        Ecaml.Hook.before_save cleanup_list_numbers)
 
 let message_mode_hook_f =
   hook_defun ~name:"message-mode-hook-f" ~__POS__
@@ -172,6 +172,15 @@ let init =
   let init =
     let open Ecaml.Funcall.Wrap in
     "my-init" <: nullary @-> Ecaml.Funcall.Wrap.return nil
+  in
+  let enable_auto_fill =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_fill)
+  in
+  let ansi_color_compilation_filter =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit Ecamlx.Ansi_color.compilation_filter
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
@@ -221,12 +230,7 @@ let init =
      modes) because it seems to be the only program mode that properly
      deals with auto-fill. *)
   List.iter
-    (fun hook ->
-      Ecaml.Hook.add hook
-        (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
-           ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
-           ~returns:Ecaml.Value.Type.unit (fun () ->
-             Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_fill)))
+    (fun hook -> Ecaml.Hook.add hook enable_auto_fill)
     [
       Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Text.major_mode;
       Ecamlx.Cc_mode.common_hook;
@@ -270,10 +274,7 @@ let init =
   Ecamlx.Customization.set_value Ecamlx.Compilation.scroll_output `First_error;
   Ecamlx.Customization.set_value Ecamlx.Compilation.context_lines
     (`Number_of_lines 0);
-  Ecaml.Hook.add Ecamlx.Compilation.filter_hook
-    (Ecamlx.Hook.Function.create ~name:String.empty ~__POS__
-       ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
-       ~returns:Ecaml.Value.Type.unit Ecamlx.Ansi_color.compilation_filter);
+  Ecaml.Hook.add Ecamlx.Compilation.filter_hook ansi_color_compilation_filter;
   Ecaml.Feature.require Ecamlx.Compilation.feature;
   Ecamlx.Customization.set_value Ecamlx.Compilation.error_regexp_alist
     (List.map
