@@ -31,9 +31,6 @@
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
 
-(defun my-add-to-list (l xs)
-  (mapc (lambda (x) (add-to-list l x)) xs))
-
 (defun my-add-hooks (hooks f)
   (mapc (lambda (hook) (add-hook hook f)) hooks))
 
