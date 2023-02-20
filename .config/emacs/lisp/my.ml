@@ -6,7 +6,9 @@ let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
   Ecamlx.defun ~name:(prefix_name name) ~__POS__ ?docstring ?define_keys
     ?obsoletes ?should_profile ?interactive ?disabled ?evil_config ~returns f
 
-let hook_defun ~name ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
+let hook_defun
+    ?(name = Ecaml.Symbol.name @@ Ecaml.Symbol.gensym ~prefix:"hook-f" ())
+    ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
   Ecamlx.Hook.Function.create ~name:(prefix_name name) ~__POS__ ?docstring
     ?should_profile ~hook_type ~returns f
 
