@@ -459,7 +459,6 @@ let init =
          })
        [
          ("README\\'", Ecaml.Major_mode.Text.major_mode);
-         ("dune-workspace\\'", Ecamlx.Major_mode.Dune.major_mode);
          ("bash-fc\\'", Ecamlx.Major_mode.Sh.major_mode);
          ("\\.bash_aliases\\'", Ecamlx.Major_mode.Sh.major_mode);
          ("\\.dockerignore\\'", Ecamlx.Major_mode.Gitignore.major_mode);

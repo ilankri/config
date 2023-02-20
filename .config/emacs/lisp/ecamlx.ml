@@ -182,10 +182,6 @@ module Major_mode = struct
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
            (position ~__POS__))
 
-  module Dune =
-    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "dune-mode"
-           (position ~__POS__))
-
   module Git_rebase =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "git-rebase-mode"
            (position ~__POS__))
