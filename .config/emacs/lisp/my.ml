@@ -182,6 +182,21 @@ let init =
     hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
       ~returns:Ecaml.Value.Type.unit Ecamlx.Ansi_color.compilation_filter
   in
+  let eglot_ensure =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit Ecamlx.Eglot.ensure
+  in
+  let eglot_maybe_format_buffer =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        if Ecamlx.Eglot.managed_p () then Ecamlx.Eglot.format_buffer ())
+  in
+  let eglot_format_buffer_before_save =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        Ecaml.Hook.add ~buffer_local:true ~where:Ecaml.Hook.Where.End
+          Ecaml.Hook.before_save eglot_maybe_format_buffer)
+  in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
   Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
@@ -212,6 +227,22 @@ let init =
   Ecamlx.Package.install_selected_packages ();
 
   init ();
+
+  (* Eglot *)
+  List.iter
+    (fun (module Major_mode : Ecaml.Major_mode.S_with_lazy_keymap) ->
+      Ecaml.Hook.add
+        (Ecaml.Hook.major_mode_hook Major_mode.major_mode)
+        eglot_ensure)
+    [ (module Ecamlx.Major_mode.Scala); (module Ecaml.Major_mode.Tuareg) ];
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Prog.major_mode)
+    eglot_format_buffer_before_save;
+  Ecamlx.Customization.set_value Ecamlx.Eglot.autoshutdown true;
+  Ecamlx.Customization.set_value Ecamlx.Eglot.ignored_server_capabilities
+    [ `Document_highlight_provider ];
+  Ecaml.Var.set_default_value Ecamlx.Eglot.stay_out_of
+    [ `Symbol (Ecaml.Symbol.intern "flymake") ];
 
   (* Semantic *)
   Ecamlx.Customization.set_value Ecamlx.Semantic.default_submodes

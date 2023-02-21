@@ -121,22 +121,6 @@
 
   (require 'dune)
 
-  ;; Eglot
-  (defun my-eglot-format-buffer-before-save ()
-    (defun my-eglot-maybe-format-buffer ()
-      (when (eglot-managed-p) (eglot-format-buffer)))
-    (add-hook 'before-save-hook 'my-eglot-maybe-format-buffer t t))
-
-  (my-add-hooks '(scala-mode-hook tuareg-mode-hook) 'eglot-ensure)
-
-  (add-hook 'prog-mode-hook 'my-eglot-format-buffer-before-save)
-
-  (custom-set-variables
-   '(eglot-autoshutdown t)
-   '(eglot-ignored-server-capabilities '(:documentHighlightProvider)))
-
-  (setq eglot-stay-out-of '(flymake))
-
   ;; Ispell
 
   ;; Use hunspell instead of aspell because hunspell has a better French
