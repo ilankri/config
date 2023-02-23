@@ -135,38 +135,6 @@
 
   ;; Auto-insert
 
-  ;; This skeleton is like the one provided by default, except that we add
-  ;; an appropriate comment after the #endif.
-  (define-auto-insert '("\\.\\([Hh]\\|hh\\|hpp\\)\\'" . "C / C++ guard macro")
-    '((upcase (concat (file-name-nondirectory
-                       (file-name-sans-extension buffer-file-name))
-                      "_"
-                      (file-name-extension buffer-file-name)))
-      "#ifndef " str "\n#define " str "\n\n" _ "\n\n#endif /* not " str
-      " */\n"))
-
-  ;; This skeleton is like the one provided by default, except that it
-  ;; does the inclusion for .hpp file too.
-  (define-auto-insert '("\\.\\([Cc]\\|cc\\|cpp\\)\\'" . "C / C++ source")
-    '(nil "#include \""
-          (let
-              ((stem
-                (file-name-sans-extension buffer-file-name)))
-            (cond
-             ((file-exists-p
-               (concat stem ".h"))
-              (file-name-nondirectory
-               (concat stem ".h")))
-             ((file-exists-p
-               (concat stem ".hh"))
-              (file-name-nondirectory
-               (concat stem ".hh")))
-             ((file-exists-p
-               (concat stem ".hpp"))
-              (file-name-nondirectory
-               (concat stem ".hpp")))))
-          & 34 | -10))
-
   ;; Prompt the user for the appropriate Makefile type to insert.
   (define-auto-insert '("[Mm]akefile\\'" . "Makefile") 'my-makefile-auto-insert)
 
