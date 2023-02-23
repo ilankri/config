@@ -133,9 +133,6 @@
   (my-add-hooks '(message-mode-hook LaTeX-mode-hook)
                 'my-ispell-change-to-fr-dictionary)
 
-  ;; Ffap
-  (custom-set-variables '(ffap-machine-p-known 'reject))
-
   ;; Auto-insert
 
   ;; This skeleton is like the one provided by default, except that we add
