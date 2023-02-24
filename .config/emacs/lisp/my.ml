@@ -82,6 +82,10 @@ let prefix_by_user_emacs_directory =
   let open Ecaml.Funcall.Wrap in
   prefix_name "prefix-by-user-emacs-directory" <: string @-> return string
 
+let c_trad_comment_on =
+  let open Ecaml.Funcall.Wrap in
+  prefix_name "c-trad-comment-on" <: nullary @-> return nil
+
 let init_package_archives () =
   Ecaml.Feature.require Ecamlx.Package.feature;
   Ecamlx.Customization.set_value Ecamlx.Package.archives
@@ -113,6 +117,18 @@ let try_smerge =
         Ecaml.Point.search_forward_regexp
           (Ecaml.Var.default_value_exn Ecamlx.Smerge_mode.begin_re)
       then Ecaml.Minor_mode.enable Ecamlx.Minor_mode.smerge)
+
+let scala_mode_hook_f =
+  hook_defun ~name:"scala-mode-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      (* Hacks for Scala 3 *)
+      Ecamlx.Current_buffer.set_buffer_local Ecamlx.Indent.line_function
+        Ecamlx.Indent.relative;
+      Ecaml.Hook.remove_symbol ~buffer_local:true Ecamlx.Hook.post_self_insert
+        (Ecaml.Symbol.intern "scala-indent:indent-on-special-words");
+
+      c_trad_comment_on ())
 
 let csv_mode_hook_f =
   hook_defun ~name:"csv-mode-hook-f" ~__POS__
@@ -429,6 +445,13 @@ let init =
          (* Scala 3 *)
        ]
     @ Ecaml.Customization.value Ecamlx.Compilation.error_regexp_alist);
+
+  (* Scala *)
+  Ecamlx.Customization.set_value
+    Ecamlx.Scala_mode.Indent.default_run_on_strategy `Operators;
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Scala.major_mode)
+    scala_mode_hook_f;
 
   (* Markdown *)
   Ecamlx.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";

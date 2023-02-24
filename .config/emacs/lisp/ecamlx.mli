@@ -53,6 +53,7 @@ end
 
 module Hook : sig
   val find_file : Ecaml.Hook.normal Ecaml.Hook.t
+  val post_self_insert : Ecaml.Hook.normal Ecaml.Hook.t
 
   module Function : sig
     val create :
@@ -279,6 +280,8 @@ end
 
 module Indent : sig
   val tabs_mode : bool Ecaml.Customization.t
+  val line_function : Ecaml.Function.t Ecaml.Var.t
+  val relative : Ecaml.Function.t
 end
 
 module Ispell : sig
@@ -330,6 +333,13 @@ module Package : sig
   val selected_packages : Ecaml.Symbol.t list Ecaml.Customization.t
   val initialize : ?no_activate:bool -> unit -> unit
   val install_selected_packages : ?no_confirm:bool -> unit -> unit
+end
+
+module Scala_mode : sig
+  module Indent : sig
+    val default_run_on_strategy :
+      [ `Eager | `Operators | `Reluctant ] Ecaml.Customization.t
+  end
 end
 
 module Semantic : sig

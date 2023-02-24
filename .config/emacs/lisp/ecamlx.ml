@@ -145,6 +145,10 @@ module Hook = struct
     let open Ecaml.Hook.Wrap in
     "find-file-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 
+  let post_self_insert =
+    let open Ecaml.Hook.Wrap in
+    "post-self-insert-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+
   module Function = struct
     let create ~name ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
       Ecaml.Hook.Function.create (Ecaml.Symbol.intern name) (position ~__POS__)
@@ -858,6 +862,31 @@ module Ispell = struct
     change_dictionary dictionary globally
 end
 
+module Scala_mode = struct
+  module Indent = struct
+    let default_run_on_strategy =
+      let type_ =
+        let module Type = struct
+          type t = [ `Eager | `Operators | `Reluctant ]
+
+          let all = [ `Eager; `Operators; `Reluctant ]
+
+          let sexp_of_t value =
+            let atom =
+              match value with
+              | `Eager -> "scala-indent:eager-strategy"
+              | `Operators -> "scala-indent:operator-strategy"
+              | `Reluctant -> "scala-indent:reluctant-strategy"
+            in
+            Sexplib0.Sexp.Atom atom
+        end in
+        Value.Type.enum "require-final-newline" (module Type)
+      in
+      let open Ecaml.Customization.Wrap in
+      "scala-indent:default-run-on-strategy" <: type_
+  end
+end
+
 module Semantic = struct
   module Submode = struct
     type t = Ecaml.Minor_mode.t
@@ -892,6 +921,13 @@ module Indent = struct
   let tabs_mode =
     let open Ecaml.Customization.Wrap in
     "indent-tabs-mode" <: bool
+
+  let line_function =
+    let open Ecaml.Var.Wrap in
+    "indent-line-function" <: Ecaml.Function.type_
+
+  let relative =
+    "indent-relative" |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
 end
 
 module Magit = struct

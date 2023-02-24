@@ -90,14 +90,6 @@
   (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
                               ("\\.re\\'" (".rei")))))
 
-(defun my-scala-mode-hook-f ()
-  (setq-local indent-line-function 'indent-relative)
-  (remove-hook 'post-self-insert-hook
-               'scala-indent:indent-on-special-words t)
-  ;; Hacks for Scala 3
-
-  (my-c-trad-comment-on))
-
 (defun my-git-grep ()
   (interactive)
   (require 'grep)
@@ -148,11 +140,6 @@
 
   ;; Reason
   (add-hook 'reason-mode-hook 'my-reason-mode-hook-f)
-
-  ;; Scala
-  (custom-set-variables '(scala-indent:default-run-on-strategy 1))
-
-  (add-hook 'scala-mode-hook 'my-scala-mode-hook-f)
 
   ;; Proof general
   (custom-set-variables '(proof-splash-enable nil)
