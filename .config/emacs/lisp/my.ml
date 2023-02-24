@@ -197,6 +197,16 @@ let init =
         Ecaml.Hook.add ~buffer_local:true ~where:Ecaml.Hook.Where.End
           Ecaml.Hook.before_save eglot_maybe_format_buffer)
   in
+  let enable_flyspell =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        Ecaml.Minor_mode.enable Ecamlx.Minor_mode.flyspell)
+  in
+  let ispell_change_to_fr_dictionary =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        Ecamlx.Ispell.change_dictionary "fr_FR")
+  in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
   Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
@@ -249,6 +259,24 @@ let init =
     (Ecamlx.Semantic.Submode.global_stickyfunc
     :: Ecaml.Customization.value Ecamlx.Semantic.default_submodes);
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.semantic;
+
+  (* Ispell *)
+
+  (* Use hunspell instead of aspell because hunspell has a better French
+     support. *)
+  Ecamlx.Customization.set_value Ecamlx.Ispell.program_name "hunspell";
+
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Text.major_mode)
+    enable_flyspell;
+
+  (* Switch to French dictionary when writing mails or LaTeX files.  *)
+  List.iter
+    (fun hook -> Ecaml.Hook.add hook ispell_change_to_fr_dictionary)
+    [
+      Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Message.major_mode;
+      Ecamlx.Auctex.Latex.mode_hook;
+    ];
 
   (* Filling *)
   Ecamlx.Customization.set_value Ecamlx.Current_buffer.fill_column 72;

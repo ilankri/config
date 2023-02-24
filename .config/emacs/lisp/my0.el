@@ -53,10 +53,6 @@
   (setq-local comment-start "/* ")
   (setq-local comment-end " */"))
 
-(defun my-ispell-change-to-fr-dictionary ()
-  (interactive)
-  (ispell-change-dictionary "fr_FR"))
-
 (defun my-ispell (dict)
   (let ((old-dict (or ispell-local-dictionary ispell-dictionary)))
     (ispell-change-dictionary dict)
@@ -120,18 +116,6 @@
   (require 'ocp-indent)
 
   (require 'dune)
-
-  ;; Ispell
-
-  ;; Use hunspell instead of aspell because hunspell has a better French
-  ;; support.
-  (custom-set-variables '(ispell-program-name "hunspell"))
-
-  (add-hook 'text-mode-hook 'flyspell-mode)
-
-  ;; Switch to French dictionary when writing mails or LaTeX files.
-  (my-add-hooks '(message-mode-hook LaTeX-mode-hook)
-                'my-ispell-change-to-fr-dictionary)
 
   ;; Auto-insert
 

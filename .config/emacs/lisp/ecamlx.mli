@@ -103,6 +103,7 @@ module Minor_mode : sig
   val minibuffer_depth_indicate : Ecaml.Minor_mode.t
   val global_auto_revert : Ecaml.Minor_mode.t
   val diff : Ecaml.Minor_mode.t
+  val flyspell : Ecaml.Minor_mode.t
 end
 
 module Regexp : sig
@@ -111,6 +112,12 @@ end
 
 module Ansi_color : sig
   val compilation_filter : unit -> unit
+end
+
+module Auctex : sig
+  module Latex : sig
+    val mode_hook : Ecaml.Hook.normal Ecaml.Hook.t
+  end
 end
 
 module Browse_url : sig
@@ -281,6 +288,9 @@ module Ispell : sig
     val change_dictionary : Ecaml.Command.t
     val ispell : Ecaml.Command.t
   end
+
+  val program_name : string Ecaml.Customization.t
+  val change_dictionary : ?globally:bool -> string -> unit
 end
 
 module Man : sig

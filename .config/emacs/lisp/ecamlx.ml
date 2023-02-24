@@ -232,6 +232,7 @@ module Minor_mode = struct
   let minibuffer_depth_indicate = make "minibuffer-depth-indicate-mode"
   let global_auto_revert = make "global-auto-revert-mode"
   let diff = make "diff-minor-mode"
+  let flyspell = make "flyspell-mode"
 end
 
 module Regexp = struct
@@ -247,6 +248,14 @@ module Ansi_color = struct
   let compilation_filter =
     let open Ecaml.Funcall.Wrap in
     "ansi-color-compilation-filter" <: nullary @-> return nil
+end
+
+module Auctex = struct
+  module Latex = struct
+    let mode_hook =
+      let open Ecaml.Hook.Wrap in
+      "LaTeX-mode-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+  end
 end
 
 module Browse_url = struct
@@ -836,6 +845,17 @@ module Ispell = struct
     let change_dictionary = Command.from_string "ispell-change-dictionary"
     let ispell = Command.from_string "ispell"
   end
+
+  let program_name =
+    let open Ecaml.Customization.Wrap in
+    "ispell-program-name" <: string
+
+  let change_dictionary ?globally dictionary =
+    let change_dictionary =
+      let open Ecaml.Funcall.Wrap in
+      "ispell-change-dictionary" <: string @-> nil_or bool @-> return nil
+    in
+    change_dictionary dictionary globally
 end
 
 module Semantic = struct
