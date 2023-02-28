@@ -71,7 +71,7 @@
 (defun my-c-initialization-hook-f ()
   (custom-set-variables '(c-default-style '((java-mode . "java")
                                             (awk-mode . "awk")
-                                            (other . "my-linux")))))
+                                            (other . "linux")))))
 
 (defun my-tuareg-mode-hook-f ()
   (setq-local comment-style 'indent)
@@ -125,8 +125,6 @@
   (auto-insert-mode 1)
 
   ;; CC mode
-  (c-add-style "my-linux" '("linux" (indent-tabs-mode . t)))
-
   (add-hook 'c-initialization-hook 'my-c-initialization-hook-f)
 
   ;; In java-mode and c++-mode, we use C style comments and not
