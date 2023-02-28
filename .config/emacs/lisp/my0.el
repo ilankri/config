@@ -69,9 +69,12 @@
 
 ;;; Hook functions
 (defun my-c-initialization-hook-f ()
-  (custom-set-variables '(c-default-style '((java-mode . "java")
-                                            (awk-mode . "awk")
-                                            (other . "linux")))))
+  (custom-set-variables '(c-default-style
+                          (mapcar (lambda (entry)
+                                    (if (equal (car entry) 'other)
+                                        '(other . "linux")
+                                      entry))
+                                  c-default-style))))
 
 (defun my-tuareg-mode-hook-f ()
   (setq-local comment-style 'indent)
