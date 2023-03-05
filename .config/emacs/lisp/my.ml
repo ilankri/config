@@ -182,6 +182,16 @@ let message_mode_hook_f =
         Ecamlx.Whitespace.action [];
       set_ispell_key ~local:true "o" Ecamlx.Ispell.Command.message)
 
+let c_initialization_hook_f =
+  hook_defun ~name:"c-initialization-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecamlx.Customization.set_value Ecamlx.Cc_mode.default_style
+        {
+          (Ecaml.Customization.value Ecamlx.Cc_mode.default_style) with
+          Ecamlx.Cc_mode.Default_style.other = Some "linux";
+        })
+
 let init =
   let open Ecaml.Defun.Let_syntax in
   return () >>| fun () ->
@@ -222,6 +232,10 @@ let init =
     hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
       ~returns:Ecaml.Value.Type.unit (fun () ->
         Ecamlx.Ispell.change_dictionary "fr_FR")
+  in
+  let c_trad_comment_on =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit c_trad_comment_on
   in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
@@ -445,6 +459,18 @@ let init =
          (* Scala 3 *)
        ]
     @ Ecaml.Customization.value Ecamlx.Compilation.error_regexp_alist);
+
+  (* CC mode *)
+  Ecaml.Hook.add Ecamlx.Cc_mode.initialization_hook c_initialization_hook_f;
+
+  (* In java-mode and c++-mode, we use C style comments and not
+     single-line comments. *)
+  List.iter
+    (fun (module Mode : Ecaml.Major_mode.S_with_lazy_keymap) ->
+      Ecaml.Hook.add
+        (Ecaml.Hook.major_mode_hook Mode.major_mode)
+        c_trad_comment_on)
+    [ (module Ecamlx.Major_mode.Java); (module Ecamlx.Major_mode.C_plus_plus) ];
 
   (* Scala *)
   Ecamlx.Customization.set_value

@@ -68,14 +68,6 @@
   (my-ispell "en_US"))
 
 ;;; Hook functions
-(defun my-c-initialization-hook-f ()
-  (custom-set-variables '(c-default-style
-                          (mapcar (lambda (entry)
-                                    (if (equal (car entry) 'other)
-                                        '(other . "linux")
-                                      entry))
-                                  c-default-style))))
-
 (defun my-tuareg-mode-hook-f ()
   (setq-local comment-style 'indent)
   (setq-local tuareg-interactive-program
@@ -126,13 +118,6 @@
   (custom-set-variables
    '(auto-insert-directory (my-prefix-by-user-emacs-directory "insert/")))
   (auto-insert-mode 1)
-
-  ;; CC mode
-  (add-hook 'c-initialization-hook 'my-c-initialization-hook-f)
-
-  ;; In java-mode and c++-mode, we use C style comments and not
-  ;; single-line comments.
-  (my-add-hooks '(java-mode-hook c++-mode-hook) 'my-c-trad-comment-on)
 
   ;; Tuareg
   (custom-set-variables '(tuareg-interactive-read-only-input t))
