@@ -271,6 +271,7 @@ let init =
          "git-modes";
          "dockerfile-mode";
          "auctex";
+         "proof-general";
        ]);
   Ecamlx.Package.initialize ();
 
