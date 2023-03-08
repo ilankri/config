@@ -31,9 +31,6 @@
 (defun my-add-hook (hook fs)
   (mapc (lambda (f) (add-hook hook f)) fs))
 
-(defun my-add-hooks (hooks f)
-  (mapc (lambda (hook) (add-hook hook f)) hooks))
-
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
