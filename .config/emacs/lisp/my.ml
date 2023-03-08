@@ -237,6 +237,17 @@ let init =
     hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
       ~returns:Ecaml.Value.Type.unit c_trad_comment_on
   in
+  let enable_latex_minor_modes =
+    hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+      ~returns:Ecaml.Value.Type.unit (fun () ->
+        List.iter Ecaml.Minor_mode.enable
+          [
+            Ecamlx.Auctex.Tex.Minor_mode.pdf;
+            Ecamlx.Auctex.Latex.Minor_mode.math;
+            Ecamlx.Auctex.Tex.Minor_mode.source_correlate;
+            Ecamlx.Minor_mode.reftex;
+          ])
+  in
   Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
   Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
@@ -487,6 +498,32 @@ let init =
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Markdown.major_mode)
     markdown_mode_hook_f;
+
+  (* LaTeX *)
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.auto_save true;
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.parse_self true;
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Latex.section_hook
+    [ `Heading; `Title; `Toc; `Section; `Label ];
+  Ecamlx.Customization.set_value Ecamlx.Reftex.plug_into_auctex
+    {
+      Ecamlx.Reftex.supply_labels_in_new_sections_and_environments = true;
+      supply_arguments_for_macros_like_label = true;
+      supply_arguments_for_macros_like_ref = true;
+      supply_arguments_for_macros_like_cite = true;
+      supply_arguments_for_macros_like_index = true;
+    };
+  Ecamlx.Customization.set_value Ecamlx.Reftex.enable_partial_scans true;
+  Ecamlx.Customization.set_value Ecamlx.Reftex.save_parse_info true;
+  Ecamlx.Customization.set_value Ecamlx.Reftex.use_multiple_selection_buffers
+    true;
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.electric_math
+    (Some ("$", "$"));
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.electric_sub_and_superscript
+    true;
+  Ecamlx.Customization.set_value Ecamlx.Auctex.font_latex_fontify_script
+    `Multi_level;
+  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.master `Query;
+  Ecaml.Hook.add Ecamlx.Auctex.Latex.mode_hook enable_latex_minor_modes;
 
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;

@@ -28,9 +28,6 @@
   (concat user-emacs-directory file))
 
 ;;; Auxiliary functions
-(defun my-add-hook (hook fs)
-  (mapc (lambda (f) (add-hook hook f)) fs))
-
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
    (concat auto-insert-directory
@@ -127,28 +124,6 @@
   ;; Proof general
   (custom-set-variables '(proof-splash-enable nil)
                         '(proof-three-window-mode-policy 'hybrid)
-                        '(coq-one-command-per-line nil))
-
-  ;; LaTeX
-  (custom-set-variables '(TeX-auto-save t)
-                        '(TeX-parse-self t)
-                        '(LaTeX-section-hook '(LaTeX-section-heading
-                                               LaTeX-section-title
-                                               LaTeX-section-toc
-                                               LaTeX-section-section
-                                               LaTeX-section-label))
-                        '(reftex-plug-into-AUCTeX t)
-                        '(reftex-enable-partial-scans t)
-                        '(reftex-save-parse-info t)
-                        '(reftex-use-multiple-selection-buffers t)
-                        '(TeX-electric-math (cons "$" "$"))
-                        '(TeX-electric-sub-and-superscript t)
-                        '(font-latex-fontify-script 'multi-level))
-
-  (custom-set-variables '(TeX-master nil))
-
-  (my-add-hook 'LaTeX-mode-hook
-               '(TeX-PDF-mode LaTeX-math-mode TeX-source-correlate-mode
-                              reftex-mode)))
+                        '(coq-one-command-per-line nil)))
 
 (provide 'my0)

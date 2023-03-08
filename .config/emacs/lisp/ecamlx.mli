@@ -107,6 +107,7 @@ module Minor_mode : sig
   val global_auto_revert : Ecaml.Minor_mode.t
   val diff : Ecaml.Minor_mode.t
   val flyspell : Ecaml.Minor_mode.t
+  val reftex : Ecaml.Minor_mode.t
 end
 
 module Regexp : sig
@@ -119,8 +120,35 @@ end
 
 module Auctex : sig
   module Latex : sig
+    module Minor_mode : sig
+      val math : Ecaml.Minor_mode.t
+    end
+
     val mode_hook : Ecaml.Hook.normal Ecaml.Hook.t
+
+    val section_hook :
+      [ `Heading | `Title | `Toc | `Section | `Label ] list
+      Ecaml.Customization.t
   end
+
+  module Tex : sig
+    module Minor_mode : sig
+      val pdf : Ecaml.Minor_mode.t
+      val source_correlate : Ecaml.Minor_mode.t
+    end
+
+    val auto_save : bool Ecaml.Customization.t
+    val parse_self : bool Ecaml.Customization.t
+    val electric_math : (string * string) option Ecaml.Customization.t
+    val electric_sub_and_superscript : bool Ecaml.Customization.t
+
+    val master :
+      [ `Query | `This_file | `Shared | `Dwim | `File of string ]
+      Ecaml.Customization.t
+  end
+
+  val font_latex_fontify_script :
+    [ `Yes | `No | `Multi_level | `Invisible ] Ecaml.Customization.t
 end
 
 module Browse_url : sig
@@ -345,6 +373,21 @@ module Package : sig
   val selected_packages : Ecaml.Symbol.t list Ecaml.Customization.t
   val initialize : ?no_activate:bool -> unit -> unit
   val install_selected_packages : ?no_confirm:bool -> unit -> unit
+end
+
+module Reftex : sig
+  type auctex_plugins = {
+    supply_labels_in_new_sections_and_environments : bool;
+    supply_arguments_for_macros_like_label : bool;
+    supply_arguments_for_macros_like_ref : bool;
+    supply_arguments_for_macros_like_cite : bool;
+    supply_arguments_for_macros_like_index : bool;
+  }
+
+  val plug_into_auctex : auctex_plugins Ecaml.Customization.t
+  val enable_partial_scans : bool Ecaml.Customization.t
+  val save_parse_info : bool Ecaml.Customization.t
+  val use_multiple_selection_buffers : bool Ecaml.Customization.t
 end
 
 module Scala_mode : sig

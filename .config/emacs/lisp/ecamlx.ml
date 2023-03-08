@@ -245,6 +245,7 @@ module Minor_mode = struct
   let global_auto_revert = make "global-auto-revert-mode"
   let diff = make "diff-minor-mode"
   let flyspell = make "flyspell-mode"
+  let reftex = make "reftex-mode"
 end
 
 module Regexp = struct
@@ -264,10 +265,127 @@ end
 
 module Auctex = struct
   module Latex = struct
+    module Minor_mode = struct
+      let math = Minor_mode.make "LaTeX-math-mode"
+    end
+
     let mode_hook =
       let open Ecaml.Hook.Wrap in
       "LaTeX-mode-hook" <: Ecaml.Hook.Hook_type.Normal_hook
+
+    let section_hook =
+      let type_ =
+        let module Type = struct
+          type t = [ `Heading | `Title | `Toc | `Section | `Label ]
+
+          let all = [ `Heading; `Title; `Toc; `Section; `Label ]
+
+          let sexp_of_t value =
+            let hook =
+              match value with
+              | `Heading -> "heading"
+              | `Title -> "title"
+              | `Toc -> "toc"
+              | `Section -> "section"
+              | `Label -> "label"
+            in
+            Sexplib0.Sexp.Atom (Format.sprintf "LaTeX-section-%s" hook)
+        end in
+        Value.Type.enum "LaTeX-section-hook" (module Type)
+      in
+      let open Ecaml.Customization.Wrap in
+      "LaTeX-section-hook" <: list type_
   end
+
+  module Tex = struct
+    module Minor_mode = struct
+      let pdf = Minor_mode.make "TeX-PDF-mode"
+      let source_correlate = Minor_mode.make "TeX-source-correlate-mode"
+    end
+
+    let auto_save =
+      let open Ecaml.Customization.Wrap in
+      "TeX-auto-save" <: bool
+
+    let parse_self =
+      let open Ecaml.Customization.Wrap in
+      "TeX-parse-self" <: bool
+
+    let electric_math =
+      let type_ =
+        let to_ value =
+          if Ecaml.Value.is_nil value then None
+          else
+            Some
+              ( value |> Ecaml.Value.car_exn |> Ecaml.Value.to_utf8_bytes_exn,
+                value |> Ecaml.Value.cdr_exn |> Ecaml.Value.to_utf8_bytes_exn )
+        in
+        let from = function
+          | None -> Ecaml.Value.nil
+          | Some (before, after) ->
+              Ecaml.Value.cons
+                (Ecaml.Value.of_utf8_bytes before)
+                (Ecaml.Value.of_utf8_bytes after)
+        in
+        let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+        Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "TeX-electric-math") to_sexp
+          to_ from
+      in
+      let open Ecaml.Customization.Wrap in
+      "TeX-electric-math" <: type_
+
+    let electric_sub_and_superscript =
+      let open Ecaml.Customization.Wrap in
+      "TeX-electric-sub-and-superscript" <: bool
+
+    let master =
+      let type_ =
+        let shared = Ecaml.Value.intern "shared" in
+        let dwim = Ecaml.Value.intern "dwim" in
+        let to_ value =
+          if Ecaml.Value.is_nil value then `Query
+          else if Ecaml.Value.eq value Ecaml.Value.t then `This_file
+          else if Ecaml.Value.eq value shared then `Shared
+          else if Ecaml.Value.eq value dwim then `Dwim
+          else `File (Ecaml.Value.to_utf8_bytes_exn value)
+        in
+        let from = function
+          | `Query -> Ecaml.Value.nil
+          | `This_file -> Ecaml.Value.t
+          | `Shared -> shared
+          | `Dwim -> dwim
+          | `File file -> Ecaml.Value.of_utf8_bytes file
+        in
+        let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+        Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "TeX-master") to_sexp to_
+          from
+      in
+      let open Ecaml.Customization.Wrap in
+      "TeX-master" <: type_
+  end
+
+  let font_latex_fontify_script =
+    let type_ =
+      let module Type = struct
+        type t = [ `Yes | `No | `Multi_level | `Invisible ]
+
+        let all = [ `Yes; `No; `Multi_level; `Invisible ]
+
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | `Yes -> "t"
+            | `No -> "nil"
+            | `Multi_level -> "multi-level"
+            | `Invisible -> "invisible"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "font-latex-fontify-script" (module Type)
+    in
+
+    let open Ecaml.Customization.Wrap in
+    "font-latex-fontify-script" <: type_
 end
 
 module Browse_url = struct
@@ -1110,6 +1228,95 @@ module Package = struct
       "package-install-selected-packages" <: nil_or bool @-> return string
     in
     ignore (install_selected_packages no_confirm)
+end
+
+module Reftex = struct
+  type auctex_plugins = {
+    supply_labels_in_new_sections_and_environments : bool;
+    supply_arguments_for_macros_like_label : bool;
+    supply_arguments_for_macros_like_ref : bool;
+    supply_arguments_for_macros_like_cite : bool;
+    supply_arguments_for_macros_like_index : bool;
+  }
+
+  let plug_into_auctex =
+    let type_ =
+      let to_ value =
+        if Ecaml.Value.eq value Ecaml.Value.t then
+          {
+            supply_labels_in_new_sections_and_environments = true;
+            supply_arguments_for_macros_like_label = true;
+            supply_arguments_for_macros_like_ref = true;
+            supply_arguments_for_macros_like_cite = true;
+            supply_arguments_for_macros_like_index = true;
+          }
+        else
+          match Ecaml.Value.to_list_exn ~f:Ecaml.Value.to_bool value with
+          | [ _ ]
+          | [ _; _ ]
+          | [ _; _; _ ]
+          | [ _; _; _; _ ]
+          | _ :: _ :: _ :: _ :: _ :: _ :: _ ->
+              assert false
+          | [] ->
+              {
+                supply_labels_in_new_sections_and_environments = false;
+                supply_arguments_for_macros_like_label = false;
+                supply_arguments_for_macros_like_ref = false;
+                supply_arguments_for_macros_like_cite = false;
+                supply_arguments_for_macros_like_index = false;
+              }
+          | [
+           supply_labels_in_new_sections_and_environments;
+           supply_arguments_for_macros_like_label;
+           supply_arguments_for_macros_like_ref;
+           supply_arguments_for_macros_like_cite;
+           supply_arguments_for_macros_like_index;
+          ] ->
+              {
+                supply_labels_in_new_sections_and_environments;
+                supply_arguments_for_macros_like_label;
+                supply_arguments_for_macros_like_ref;
+                supply_arguments_for_macros_like_cite;
+                supply_arguments_for_macros_like_index;
+              }
+      in
+      let from
+          {
+            supply_labels_in_new_sections_and_environments;
+            supply_arguments_for_macros_like_label;
+            supply_arguments_for_macros_like_ref;
+            supply_arguments_for_macros_like_cite;
+            supply_arguments_for_macros_like_index;
+          } =
+        [
+          supply_labels_in_new_sections_and_environments;
+          supply_arguments_for_macros_like_label;
+          supply_arguments_for_macros_like_ref;
+          supply_arguments_for_macros_like_cite;
+          supply_arguments_for_macros_like_index;
+        ]
+        |> List.map Ecaml.Value.of_bool
+        |> Ecaml.Value.list
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "reftex-plug-into-AUCTeX")
+        to_sexp to_ from
+    in
+    let open Ecaml.Customization.Wrap in
+    "reftex-plug-into-AUCTeX" <: type_
+
+  let enable_partial_scans =
+    let open Ecaml.Customization.Wrap in
+    "reftex-enable-partial-scans" <: bool
+
+  let save_parse_info =
+    let open Ecaml.Customization.Wrap in
+    "reftex-save-parse-info" <: bool
+
+  let use_multiple_selection_buffers =
+    let open Ecaml.Customization.Wrap in
+    "reftex-use-multiple-selection-buffers" <: bool
 end
 
 module Startup = struct
