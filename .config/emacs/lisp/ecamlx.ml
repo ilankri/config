@@ -385,7 +385,7 @@ module Compilation = struct
         let sexp_of_t value =
           let atom =
             match value with
-            | `Yes -> "yes"
+            | `Yes -> "t"
             | `No -> "nil"
             | `First_error -> "first-error"
           in
