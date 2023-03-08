@@ -526,6 +526,13 @@ let init =
   Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.master `Query;
   Ecaml.Hook.add Ecamlx.Auctex.Latex.mode_hook enable_latex_minor_modes;
 
+  (* Proof general *)
+  Ecamlx.Customization.set_value Ecamlx.Proof_general.splash_enable false;
+  Ecamlx.Customization.set_value Ecamlx.Proof_general.three_window_mode_policy
+    `Hybrid;
+  Ecamlx.Customization.set_value Ecamlx.Proof_general.Coq.one_command_per_line
+    false;
+
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
 

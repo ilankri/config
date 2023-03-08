@@ -375,6 +375,17 @@ module Package : sig
   val install_selected_packages : ?no_confirm:bool -> unit -> unit
 end
 
+module Proof_general : sig
+  module Coq : sig
+    val one_command_per_line : bool Ecaml.Customization.t
+  end
+
+  val splash_enable : bool Ecaml.Customization.t
+
+  val three_window_mode_policy :
+    [ `Smart | `Horizontal | `Hybrid | `Vertical ] Ecaml.Customization.t
+end
+
 module Reftex : sig
   type auctex_plugins = {
     supply_labels_in_new_sections_and_environments : bool;

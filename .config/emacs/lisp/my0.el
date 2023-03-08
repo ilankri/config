@@ -119,11 +119,6 @@
   (add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f)
 
   ;; Reason
-  (add-hook 'reason-mode-hook 'my-reason-mode-hook-f)
-
-  ;; Proof general
-  (custom-set-variables '(proof-splash-enable nil)
-                        '(proof-three-window-mode-policy 'hybrid)
-                        '(coq-one-command-per-line nil)))
+  (add-hook 'reason-mode-hook 'my-reason-mode-hook-f))
 
 (provide 'my0)
