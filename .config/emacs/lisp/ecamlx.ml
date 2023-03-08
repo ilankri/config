@@ -400,7 +400,7 @@ module Compilation = struct
     let type_ =
       let to_ value =
         if Ecaml.Value.eq value Ecaml.Value.t then `Never_scroll
-        else if Ecaml.Value.eq value Ecaml.Value.nil then `Scroll_when_no_fringe
+        else if Ecaml.Value.is_nil value then `Scroll_when_no_fringe
         else if Ecaml.Value.is_integer value then
           `Number_of_lines (Ecaml.Value.to_int_exn value)
         else assert false
@@ -706,7 +706,7 @@ module Eldoc = struct
       in
       let to_ value =
         if Ecaml.Value.eq value Ecaml.Value.t then `Always
-        else if Ecaml.Value.eq value Ecaml.Value.nil then `Never
+        else if Ecaml.Value.is_nil value then `Never
         else if Ecaml.Value.eq value truncate_sym_name_if_fit then
           `Truncate_sym_name_if_fit
         else if Ecaml.Value.is_integer value then
