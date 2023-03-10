@@ -96,8 +96,6 @@
 
   (require 'ocp-indent)
 
-  (require 'dune)
-
   ;; Auto-insert
 
   ;; Prompt the user for the appropriate Makefile type to insert.
