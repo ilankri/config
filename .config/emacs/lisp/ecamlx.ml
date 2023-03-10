@@ -246,6 +246,7 @@ module Minor_mode = struct
   let diff = make "diff-minor-mode"
   let flyspell = make "flyspell-mode"
   let reftex = make "reftex-mode"
+  let auto_insert = make "auto-insert-mode"
 end
 
 module Regexp = struct
@@ -386,6 +387,52 @@ module Auctex = struct
 
     let open Ecaml.Customization.Wrap in
     "font-latex-fontify-script" <: type_
+end
+
+module Auto_insert = struct
+  let define ?after ?description condition actions =
+    let define =
+      let condition =
+        let to_ value =
+          if Ecaml.Value.is_symbol value then
+            `Major_mode
+              (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__)
+                 (Ecaml.Symbol.of_value_exn value))
+          else `Regexp (Ecaml.Regexp.of_value_exn value)
+        in
+        let from = function
+          | `Major_mode m ->
+              m |> Ecaml.Major_mode.symbol |> Ecaml.Symbol.to_value
+          | `Regexp r -> Ecaml.Regexp.to_value r
+        in
+        let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+        Ecaml.Value.Type.create
+          (Sexplib0.Sexp.Atom "define-auto-insert-condition") to_sexp to_ from
+      in
+      let action =
+        let to_ value =
+          if Ecaml.Value.is_function value then
+            `Function (Ecaml.Function.of_value_exn value)
+          else `File (Ecaml.Value.to_utf8_bytes_exn value)
+        in
+        let from = function
+          | `Function f -> Ecaml.Function.to_value f
+          | `File f -> Ecaml.Value.of_utf8_bytes f
+        in
+        let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+        Ecaml.Value.Type.create (Sexplib0.Sexp.Atom "define-auto-insert-action")
+          to_sexp to_ from
+      in
+      let open Ecaml.Funcall.Wrap in
+      "define-auto-insert"
+      <: tuple condition (nil_or string)
+         @-> action @-> nil_or bool @-> return nil
+    in
+    define (condition, description) actions after
+
+  let directory =
+    let open Ecaml.Customization.Wrap in
+    "auto-insert-directory" <: string
 end
 
 module Browse_url = struct

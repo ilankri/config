@@ -76,6 +76,8 @@ module Function = struct
     prefix_name name |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
 
   let scala3_end_column () = from_string "scala3-end-column"
+  let makefile_auto_insert () = from_string "makefile-auto-insert"
+  let gitignore_auto_insert () = from_string "gitignore-auto-insert"
 end
 
 let prefix_by_user_emacs_directory =
@@ -294,6 +296,20 @@ let init =
     [ `Document_highlight_provider ];
   Ecaml.Var.set_default_value Ecamlx.Eglot.stay_out_of
     [ `Symbol (Ecaml.Symbol.intern "flymake") ];
+
+  (* Auto-insert *)
+
+  (* Prompt the user for the appropriate Makefile type to insert.  *)
+  Ecamlx.Auto_insert.define ~description:"Makefile"
+    (`Regexp (Ecaml.Regexp.of_pattern "[Mm]akefile\\'"))
+    (`Function (Function.makefile_auto_insert ()));
+
+  Ecamlx.Auto_insert.define ~description:".gitignore file"
+    (`Regexp (Ecaml.Regexp.of_pattern ".gitignore\\'"))
+    (`Function (Function.gitignore_auto_insert ()));
+  Ecamlx.Customization.set_value Ecamlx.Auto_insert.directory
+    (prefix_by_user_emacs_directory "insert/");
+  Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_insert;
 
   (* Semantic *)
   Ecamlx.Customization.set_value Ecamlx.Semantic.default_submodes

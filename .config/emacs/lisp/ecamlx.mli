@@ -108,6 +108,7 @@ module Minor_mode : sig
   val diff : Ecaml.Minor_mode.t
   val flyspell : Ecaml.Minor_mode.t
   val reftex : Ecaml.Minor_mode.t
+  val auto_insert : Ecaml.Minor_mode.t
 end
 
 module Regexp : sig
@@ -149,6 +150,17 @@ module Auctex : sig
 
   val font_latex_fontify_script :
     [ `Yes | `No | `Multi_level | `Invisible ] Ecaml.Customization.t
+end
+
+module Auto_insert : sig
+  val define :
+    ?after:bool ->
+    ?description:string ->
+    [ `Regexp of Ecaml.Regexp.t | `Major_mode of Ecaml.Major_mode.t ] ->
+    [ `File of string | `Function of Ecaml.Function.t ] ->
+    unit
+
+  val directory : string Ecaml.Customization.t
 end
 
 module Browse_url : sig

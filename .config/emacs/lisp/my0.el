@@ -87,18 +87,6 @@
 (defun my-init ()
   (require 'debian-el)
 
-  ;; Auto-insert
-
-  ;; Prompt the user for the appropriate Makefile type to insert.
-  (define-auto-insert '("[Mm]akefile\\'" . "Makefile") 'my-makefile-auto-insert)
-
-  (define-auto-insert '(".gitignore\\'" . ".gitignore file")
-    'my-gitignore-auto-insert)
-
-  (custom-set-variables
-   '(auto-insert-directory (my-prefix-by-user-emacs-directory "insert/")))
-  (auto-insert-mode 1)
-
   ;; Tuareg
   (custom-set-variables '(tuareg-interactive-read-only-input t))
 
