@@ -91,8 +91,7 @@
   (kill-buffer))
 
 (defun my-init ()
-  ;; APT
-  (require 'apt-sources)           ; To force update of `auto-mode-alist'.
+  (require 'debian-el)
 
   (require 'ocp-indent)
 
