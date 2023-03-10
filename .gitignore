@@ -33,8 +33,6 @@
 !/.config/ocaml/init.ml
 !/.latex/
 !/.latex/preamble.tex
-!/.ocp/
-!/.ocp/ocp-indent.conf
 !/.inputrc
 !/bin/
 !/bin/my-display-date

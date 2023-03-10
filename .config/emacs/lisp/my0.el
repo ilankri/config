@@ -40,9 +40,6 @@
 (defun my-gitignore-auto-insert ()
   (my-prompt-file-for-auto-insert "gitignore"))
 
-(defun my-ocp-indent-auto-insert ()
-  (insert-file-contents "~/.ocp/ocp-indent.conf"))
-
 (defun my-c-trad-comment-on ()
   (setq-local comment-start "/* ")
   (setq-local comment-end " */"))
@@ -68,10 +65,7 @@
               (concat tuareg-interactive-program " -nopromptcont"))
   (let ((ext (file-name-extension buffer-file-name)))
     (when (member ext '("mll" "mly"))
-      (electric-indent-local-mode 0))
-    (when (string-equal ext "mly")
-      (setq-local indent-line-function 'ocp-indent-line)
-      (setq-local indent-region-function 'ocp-indent-region)))
+      (electric-indent-local-mode 0)))
   (local-unset-key (kbd "C-c C-h"))
   (local-set-key (kbd "C-c ?") 'caml-help))
 
@@ -93,8 +87,6 @@
 (defun my-init ()
   (require 'debian-el)
 
-  (require 'ocp-indent)
-
   ;; Auto-insert
 
   ;; Prompt the user for the appropriate Makefile type to insert.
@@ -102,9 +94,6 @@
 
   (define-auto-insert '(".gitignore\\'" . ".gitignore file")
     'my-gitignore-auto-insert)
-
-  (define-auto-insert '(".ocp-indent\\'" . ".ocp-indent file")
-    'my-ocp-indent-auto-insert)
 
   (custom-set-variables
    '(auto-insert-directory (my-prefix-by-user-emacs-directory "insert/")))

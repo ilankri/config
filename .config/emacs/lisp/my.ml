@@ -266,7 +266,6 @@ let init =
          "eglot";
          "yaml-mode";
          "tuareg";
-         "ocp-indent";
          "dune";
          "git-modes";
          "dockerfile-mode";
