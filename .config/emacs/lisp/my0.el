@@ -60,9 +60,6 @@
 
 ;;; Hook functions
 (defun my-tuareg-mode-hook-f ()
-  (setq-local comment-style 'indent)
-  (setq-local tuareg-interactive-program
-              (concat tuareg-interactive-program " -nopromptcont"))
   (let ((ext (file-name-extension buffer-file-name)))
     (when (member ext '("mll" "mly"))
       (electric-indent-local-mode 0)))
