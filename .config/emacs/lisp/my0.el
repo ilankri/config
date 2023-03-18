@@ -69,10 +69,6 @@
   (local-unset-key (kbd "C-c C-h"))
   (local-set-key (kbd "C-c ?") 'caml-help))
 
-(defun my-reason-mode-hook-f ()
-  (setq ff-other-file-alist '(("\\.rei\\'" (".re"))
-                              ("\\.re\\'" (".rei")))))
-
 (defun my-git-grep ()
   (interactive)
   (require 'grep)
@@ -90,9 +86,6 @@
   ;; Tuareg
   (custom-set-variables '(tuareg-interactive-read-only-input t))
 
-  (add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f)
-
-  ;; Reason
-  (add-hook 'reason-mode-hook 'my-reason-mode-hook-f))
+  (add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f))
 
 (provide 'my0)
