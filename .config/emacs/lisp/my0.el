@@ -60,11 +60,7 @@
 
 ;;; Hook functions
 (defun my-tuareg-mode-hook-f ()
-  (let ((ext (file-name-extension buffer-file-name)))
-    (when (member ext '("mll" "mly"))
-      (electric-indent-local-mode 0)))
-  (local-unset-key (kbd "C-c C-h"))
-  (local-set-key (kbd "C-c ?") 'caml-help))
+  (local-unset-key (kbd "C-c C-h")))
 
 (defun my-git-grep ()
   (interactive)
