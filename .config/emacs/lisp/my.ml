@@ -203,10 +203,6 @@ let tuareg_mode_hook_f =
 let init =
   let open Ecaml.Defun.Let_syntax in
   return () >>| fun () ->
-  let init =
-    let open Ecaml.Funcall.Wrap in
-    "my-init" <: nullary @-> Ecaml.Funcall.Wrap.return nil
-  in
   let enable_auto_fill =
     hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
       ~returns:Ecaml.Value.Type.unit (fun () ->
@@ -285,7 +281,7 @@ let init =
   (* Ensure that packages are installed.  *)
   Ecamlx.Package.install_selected_packages ();
 
-  init ();
+  Ecaml.Feature.require Ecamlx.Debian_el.feature;
 
   (* Eglot *)
   List.iter

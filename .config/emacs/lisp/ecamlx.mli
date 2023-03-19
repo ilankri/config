@@ -241,6 +241,10 @@ module Compilation : sig
     Ecaml.Customization.t
 end
 
+module Debian_el : sig
+  val feature : Ecaml.Feature.t
+end
+
 module Diff_mode : sig
   module Refine : sig
     type t = Font_lock | Navigation

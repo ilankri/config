@@ -831,6 +831,10 @@ module Compilation = struct
     "compilation-error-regexp-alist" <: list type_
 end
 
+module Debian_el = struct
+  let feature = Ecaml.Symbol.intern "debian-el"
+end
+
 module Diff_mode = struct
   module Refine = struct
     type t = Font_lock | Navigation

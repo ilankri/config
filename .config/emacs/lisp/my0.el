@@ -69,7 +69,4 @@
   (interactive)
   (kill-buffer))
 
-(defun my-init ()
-  (require 'debian-el))
-
 (provide 'my0)
