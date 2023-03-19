@@ -58,10 +58,6 @@
   (interactive)
   (my-ispell "en_US"))
 
-;;; Hook functions
-(defun my-tuareg-mode-hook-f ()
-  (local-unset-key (kbd "C-c C-h")))
-
 (defun my-git-grep ()
   (interactive)
   (require 'grep)
@@ -74,11 +70,6 @@
   (kill-buffer))
 
 (defun my-init ()
-  (require 'debian-el)
-
-  ;; Tuareg
-  (custom-set-variables '(tuareg-interactive-read-only-input t))
-
-  (add-hook 'tuareg-mode-hook 'my-tuareg-mode-hook-f))
+  (require 'debian-el))
 
 (provide 'my0)

@@ -16,6 +16,7 @@ val defun :
 
 val global_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
 val local_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+val local_unset_key : Ecaml.Key_sequence.t -> unit
 val mode_line_compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
 val track_eol : bool Ecaml.Customization.t
 val shell_file_name : string Ecaml.Customization.t
@@ -450,6 +451,10 @@ end
 module Term : sig
   val buffer_maximum_size : int Ecaml.Customization.t
   val ansi_term : ?new_buffer_name:string -> string -> Ecaml.Buffer.t
+end
+
+module Tuareg : sig
+  val interactive_read_only_input : bool Ecaml.Customization.t
 end
 
 module Vc : sig

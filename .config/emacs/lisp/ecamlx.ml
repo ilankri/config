@@ -20,6 +20,10 @@ let local_set_key =
   "local-set-key"
   <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
 
+let local_unset_key =
+  let open Ecaml.Funcall.Wrap in
+  "local-unset-key" <: Ecaml.Key_sequence.type_ @-> return nil
+
 module Value = struct
   module Type = struct
     let enum (type a) name (module Type : Enum.S with type t = a) =
@@ -1445,6 +1449,12 @@ module Term = struct
       "ansi-term" <: string @-> nil_or string @-> return Ecaml.Buffer.type_
     in
     ansi_term program new_buffer_name
+end
+
+module Tuareg = struct
+  let interactive_read_only_input =
+    let open Ecaml.Customization.Wrap in
+    "tuareg-interactive-read-only-input" <: bool
 end
 
 module Vc = struct

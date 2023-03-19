@@ -194,6 +194,12 @@ let c_initialization_hook_f =
           Ecamlx.Cc_mode.Default_style.other = Some "linux";
         })
 
+let tuareg_mode_hook_f =
+  hook_defun ~name:"tuareg-mode-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () ->
+      Ecamlx.local_unset_key @@ Ecaml.Key_sequence.create_exn "C-c C-h")
+
 let init =
   let open Ecaml.Defun.Let_syntax in
   return () >>| fun () ->
@@ -547,6 +553,12 @@ let init =
     `Hybrid;
   Ecamlx.Customization.set_value Ecamlx.Proof_general.Coq.one_command_per_line
     false;
+
+  (* Tuareg *)
+  Ecamlx.Customization.set_value Ecamlx.Tuareg.interactive_read_only_input true;
+  Ecaml.Hook.add
+    (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Tuareg.major_mode)
+    tuareg_mode_hook_f;
 
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
