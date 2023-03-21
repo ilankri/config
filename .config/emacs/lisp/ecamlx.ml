@@ -61,6 +61,10 @@ let shell_file_name =
   let open Ecaml.Customization.Wrap in
   "shell-file-name" <: string
 
+let user_emacs_directory =
+  let open Ecaml.Var.Wrap in
+  "user-emacs-directory" <: string
+
 module Command = struct
   let from_string name =
     name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn

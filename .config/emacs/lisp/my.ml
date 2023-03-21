@@ -80,9 +80,8 @@ module Function = struct
   let gitignore_auto_insert () = from_string "gitignore-auto-insert"
 end
 
-let prefix_by_user_emacs_directory =
-  let open Ecaml.Funcall.Wrap in
-  prefix_name "prefix-by-user-emacs-directory" <: string @-> return string
+let prefix_by_user_emacs_directory file =
+  Ecaml.Var.default_value_exn Ecamlx.user_emacs_directory ^ file
 
 let c_trad_comment_on () =
   Ecamlx.Current_buffer.set_buffer_local Ecamlx.Comment.start "/* ";

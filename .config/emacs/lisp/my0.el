@@ -24,9 +24,6 @@
     (set-window-buffer-start-and-point w1 w2buf w2start w2pt)
     (set-window-buffer-start-and-point w2 w1buf w1start w1pt)))
 
-(defun my-prefix-by-user-emacs-directory (file)
-  (concat user-emacs-directory file))
-
 ;;; Auxiliary functions
 (defun my-prompt-file-for-auto-insert (filename)
   (insert-file-contents
