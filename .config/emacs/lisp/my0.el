@@ -25,18 +25,6 @@
     (set-window-buffer-start-and-point w2 w1buf w1start w1pt)))
 
 ;;; Auxiliary functions
-(defun my-prompt-file-for-auto-insert (filename)
-  (insert-file-contents
-   (concat auto-insert-directory
-           (completing-read "Type: " '("c" "java" "latex" "ocaml") nil t)
-           "/" filename)))
-
-(defun my-makefile-auto-insert ()
-  (my-prompt-file-for-auto-insert "Makefile"))
-
-(defun my-gitignore-auto-insert ()
-  (my-prompt-file-for-auto-insert "gitignore"))
-
 (defun my-ispell (dict)
   (let ((old-dict (or ispell-local-dictionary ispell-dictionary)))
     (ispell-change-dictionary dict)

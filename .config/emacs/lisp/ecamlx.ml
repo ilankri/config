@@ -10,6 +10,9 @@ let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
     ?define_keys ?obsoletes ?should_profile ?interactive ?disabled ?evil_config
     returns f
 
+let lambda ~__POS__ ?docstring ?interactive ~returns f =
+  Ecaml.lambda (position ~__POS__) ?docstring ?interactive returns f
+
 let global_set_key =
   let open Ecaml.Funcall.Wrap in
   "global-set-key"

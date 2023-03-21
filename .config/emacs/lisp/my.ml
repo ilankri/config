@@ -76,8 +76,31 @@ module Function = struct
     prefix_name name |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
 
   let scala3_end_column () = from_string "scala3-end-column"
-  let makefile_auto_insert () = from_string "makefile-auto-insert"
-  let gitignore_auto_insert () = from_string "gitignore-auto-insert"
+
+  let prompt_file_for_auto_insert filename =
+    let open Async_kernel.Deferred.Let_syntax in
+    Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
+      ~collection:
+        (Ecaml.Completing.Collection.create_elisp
+           [ "c"; "java"; "latex"; "ocaml" ])
+      ~require_match:Ecaml.Completing.Require_match.True ~prompt:"Type: " ()
+    >>| fun type_ ->
+    Ecaml.Point.insert_file_contents_exn
+      (Format.sprintf "%s%s/%s"
+         (Ecaml.Customization.value Ecamlx.Auto_insert.directory)
+         type_ filename)
+
+  let makefile_auto_insert () =
+    Ecamlx.lambda ~__POS__
+      ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () -> prompt_file_for_auto_insert "Makefile")
+
+  let gitignore_auto_insert () =
+    Ecamlx.lambda ~__POS__
+      ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () -> prompt_file_for_auto_insert "gitignore")
 end
 
 let prefix_by_user_emacs_directory file =
