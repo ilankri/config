@@ -43,8 +43,7 @@
   (interactive)
   (require 'grep)
   (require 'vc-git)
-  (let ((current-prefix-arg '(4)))
-    (vc-git-grep (grep-read-regexp) "" (vc-root-dir))))
+  (vc-git-grep (grep-read-regexp) "" (vc-root-dir)))
 
 (defun my-kill-current-buffer ()
   (interactive)
