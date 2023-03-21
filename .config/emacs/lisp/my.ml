@@ -84,9 +84,9 @@ let prefix_by_user_emacs_directory =
   let open Ecaml.Funcall.Wrap in
   prefix_name "prefix-by-user-emacs-directory" <: string @-> return string
 
-let c_trad_comment_on =
-  let open Ecaml.Funcall.Wrap in
-  prefix_name "c-trad-comment-on" <: nullary @-> return nil
+let c_trad_comment_on () =
+  Ecamlx.Current_buffer.set_buffer_local Ecamlx.Comment.start "/* ";
+  Ecamlx.Current_buffer.set_buffer_local Ecamlx.Comment.end_ " */"
 
 let init_package_archives () =
   Ecaml.Feature.require Ecamlx.Package.feature;

@@ -40,10 +40,6 @@
 (defun my-gitignore-auto-insert ()
   (my-prompt-file-for-auto-insert "gitignore"))
 
-(defun my-c-trad-comment-on ()
-  (setq-local comment-start "/* ")
-  (setq-local comment-end " */"))
-
 (defun my-ispell (dict)
   (let ((old-dict (or ispell-local-dictionary ispell-dictionary)))
     (ispell-change-dictionary dict)
