@@ -340,6 +340,11 @@ module Git_commit : sig
   val setup_hook : Ecaml.Hook.normal Ecaml.Hook.t
 end
 
+module Grep : sig
+  val feature : Ecaml.Feature.t
+  val read_regexp : unit -> Ecaml.Regexp.t
+end
+
 module Imenu : sig
   module Command : sig
     val imenu : Ecaml.Command.t
@@ -477,6 +482,12 @@ module Vc : sig
     [ `Ask | `Visit_link_and_warn | `Follow_link ] Ecaml.Customization.t
 
   val command_messages : bool Ecaml.Customization.t
+  val root_dir : unit -> string option
+
+  module Git : sig
+    val feature : Ecaml.Feature.t
+    val grep : ?files:string -> ?dir:string -> Ecaml.Regexp.t -> unit
+  end
 end
 
 module Whitespace : sig

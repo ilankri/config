@@ -39,12 +39,6 @@
   (interactive)
   (my-ispell "en_US"))
 
-(defun my-git-grep ()
-  (interactive)
-  (require 'grep)
-  (require 'vc-git)
-  (vc-git-grep (grep-read-regexp) "" (vc-root-dir)))
-
 (defun my-kill-current-buffer ()
   (interactive)
   (kill-buffer))

@@ -47,6 +47,17 @@ let _ansi_term =
              ~default:(Ecaml.Customization.value Ecamlx.shell_file_name)
              (Ecaml.System.getenv ~var:"ESHELL"))))
 
+let _git_grep =
+  defun ~name:"git-grep" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.No_arg
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| fun () ->
+    Ecaml.Feature.require Ecamlx.Grep.feature;
+    Ecaml.Feature.require Ecamlx.Vc.Git.feature;
+    Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
+      (Ecamlx.Grep.read_regexp ()))
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn

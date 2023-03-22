@@ -1102,6 +1102,14 @@ module Git_commit = struct
     "git-commit-setup-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 end
 
+module Grep = struct
+  let feature = Ecaml.Symbol.intern "grep"
+
+  let read_regexp =
+    let open Ecaml.Funcall.Wrap in
+    "grep-read-regexp" <: nullary @-> return Ecaml.Regexp.t
+end
+
 module Imenu = struct
   module Command = struct
     let imenu = Command.from_string "imenu"
@@ -1501,6 +1509,22 @@ module Vc = struct
   let command_messages =
     let open Ecaml.Customization.Wrap in
     "vc-command-messages" <: bool
+
+  let root_dir =
+    let open Ecaml.Funcall.Wrap in
+    "vc-root-dir" <: nullary @-> return (nil_or string)
+
+  module Git = struct
+    let feature = Ecaml.Symbol.intern "vc-git"
+
+    let grep ?files ?dir regexp =
+      let grep =
+        let open Ecaml.Funcall.Wrap in
+        "vc-git-grep"
+        <: Ecaml.Regexp.t @-> nil_or string @-> nil_or string @-> return nil
+      in
+      grep regexp files dir
+  end
 end
 
 module Whitespace = struct
