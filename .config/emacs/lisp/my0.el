@@ -1,10 +1,3 @@
-(defun my-compile (&optional arg)
-  (interactive "P")
-  (require 'compile)
-  (if arg
-      (compile (compilation-read-command compile-command))
-    (recompile)))
-
 (defun my-indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))

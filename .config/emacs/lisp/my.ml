@@ -65,6 +65,19 @@ let _kill_current_buffer =
     (let open Ecaml.Defun.Let_syntax in
     return () >>| Ecaml.Current_buffer.kill)
 
+let _compile =
+  defun ~name:"compile" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+    (let open Ecaml.Defun.Let_syntax in
+    Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
+    >>| fun arg ->
+    Ecaml.Feature.require Ecamlx.Compilation.feature;
+    if arg then
+      Ecamlx.Compilation.compile @@ Ecamlx.Compilation.read_command
+      @@ Ecaml.Customization.value Ecamlx.Compilation.command
+    else Ecamlx.Compilation.recompile ())
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn

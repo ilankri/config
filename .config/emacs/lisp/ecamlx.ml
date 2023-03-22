@@ -605,6 +605,28 @@ module Compilation = struct
     let open Ecaml.Hook.Wrap in
     "compilation-filter-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 
+  let compile ?comint command =
+    let compile =
+      let open Ecaml.Funcall.Wrap in
+      "compile" <: string @-> nil_or bool @-> return nil
+    in
+    compile command comint
+
+  let recompile ?edit_command () =
+    let recompile =
+      let open Ecaml.Funcall.Wrap in
+      "recompile" <: nil_or bool @-> return nil
+    in
+    recompile edit_command
+
+  let command =
+    let open Ecaml.Customization.Wrap in
+    "compile-command" <: string
+
+  let read_command =
+    let open Ecaml.Funcall.Wrap in
+    "compilation-read-command" <: string @-> return string
+
   module Error_matcher = struct
     type subexpression = int
 
