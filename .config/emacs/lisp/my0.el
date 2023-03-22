@@ -39,8 +39,4 @@
   (interactive)
   (my-ispell "en_US"))
 
-(defun my-kill-current-buffer ()
-  (interactive)
-  (kill-buffer))
-
 (provide 'my0)

@@ -58,6 +58,13 @@ let _git_grep =
     Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
       (Ecamlx.Grep.read_regexp ()))
 
+let _kill_current_buffer =
+  defun ~name:"kill-current-buffer" ~__POS__
+    ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.No_arg
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| Ecaml.Current_buffer.kill)
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
