@@ -1,7 +1,3 @@
-(defun my-indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
 ;; Inspired by https://www.emacswiki.org/emacs/TransposeWindows.
 (defun my-transpose-windows (count)
   (interactive "p")

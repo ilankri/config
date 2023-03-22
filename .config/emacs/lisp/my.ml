@@ -78,6 +78,15 @@ let _compile =
       @@ Ecaml.Customization.value Ecamlx.Compilation.command
     else Ecamlx.Compilation.recompile ())
 
+let _indent_buffer =
+  defun ~name:"indent-buffer" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.No_arg
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| fun () ->
+    Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
+      ~end_:(Ecaml.Point.max ()) ())
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
