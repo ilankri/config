@@ -1,4 +1,4 @@
-(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(add-to-list 'load-path (concat user-emacs-directory "lib"))
 
 (custom-set-variables '(load-prefer-newer t))
 

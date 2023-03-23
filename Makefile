@@ -1,12 +1,12 @@
 SHELL = /bin/sh
 DOCKER_IMAGE_TAG = ilankri-dotfiles
 
-elispdir = ~/.config/emacs/lisp
+elibdir = ~/.config/emacs/lib
 print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-emacs compile-emacs-lisp	\
+.PHONY: all install clean install-bash install-emacs compile-emacs-lib	\
 	docker-build docker-debug-emacs-init
 
 all: install
@@ -15,7 +15,7 @@ install: install-bash install-emacs
 
 clean:
 	@echo "Cleaning..."
-	@$(MAKE) -C $(elispdir) clean
+	@$(MAKE) -C $(elibdir) clean
 	@$(print_done)
 
 install-bash:
@@ -27,15 +27,15 @@ install-bash:
 		>> ~/.bashrc
 	@$(print_done)
 
-install-emacs: compile-emacs-lisp
+install-emacs: compile-emacs-lib
 	@$(print_installing) Emacs
-	@emacs --batch --directory $(elispdir) --load $(elispdir)/my.so	\
+	@emacs --batch --directory $(elibdir) --load $(elibdir)/my.so	\
 		--funcall my-init-packages
 	@$(print_done)
 
-compile-emacs-lisp:
-	@echo "Compiling Elisp files..."
-	@$(MAKE) -C $(elispdir) build
+compile-emacs-lib:
+	@echo "Compiling Emacs library files..."
+	@$(MAKE) -C $(elibdir) build
 	@$(print_done)
 
 docker-build:
