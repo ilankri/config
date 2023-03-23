@@ -552,6 +552,15 @@ module Windmove : sig
   end
 end
 
+module Window : sig
+  val set_buffer_start_and_point :
+    ?start:Ecaml.Position.t ->
+    ?point:Ecaml.Position.t ->
+    buffer:Ecaml.Buffer.t ->
+    Ecaml.Window.t ->
+    unit
+end
+
 module Winner : sig
   module Command : sig
     val undo : unit -> Ecaml.Command.t

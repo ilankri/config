@@ -87,6 +87,32 @@ let _indent_buffer =
     Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
       ~end_:(Ecaml.Point.max ()) ())
 
+(* Inspired by https://www.emacswiki.org/emacs/TransposeWindows.  *)
+let _transpose_windows =
+  defun ~name:"transpose-windows" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+    (let open Ecaml.Defun.Let_syntax in
+    Ecaml.Defun.optional_with_default "count" 1 Ecaml.Defun.int >>| fun count ->
+    match Ecaml.Frame.window_list () with
+    | [] -> assert false
+    | w1 :: _ as ws ->
+        let w1buf = Ecaml.Window.buffer_exn w1 in
+        let w1start = Ecaml.Window.start w1 in
+        let w1pt = Ecaml.Window.point_exn w1 in
+        let w2 =
+          match List.nth_opt ws (count mod List.length ws) with
+          | None -> assert false
+          | Some w2 -> w2
+        in
+        let w2buf = Ecaml.Window.buffer_exn w2 in
+        let w2start = Ecaml.Window.start w2 in
+        let w2pt = Ecaml.Window.point_exn w2 in
+        Ecamlx.Window.set_buffer_start_and_point ~buffer:w2buf ~start:w2start
+          ~point:w2pt w1;
+        Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
+          ~point:w1pt w2)
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
