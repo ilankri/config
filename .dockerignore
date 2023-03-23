@@ -14,7 +14,6 @@
 !.config/emacs/lisp/ecamlx.mli
 !.config/emacs/lisp/emacs-config.opam
 !.config/emacs/lisp/my.ml
-!.config/emacs/lisp/my0.el
 !.config/gh/config.yml
 !.config/git/config
 !.config/git/ignore

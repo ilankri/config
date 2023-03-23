@@ -113,6 +113,32 @@ let _transpose_windows =
         Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
           ~point:w1pt w2)
 
+let ispell dict =
+  let old_dict =
+    match Ecaml.Customization.value Ecamlx.Ispell.local_dictionary with
+    | Some old_dict -> old_dict
+    | None ->
+        Option.value ~default:"default"
+          (Ecaml.Customization.value Ecamlx.Ispell.dictionary)
+  in
+  Ecamlx.Ispell.change_dictionary dict;
+  Ecamlx.Ispell.ispell ();
+  Ecamlx.Ispell.change_dictionary old_dict
+
+let _ispell_fr =
+  defun ~name:"ispell-fr" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.No_arg
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| fun () -> ispell "fr_FR")
+
+let _ispell_en =
+  defun ~name:"ispell-en" ~__POS__
+    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+    ~interactive:Ecaml.Defun.Interactive.No_arg
+    (let open Ecaml.Defun.Let_syntax in
+    return () >>| fun () -> ispell "en_US")
+
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
@@ -340,7 +366,6 @@ let init =
             Ecamlx.Minor_mode.reftex;
           ])
   in
-  Ecaml.Feature.require @@ Ecaml.Symbol.intern "my0";
   init_package_archives ();
   Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
     (List.map Ecaml.Symbol.intern

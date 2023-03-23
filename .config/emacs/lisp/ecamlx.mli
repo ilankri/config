@@ -371,6 +371,9 @@ module Ispell : sig
 
   val program_name : string Ecaml.Customization.t
   val change_dictionary : ?globally:bool -> string -> unit
+  val dictionary : string option Ecaml.Customization.t
+  val local_dictionary : string option Ecaml.Customization.t
+  val ispell : unit -> unit
 end
 
 module Man : sig
