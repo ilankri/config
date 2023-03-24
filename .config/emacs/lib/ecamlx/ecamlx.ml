@@ -1329,7 +1329,7 @@ module Package = struct
   let refresh_contents ?async () =
     let refresh_contents =
       let open Ecaml.Funcall.Wrap in
-      "package-refresh-contents" <: nil_or bool @-> return unit
+      "package-refresh-contents" <: nil_or bool @-> return nil
     in
     refresh_contents async
 
@@ -1340,7 +1340,7 @@ module Package = struct
   let initialize ?no_activate () =
     let initialize =
       let open Ecaml.Funcall.Wrap in
-      "package-initialize" <: nil_or bool @-> return unit
+      "package-initialize" <: nil_or bool @-> return nil
     in
     initialize no_activate
 
