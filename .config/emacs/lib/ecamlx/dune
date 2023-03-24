@@ -1,0 +1,3 @@
+(library
+ (name ecamlx)
+ (libraries ecaml sexplib0))

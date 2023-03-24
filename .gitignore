@@ -19,10 +19,14 @@
 !/.config/emacs/lib/Makefile
 !/.config/emacs/lib/dune
 !/.config/emacs/lib/dune-project
-!/.config/emacs/lib/ecamlx.ml
-!/.config/emacs/lib/ecamlx.mli
+!/.config/emacs/lib/ecamlx/
+!/.config/emacs/lib/ecamlx/dune
+!/.config/emacs/lib/ecamlx/ecamlx.ml
+!/.config/emacs/lib/ecamlx/ecamlx.mli
 !/.config/emacs/lib/emacs-config.opam
-!/.config/emacs/lib/my.ml
+!/.config/emacs/lib/my/
+!/.config/emacs/lib/my/dune
+!/.config/emacs/lib/my/my.ml
 !/.config/gh/
 !/.config/gh/config.yml
 !/.config/git/

@@ -2,10 +2,3 @@
  (_
   (flags
    (:standard -w @a))))
-
-(executable
- (name my)
- (libraries ecaml sexplib0)
- (promote (until-clean))
- (modes
-  (native shared_object)))
