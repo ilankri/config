@@ -1,13 +1,13 @@
 SHELL = /bin/sh
 DOCKER_IMAGE_TAG = ilankri-dotfiles
 
-elibdir = ~/.config/emacs/lib
+econfdir = ~/.config/emacs
 print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-emacs compile-emacs-lib	\
-	docker-build docker-debug-emacs-init
+.PHONY: all install clean install-bash install-emacs			\
+	compile-emacs-config docker-build docker-debug-emacs-init
 
 all: install
 
@@ -15,7 +15,7 @@ install: install-bash install-emacs
 
 clean:
 	@echo "Cleaning..."
-	@$(MAKE) -C $(elibdir) clean
+	@$(MAKE) -C $(econfdir) clean
 	@$(print_done)
 
 install-bash:
@@ -27,15 +27,15 @@ install-bash:
 		>> ~/.bashrc
 	@$(print_done)
 
-install-emacs: compile-emacs-lib
+install-emacs: compile-emacs-config
 	@$(print_installing) Emacs
-	@emacs --batch --directory $(elibdir)				\
-		--load $(elibdir)/my/my.so --funcall my-init-packages
+	@emacs --batch --load $(econfdir)/lib/my/my.so	\
+		--funcall my-init-packages
 	@$(print_done)
 
-compile-emacs-lib:
-	@echo "Compiling Emacs library files..."
-	@$(MAKE) -C $(elibdir) build
+compile-emacs-config:
+	@echo "Compiling Emacs configuration..."
+	@$(MAKE) -C $(econfdir) build
 	@$(print_done)
 
 docker-build:

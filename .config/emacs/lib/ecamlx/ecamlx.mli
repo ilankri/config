@@ -29,6 +29,7 @@ val mode_line_compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
 val track_eol : bool Ecaml.Customization.t
 val shell_file_name : string Ecaml.Customization.t
 val user_emacs_directory : string Ecaml.Var.t
+val load_prefer_newer : bool Ecaml.Var.t
 
 module Command : sig
   val blink_matching_open : Ecaml.Command.t

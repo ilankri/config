@@ -1,0 +1,11 @@
+(env
+ (_
+  (flags
+   (:standard -w @a))))
+
+(executable
+ (name init)
+ (libraries ecaml ecamlx)
+ (promote (until-clean))
+ (modes
+  (native shared_object)))

@@ -68,6 +68,10 @@ let user_emacs_directory =
   let open Ecaml.Var.Wrap in
   "user-emacs-directory" <: string
 
+let load_prefer_newer =
+  let open Ecaml.Var.Wrap in
+  "load-prefer-newer" <: bool
+
 module Command = struct
   let from_string name =
     name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
