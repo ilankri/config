@@ -1,6 +1,3 @@
-(executable
+(library
  (name my)
- (libraries ecaml ecamlx)
- (promote (until-clean))
- (modes
-  (native shared_object)))
+ (libraries ecaml ecamlx))

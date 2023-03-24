@@ -208,13 +208,6 @@ let init_package_archives () =
     (Ecaml.Customization.value Ecamlx.Package.archives
     @ [ ("melpa-stable", "https://stable.melpa.org/packages/") ])
 
-let _init_packages =
-  defun ~name:"init-packages" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| init_package_archives >>| fun () ->
-    Ecamlx.Package.refresh_contents ())
-
 let indent_tabs_mode_on =
   hook_defun ~name:"indent-tabs-mode-on" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
@@ -314,9 +307,7 @@ let tuareg_mode_hook_f =
     (fun () ->
       Ecamlx.local_unset_key @@ Ecaml.Key_sequence.create_exn "C-c C-h")
 
-let init =
-  let open Ecaml.Defun.Let_syntax in
-  return () >>| fun () ->
+let init () =
   let enable_auto_fill =
     hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
       ~returns:Ecaml.Value.Type.unit (fun () ->
@@ -842,8 +833,3 @@ let init =
 
   (* Emacs server *)
   Ecamlx.Server.start ()
-
-let () =
-  defun ~name:"init" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit) init;
-  Ecaml.provide @@ Ecaml.Symbol.intern library_name

@@ -14,6 +14,8 @@
 !.config/emacs/lib/ecamlx/dune
 !.config/emacs/lib/ecamlx/ecamlx.ml
 !.config/emacs/lib/ecamlx/ecamlx.mli
+!.config/emacs/lib/init-packages/dune
+!.config/emacs/lib/init-packages/init_packages.ml
 !.config/emacs/lib/my/dune
 !.config/emacs/lib/my/my.ml
 !.config/gh/config.yml

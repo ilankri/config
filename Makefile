@@ -29,7 +29,8 @@ install-bash:
 
 install-emacs: compile-emacs-config
 	@$(print_installing) Emacs
-	@emacs --batch --load $(econfdir)/lib/my/my.so	\
+	@emacs --batch							\
+		--load $(econfdir)/lib/init-packages/init_packages.so	\
 		--funcall my-init-packages
 	@$(print_done)
 

@@ -1,10 +1,5 @@
-(env
- (_
-  (flags
-   (:standard -w @a))))
-
 (executable
- (name init)
+ (name init_packages)
  (libraries ecaml ecamlx my)
  (promote (until-clean))
  (modes
