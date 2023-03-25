@@ -26,21 +26,21 @@ let set_ispell_key ?local key command =
 let set_eglot_key ?local key command =
   set_prefix_key ?local ~prefix:"l" key command
 
-let ispell dict =
-  let old_dict =
-    match Ecaml.Customization.value Ecamlx.Ispell.local_dictionary with
-    | Some old_dict -> old_dict
-    | None ->
-        Option.value ~default:"default"
-          (Ecaml.Customization.value Ecamlx.Ispell.dictionary)
-  in
-  Ecamlx.Ispell.change_dictionary dict;
-  Ecamlx.Ispell.ispell ();
-  Ecamlx.Ispell.change_dictionary old_dict
-
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
+
+  let ispell dict =
+    let old_dict =
+      match Ecaml.Customization.value Ecamlx.Ispell.local_dictionary with
+      | Some old_dict -> old_dict
+      | None ->
+          Option.value ~default:"default"
+            (Ecaml.Customization.value Ecamlx.Ispell.dictionary)
+    in
+    Ecamlx.Ispell.change_dictionary dict;
+    Ecamlx.Ispell.ispell ();
+    Ecamlx.Ispell.change_dictionary old_dict
 
   let ispell_en () =
     let name = "ispell-en" in
