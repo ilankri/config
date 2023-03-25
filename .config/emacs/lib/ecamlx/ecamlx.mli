@@ -34,6 +34,7 @@ val load_prefer_newer : bool Ecaml.Var.t
 module Command : sig
   val blink_matching_open : Ecaml.Command.t
   val switch_to_completions : Ecaml.Command.t
+  val kill_current_buffer : Ecaml.Command.t
 end
 
 module Current_buffer : sig

@@ -82,15 +82,6 @@ module Command = struct
         ~end_:(Ecaml.Point.max ()) ());
     from_string name
 
-  let kill_buffer () =
-    let name = "kill-current-buffer" in
-    defun ~name ~__POS__
-      ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
-      ~interactive:Ecaml.Defun.Interactive.No_arg
-      (let open Ecaml.Defun.Let_syntax in
-      return () >>| Ecaml.Current_buffer.kill);
-    from_string name
-
   let git_grep () =
     let name = "git-grep" in
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
@@ -791,7 +782,7 @@ let init () =
   global_set_key "h" Ecamlx.Man.Command.man;
   global_set_key "i" (Command.indent_buffer ());
   global_set_key "j" Ecamlx.Browse_url.Command.browse_url;
-  global_set_key "k" (Command.kill_buffer ());
+  global_set_key "k" Ecamlx.Command.kill_current_buffer;
   set_eglot_key "a" (Ecamlx.Eglot.Command.code_actions ());
   set_eglot_key "r" (Ecamlx.Eglot.Command.rename ());
   global_set_key "m" Ecamlx.Imenu.Command.imenu;

@@ -78,6 +78,7 @@ module Command = struct
 
   let blink_matching_open = from_string "blink-matching-open"
   let switch_to_completions = from_string "switch-to-completions"
+  let kill_current_buffer = from_string "kill-current-buffer"
 end
 
 module Customization = struct
