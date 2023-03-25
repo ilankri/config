@@ -146,21 +146,16 @@ module Command = struct
     from_string name
 end
 
-let _scala3_end_column =
-  defun ~name:"scala3-end-column" ~__POS__
-    ~returns:
-      (Ecaml.Returns.Returns (Ecaml.Value.Type.nil_or Ecaml.Value.Type.int))
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| fun () ->
-    Option.map
-      (fun column -> column |> String.trim |> int_of_string |> succ)
-      (Ecamlx.Regexp.match_string 3))
-
 module Function = struct
-  let from_string name =
-    prefix_name name |> Ecaml.Symbol.intern |> Ecaml.Function.of_symbol
-
-  let scala3_end_column () = from_string "scala3-end-column"
+  let scala3_end_column () =
+    Ecamlx.lambda ~__POS__
+      ~returns:
+        (Ecaml.Returns.Returns (Ecaml.Value.Type.nil_or Ecaml.Value.Type.int))
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () ->
+      Option.map
+        (fun column -> column |> String.trim |> int_of_string |> succ)
+        (Ecamlx.Regexp.match_string 3))
 
   let prompt_file_for_auto_insert filename =
     let open Async_kernel.Deferred.Let_syntax in
