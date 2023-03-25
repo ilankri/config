@@ -1,3 +1,3 @@
 (library
  (name my)
- (libraries ecaml ecamlx))
+ (libraries ecaml async_kernel ecamlx))
