@@ -35,7 +35,7 @@ install-emacs: compile-emacs-config
 	@$(print_done)
 
 compile-emacs-config:
-	@echo "Compiling Emacs configuration..."
+	@echo "Compiling Emacs config..."
 	@$(MAKE) -C $(econfdir) build
 	@$(print_done)
 
