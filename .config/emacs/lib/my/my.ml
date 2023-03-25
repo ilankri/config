@@ -26,93 +26,6 @@ let set_ispell_key ?local key command =
 let set_eglot_key ?local key command =
   set_prefix_key ?local ~prefix:"l" key command
 
-let _ansi_term =
-  defun ~name:"ansi-term" ~__POS__
-    ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Buffer.type_)
-    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
-    (let open Ecaml.Defun.Let_syntax in
-    Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
-    >>| fun arg ->
-    let default_buffer_name = "terminal" in
-    let new_buffer_name =
-      if arg then
-        Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
-          ~collection:(Ecaml.Completing.Collection.create_elisp [])
-          ~default:default_buffer_name ~prompt:"Name: " ()
-      else Async_kernel.return default_buffer_name
-    in
-    Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
-        Ecamlx.Term.ansi_term ~new_buffer_name
-          (Option.value
-             ~default:(Ecaml.Customization.value Ecamlx.shell_file_name)
-             (Ecaml.System.getenv ~var:"ESHELL"))))
-
-let _git_grep =
-  defun ~name:"git-grep" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.No_arg
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| fun () ->
-    Ecaml.Feature.require Ecamlx.Grep.feature;
-    Ecaml.Feature.require Ecamlx.Vc.Git.feature;
-    Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
-      (Ecamlx.Grep.read_regexp ()))
-
-let _kill_current_buffer =
-  defun ~name:"kill-current-buffer" ~__POS__
-    ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.No_arg
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| Ecaml.Current_buffer.kill)
-
-let _compile =
-  defun ~name:"compile" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
-    (let open Ecaml.Defun.Let_syntax in
-    Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
-    >>| fun arg ->
-    Ecaml.Feature.require Ecamlx.Compilation.feature;
-    if arg then
-      Ecamlx.Compilation.compile @@ Ecamlx.Compilation.read_command
-      @@ Ecaml.Customization.value Ecamlx.Compilation.command
-    else Ecamlx.Compilation.recompile ())
-
-let _indent_buffer =
-  defun ~name:"indent-buffer" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.No_arg
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| fun () ->
-    Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
-      ~end_:(Ecaml.Point.max ()) ())
-
-(* Inspired by https://www.emacswiki.org/emacs/TransposeWindows.  *)
-let _transpose_windows =
-  defun ~name:"transpose-windows" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.Raw_prefix
-    (let open Ecaml.Defun.Let_syntax in
-    Ecaml.Defun.optional_with_default "count" 1 Ecaml.Defun.int >>| fun count ->
-    match Ecaml.Frame.window_list () with
-    | [] -> assert false
-    | w1 :: _ as ws ->
-        let w1buf = Ecaml.Window.buffer_exn w1 in
-        let w1start = Ecaml.Window.start w1 in
-        let w1pt = Ecaml.Window.point_exn w1 in
-        let w2 =
-          match List.nth_opt ws (count mod List.length ws) with
-          | None -> assert false
-          | Some w2 -> w2
-        in
-        let w2buf = Ecaml.Window.buffer_exn w2 in
-        let w2start = Ecaml.Window.start w2 in
-        let w2pt = Ecaml.Window.point_exn w2 in
-        Ecamlx.Window.set_buffer_start_and_point ~buffer:w2buf ~start:w2start
-          ~point:w2pt w1;
-        Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
-          ~point:w1pt w2)
-
 let ispell dict =
   let old_dict =
     match Ecaml.Customization.value Ecamlx.Ispell.local_dictionary with
@@ -125,32 +38,121 @@ let ispell dict =
   Ecamlx.Ispell.ispell ();
   Ecamlx.Ispell.change_dictionary old_dict
 
-let _ispell_fr =
-  defun ~name:"ispell-fr" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.No_arg
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| fun () -> ispell "fr_FR")
-
-let _ispell_en =
-  defun ~name:"ispell-en" ~__POS__
-    ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-    ~interactive:Ecaml.Defun.Interactive.No_arg
-    (let open Ecaml.Defun.Let_syntax in
-    return () >>| fun () -> ispell "en_US")
-
 module Command = struct
   let from_string name =
     prefix_name name |> Ecaml.Value.intern |> Ecaml.Command.of_value_exn
 
-  let ispell_en () = from_string "ispell-en"
-  let ispell_fr () = from_string "ispell-fr"
-  let compile () = from_string "compile"
-  let indent_buffer () = from_string "indent-buffer"
-  let kill_buffer () = from_string "kill-current-buffer"
-  let git_grep () = from_string "git-grep"
-  let transpose_windows () = from_string "transpose-windows"
-  let ansi_term () = from_string "ansi-term"
+  let ispell_en () =
+    let name = "ispell-en" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.No_arg
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () -> ispell "en_US");
+    from_string name
+
+  let ispell_fr () =
+    let name = "ispell-fr" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.No_arg
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () -> ispell "fr_FR");
+    from_string name
+
+  let compile () =
+    let name = "compile" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+      (let open Ecaml.Defun.Let_syntax in
+      Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
+      >>| fun arg ->
+      Ecaml.Feature.require Ecamlx.Compilation.feature;
+      if arg then
+        Ecamlx.Compilation.compile @@ Ecamlx.Compilation.read_command
+        @@ Ecaml.Customization.value Ecamlx.Compilation.command
+      else Ecamlx.Compilation.recompile ());
+    from_string name
+
+  let indent_buffer () =
+    let name = "indent-buffer" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.No_arg
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () ->
+      Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
+        ~end_:(Ecaml.Point.max ()) ());
+    from_string name
+
+  let kill_buffer () =
+    let name = "kill-current-buffer" in
+    defun ~name ~__POS__
+      ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.No_arg
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| Ecaml.Current_buffer.kill);
+    from_string name
+
+  let git_grep () =
+    let name = "git-grep" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.No_arg
+      (let open Ecaml.Defun.Let_syntax in
+      return () >>| fun () ->
+      Ecaml.Feature.require Ecamlx.Grep.feature;
+      Ecaml.Feature.require Ecamlx.Vc.Git.feature;
+      Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
+        (Ecamlx.Grep.read_regexp ()));
+    from_string name
+
+  (* Inspired by https://www.emacswiki.org/emacs/TransposeWindows.  *)
+  let transpose_windows () =
+    let name = "transpose-windows" in
+    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+      (let open Ecaml.Defun.Let_syntax in
+      Ecaml.Defun.optional_with_default "count" 1 Ecaml.Defun.int
+      >>| fun count ->
+      match Ecaml.Frame.window_list () with
+      | [] -> assert false
+      | w1 :: _ as ws ->
+          let w1buf = Ecaml.Window.buffer_exn w1 in
+          let w1start = Ecaml.Window.start w1 in
+          let w1pt = Ecaml.Window.point_exn w1 in
+          let w2 =
+            match List.nth_opt ws (count mod List.length ws) with
+            | None -> assert false
+            | Some w2 -> w2
+          in
+          let w2buf = Ecaml.Window.buffer_exn w2 in
+          let w2start = Ecaml.Window.start w2 in
+          let w2pt = Ecaml.Window.point_exn w2 in
+          Ecamlx.Window.set_buffer_start_and_point ~buffer:w2buf ~start:w2start
+            ~point:w2pt w1;
+          Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
+            ~point:w1pt w2);
+    from_string name
+
+  let ansi_term () =
+    let name = "ansi-term" in
+    defun ~name ~__POS__
+      ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Buffer.type_)
+      ~interactive:Ecaml.Defun.Interactive.Raw_prefix
+      (let open Ecaml.Defun.Let_syntax in
+      Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
+      >>| fun arg ->
+      let default_buffer_name = "terminal" in
+      let new_buffer_name =
+        if arg then
+          Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
+            ~collection:(Ecaml.Completing.Collection.create_elisp [])
+            ~default:default_buffer_name ~prompt:"Name: " ()
+        else Async_kernel.return default_buffer_name
+      in
+      Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
+          Ecamlx.Term.ansi_term ~new_buffer_name
+            (Option.value
+               ~default:(Ecaml.Customization.value Ecamlx.shell_file_name)
+               (Ecaml.System.getenv ~var:"ESHELL"))));
+    from_string name
 end
 
 let _scala3_end_column =
