@@ -7,9 +7,9 @@
 !/.xsessionrc
 !/.bash_aliases
 !/.mybashrc.bash
-!/.docker/
-!/.docker/config.json
 !/.config/
+!/.config/docker/
+!/.config/docker/config.json
 !/.config/emacs/
 !/.config/emacs/.ocamlformat
 !/.config/emacs/Makefile

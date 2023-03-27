@@ -3,7 +3,7 @@
 !.xsessionrc
 !.bash_aliases
 !.mybashrc.bash
-!.docker/config.json
+!.config/docker/config.json
 !.config/emacs/.ocamlformat
 !.config/emacs/Makefile
 !.config/emacs/dune

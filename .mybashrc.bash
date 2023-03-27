@@ -84,5 +84,8 @@ eval "$(gh completion -s bash)"
 # sbt
 export SBT_NATIVE_CLIENT=true
 
+# Docker
+export DOCKER_CONFIG=~/.config/docker
+
 ## SSH initialization
 . my-ssh-init
