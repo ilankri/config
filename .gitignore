@@ -5,7 +5,6 @@
 !/Makefile
 !/README.md
 !/.xsessionrc
-!/.bash_aliases
 !/.config/
 !/.config/bash/
 !/.config/bash/bashrc.bash

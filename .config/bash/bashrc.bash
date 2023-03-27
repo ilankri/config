@@ -88,5 +88,20 @@ export SBT_NATIVE_CLIENT=true
 # Docker
 export DOCKER_CONFIG=~/.config/docker
 
+## Aliases
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias lh='ls -h'
+alias ll='lh -l'
+alias la='ll -A'
+alias df='df -h'
+alias du='du -h'
+alias up='sudo apt update && sudo apt upgrade'
+alias opamup='opam update -u'
+alias mr-sync='mr -j $(nproc) -d ~ -c ~/.mrconfig fetch'
+alias clear-swap='sudo swapoff -a && sudo swapon -a'
+alias docker-killall='docker rm -f $(docker ps -aq)'
+
 ## SSH initialization
 . my-ssh-init

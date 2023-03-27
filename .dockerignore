@@ -1,7 +1,6 @@
 **
 !Makefile
 !.xsessionrc
-!.bash_aliases
 !.config/bash/bashrc.bash
 !.config/docker/config.json
 !.config/emacs/.ocamlformat
