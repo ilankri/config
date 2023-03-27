@@ -431,7 +431,7 @@ module Auto_insert = struct
       Ecaml.Value.Type.create
         (Sexplib0.Sexp.Atom "define-auto-insert-condition") to_sexp to_ from
     in
-    let define =
+    let define condition =
       let action =
         let to_ value =
           if Ecaml.Value.is_function value then
@@ -448,10 +448,14 @@ module Auto_insert = struct
       in
       let open Ecaml.Funcall.Wrap in
       "define-auto-insert"
-      <: tuple condition_type (nil_or string)
-         @-> action @-> nil_or bool @-> return nil
+      <: condition @-> action @-> nil_or bool @-> return nil
     in
-    define (condition, description) action after
+    match description with
+    | None -> (define condition_type) condition action after
+    | Some description ->
+        let open Ecaml.Funcall.Wrap in
+        (define (tuple condition_type string))
+          (condition, description) action after
 
   let directory =
     let open Ecaml.Customization.Wrap in
