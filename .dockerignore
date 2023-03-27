@@ -2,7 +2,7 @@
 !Makefile
 !.xsessionrc
 !.bash_aliases
-!.mybashrc.bash
+!.config/bash/bashrc.bash
 !.config/docker/config.json
 !.config/emacs/.ocamlformat
 !.config/emacs/Makefile

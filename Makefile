@@ -20,10 +20,11 @@ clean:
 
 install-bash:
 	@$(print_installing) Bash
-	@grep -q "if \[ -f ~/.mybashrc.bash ]; then" ~/.bashrc	\
+	@grep -q "if \[ -f ~/.config/bash/bashrc.bash ]; then"	\
+		~/.bashrc					\
 	|| printf "\nif %s; then\n    %s\nfi\n"			\
-		"[ -f ~/.mybashrc.bash ]"			\
-		". ~/.mybashrc.bash"				\
+		"[ -f ~/.config/bash/bashrc.bash ]"		\
+		". ~/.config/bash/bashrc.bash"			\
 		>> ~/.bashrc
 	@$(print_done)
 

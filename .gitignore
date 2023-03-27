@@ -6,8 +6,9 @@
 !/README.md
 !/.xsessionrc
 !/.bash_aliases
-!/.mybashrc.bash
 !/.config/
+!/.config/bash/
+!/.config/bash/bashrc.bash
 !/.config/docker/
 !/.config/docker/config.json
 !/.config/emacs/
