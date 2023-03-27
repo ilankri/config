@@ -21,9 +21,9 @@
 !.config/gh/config.yml
 !.config/git/config
 !.config/git/ignore
+!.config/gnupg/gpg-agent.conf
 !.config/ocaml/init.ml
 !.latex/preamble.tex
 !.inputrc
 !bin/my-eshell
 !bin/my-ssh-init
-!.gnupg/gpg-agent.conf

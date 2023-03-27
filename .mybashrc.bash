@@ -1,5 +1,6 @@
 export LANG=en_US.UTF-8
 
+export GNUPGHOME=~/.config/gnupg
 export GPG_TTY=$(tty)
 
 export OCAMLPARAM="_,bin-annot=1"

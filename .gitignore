@@ -35,6 +35,8 @@
 !/.config/git/
 !/.config/git/config
 !/.config/git/ignore
+!/.config/gnupg/
+!/.config/gnupg/gpg-agent.conf
 !/.config/ocaml/
 !/.config/ocaml/init.ml
 !/.latex/
@@ -43,5 +45,3 @@
 !/bin/
 !/bin/my-eshell
 !/bin/my-ssh-init
-!/.gnupg/
-!/.gnupg/gpg-agent.conf
