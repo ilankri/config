@@ -415,24 +415,23 @@ end
 
 module Auto_insert = struct
   let define ?after ?description condition action =
-    let define =
-      let condition_type =
-        let to_ value =
-          if Ecaml.Value.is_symbol value then
-            `Major_mode
-              (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__)
-                 (Ecaml.Symbol.of_value_exn value))
-          else `Regexp (Ecaml.Regexp.of_value_exn value)
-        in
-        let from = function
-          | `Major_mode m ->
-              m |> Ecaml.Major_mode.symbol |> Ecaml.Symbol.to_value
-          | `Regexp r -> Ecaml.Regexp.to_value r
-        in
-        let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
-        Ecaml.Value.Type.create
-          (Sexplib0.Sexp.Atom "define-auto-insert-condition") to_sexp to_ from
+    let condition_type =
+      let to_ value =
+        if Ecaml.Value.is_symbol value then
+          `Major_mode
+            (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__)
+               (Ecaml.Symbol.of_value_exn value))
+        else `Regexp (Ecaml.Regexp.of_value_exn value)
       in
+      let from = function
+        | `Major_mode m -> m |> Ecaml.Major_mode.symbol |> Ecaml.Symbol.to_value
+        | `Regexp r -> Ecaml.Regexp.to_value r
+      in
+      let to_sexp value = value |> from |> Ecaml.Value.sexp_of_t in
+      Ecaml.Value.Type.create
+        (Sexplib0.Sexp.Atom "define-auto-insert-condition") to_sexp to_ from
+    in
+    let define =
       let action =
         let to_ value =
           if Ecaml.Value.is_function value then
