@@ -416,7 +416,7 @@ end
 module Auto_insert = struct
   let define ?after ?description condition action =
     let define =
-      let condition =
+      let condition_type =
         let to_ value =
           if Ecaml.Value.is_symbol value then
             `Major_mode
@@ -449,7 +449,7 @@ module Auto_insert = struct
       in
       let open Ecaml.Funcall.Wrap in
       "define-auto-insert"
-      <: tuple condition (nil_or string)
+      <: tuple condition_type (nil_or string)
          @-> action @-> nil_or bool @-> return nil
     in
     define (condition, description) action after
