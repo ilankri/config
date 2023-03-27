@@ -414,7 +414,7 @@ module Auctex = struct
 end
 
 module Auto_insert = struct
-  let define ?after ?description condition actions =
+  let define ?after ?description condition action =
     let define =
       let condition =
         let to_ value =
@@ -452,7 +452,7 @@ module Auto_insert = struct
       <: tuple condition (nil_or string)
          @-> action @-> nil_or bool @-> return nil
     in
-    define (condition, description) actions after
+    define (condition, description) action after
 
   let directory =
     let open Ecaml.Customization.Wrap in
