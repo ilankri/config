@@ -41,8 +41,6 @@
 !/.latex/preamble.tex
 !/.inputrc
 !/bin/
-!/bin/my-display-date
-!/bin/my-display-time
 !/bin/my-eshell
 !/bin/my-ssh-init
 !/.gnupg/
