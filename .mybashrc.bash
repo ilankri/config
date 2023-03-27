@@ -66,6 +66,7 @@ shopt -s extglob
 
 export GOPATH=~/go
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/bin:$GOPATH/bin
+export INPUTRC=~/.config/readline/inputrc
 export RLWRAP_HOME=~/.rlwrap
 export TEXINPUTS=.:~/.latex:
 export EDITOR=emacsclient

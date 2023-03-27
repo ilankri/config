@@ -39,9 +39,10 @@
 !/.config/gnupg/gpg-agent.conf
 !/.config/ocaml/
 !/.config/ocaml/init.ml
+!/.config/readline/
+!/.config/readline/inputrc
 !/.latex/
 !/.latex/preamble.tex
-!/.inputrc
 !/bin/
 !/bin/my-eshell
 !/bin/my-ssh-init
