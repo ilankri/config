@@ -403,6 +403,10 @@ let init () =
     (`Function (Function.gitignore_auto_insert ()));
   Ecamlx.Customization.set_value Ecamlx.Auto_insert.directory
     (prefix_by_user_emacs_directory "insert/");
+  Ecamlx.Auto_insert.define (`Major_mode Ecamlx.Major_mode.Latex.major_mode)
+    (`File
+      (Ecaml.Customization.value Ecamlx.Auto_insert.directory
+      ^ "latex/preamble.tex"));
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_insert;
 
   (* Semantic *)

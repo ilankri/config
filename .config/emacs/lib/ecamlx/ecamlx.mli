@@ -94,6 +94,7 @@ module Major_mode : sig
   module Git_rebase : Ecaml.Major_mode.S_with_lazy_keymap
   module Gitignore : Ecaml.Major_mode.S_with_lazy_keymap
   module Java : Ecaml.Major_mode.S_with_lazy_keymap
+  module Latex : Ecaml.Major_mode.S_with_lazy_keymap
   module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
   module Message : Ecaml.Major_mode.S_with_lazy_keymap
   module Scala : Ecaml.Major_mode.S_with_lazy_keymap

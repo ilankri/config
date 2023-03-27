@@ -226,6 +226,10 @@ module Major_mode = struct
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "java-mode"
            (position ~__POS__))
 
+  module Latex =
+    (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "latex-mode"
+           (position ~__POS__))
+
   module Markdown =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "markdown-mode"
            (position ~__POS__))

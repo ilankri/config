@@ -42,8 +42,6 @@
 !/.config/ocaml/init.ml
 !/.config/readline/
 !/.config/readline/inputrc
-!/.latex/
-!/.latex/preamble.tex
 !/bin/
 !/bin/my-eshell
 !/bin/my-ssh-init
