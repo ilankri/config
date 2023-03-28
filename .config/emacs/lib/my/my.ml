@@ -193,7 +193,7 @@ let c_trad_comment_on () =
 let init_package_archives () =
   Ecaml.Feature.require Ecamlx.Package.feature;
   Ecamlx.Customization.set_value Ecamlx.Package.archives
-    (Ecaml.Customization.value Ecamlx.Package.archives
+    (Ecaml.Customization.standard_value Ecamlx.Package.archives
     @ [ ("melpa-stable", "https://stable.melpa.org/packages/") ])
 
 let indent_tabs_mode_on =
@@ -285,7 +285,7 @@ let c_initialization_hook_f =
     (fun () ->
       Ecamlx.Customization.set_value Ecamlx.Cc_mode.default_style
         {
-          (Ecaml.Customization.value Ecamlx.Cc_mode.default_style) with
+          (Ecaml.Customization.standard_value Ecamlx.Cc_mode.default_style) with
           Ecamlx.Cc_mode.Default_style.other = Some "linux";
         })
 
@@ -405,14 +405,14 @@ let init () =
     (prefix_by_user_emacs_directory "insert/");
   Ecamlx.Auto_insert.define (`Major_mode Ecamlx.Major_mode.Latex.major_mode)
     (`File
-      (Ecaml.Customization.value Ecamlx.Auto_insert.directory
+      (Ecaml.Customization.standard_value Ecamlx.Auto_insert.directory
       ^ "latex/preamble.tex"));
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_insert;
 
   (* Semantic *)
   Ecamlx.Customization.set_value Ecamlx.Semantic.default_submodes
     (Ecamlx.Semantic.Submode.global_stickyfunc
-    :: Ecaml.Customization.value Ecamlx.Semantic.default_submodes);
+    :: Ecaml.Customization.standard_value Ecamlx.Semantic.default_submodes);
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.semantic;
 
   (* Ispell *)
@@ -438,7 +438,7 @@ let init () =
   Ecamlx.Customization.set_value Ecamlx.Comment.multi_line true;
   Ecamlx.Customization.set_value Ecamlx.Fill.nobreak_predicate
     (Ecamlx.Fill.french_nobreak_p
-    :: Ecaml.Customization.value Ecamlx.Fill.nobreak_predicate);
+    :: Ecaml.Customization.standard_value Ecamlx.Fill.nobreak_predicate);
 
   (* auto-fill-mode is only enabled in CC mode (and not in all program
      modes) because it seems to be the only program mode that properly
@@ -467,7 +467,7 @@ let init () =
                 Ecamlx.Whitespace.Style.Tab_mark;
                 Ecamlx.Whitespace.Style.Newline_mark;
               ])
-       (Ecaml.Customization.value Ecamlx.Whitespace.style));
+       (Ecaml.Customization.standard_value Ecamlx.Whitespace.style));
 
   Ecamlx.Customization.set_value Ecamlx.Whitespace.action
     [ Ecamlx.Whitespace.Action.Auto_cleanup ];
@@ -583,7 +583,7 @@ let init () =
          };
          (* Scala 3 *)
        ]
-    @ Ecaml.Customization.value Ecamlx.Compilation.error_regexp_alist);
+    @ Ecaml.Customization.standard_value Ecamlx.Compilation.error_regexp_alist);
 
   (* CC mode *)
   Ecaml.Hook.add Ecamlx.Cc_mode.initialization_hook c_initialization_hook_f;
@@ -659,7 +659,7 @@ let init () =
   Ecaml.Feature.require Ecamlx.Git_commit.feature;
   Ecaml.Var.set_default_value Ecamlx.Magit.bind_magit_project_status false;
   Ecamlx.Customization.set_value Ecamlx.Git_commit.summary_max_length
-    (Ecaml.Customization.value Ecamlx.Current_buffer.fill_column);
+    (Ecaml.Customization.standard_value Ecamlx.Current_buffer.fill_column);
   Ecamlx.Customization.set_value Ecamlx.Magit.commit_show_diff false;
   Ecamlx.Customization.set_value Ecamlx.Magit.define_global_key_bindings false;
   Ecaml.Hook.add Ecamlx.Git_commit.setup_hook git_commit_setup_hook_f;
@@ -705,7 +705,8 @@ let init () =
        ".emacs.desktop.lock";
        "_region_.tex";
      ]
-    @ Ecaml.Customization.value Ecamlx.Dired.completion_ignored_extensions);
+    @ Ecaml.Customization.standard_value
+        Ecamlx.Dired.completion_ignored_extensions);
 
   (* Hack to open files like Makefile.local or Dockerfile.test with the
      right mode. *)
