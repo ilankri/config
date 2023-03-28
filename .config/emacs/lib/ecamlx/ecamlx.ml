@@ -275,6 +275,7 @@ module Minor_mode = struct
   let flyspell = make "flyspell-mode"
   let reftex = make "reftex-mode"
   let auto_insert = make "auto-insert-mode"
+  let global_goto_address = make "global-goto-address-mode"
 end
 
 module Regexp = struct

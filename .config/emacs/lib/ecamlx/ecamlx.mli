@@ -124,6 +124,7 @@ module Minor_mode : sig
   val flyspell : Ecaml.Minor_mode.t
   val reftex : Ecaml.Minor_mode.t
   val auto_insert : Ecaml.Minor_mode.t
+  val global_goto_address : Ecaml.Minor_mode.t
 end
 
 module Regexp : sig
