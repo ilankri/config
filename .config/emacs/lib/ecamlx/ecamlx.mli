@@ -178,9 +178,9 @@ module Auto_insert : sig
   val directory : string Ecaml.Customization.t
 end
 
-module Browse_url : sig
+module Ffap : sig
   module Command : sig
-    val browse_url : Ecaml.Command.t
+    val find_file_at_point : Ecaml.Command.t
   end
 end
 

@@ -780,7 +780,7 @@ let init () =
   global_set_key "f" Ecamlx.Windmove.Command.right;
   global_set_key "h" Ecamlx.Man.Command.man;
   global_set_key "i" (Command.indent_buffer ());
-  global_set_key "j" Ecamlx.Browse_url.Command.browse_url;
+  global_set_key "j" Ecamlx.Ffap.Command.find_file_at_point;
   global_set_key "k" Ecamlx.Command.kill_current_buffer;
   set_eglot_key "a" (Ecamlx.Eglot.Command.code_actions ());
   set_eglot_key "r" (Ecamlx.Eglot.Command.rename ());

@@ -466,9 +466,9 @@ module Auto_insert = struct
     "auto-insert-directory" <: string
 end
 
-module Browse_url = struct
+module Ffap = struct
   module Command = struct
-    let browse_url = Command.from_string "browse-url"
+    let find_file_at_point = Command.from_string "find-file-at-point"
   end
 end
 
