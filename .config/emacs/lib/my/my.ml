@@ -381,7 +381,11 @@ let init () =
       Ecaml.Hook.add
         (Ecaml.Hook.major_mode_hook Major_mode.major_mode)
         eglot_ensure)
-    [ (module Ecamlx.Major_mode.Scala); (module Ecaml.Major_mode.Tuareg) ];
+    [
+      (module Ecamlx.Major_mode.Scala);
+      (module Ecaml.Major_mode.Tuareg);
+      (module Ecamlx.Major_mode.Sh);
+    ];
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Prog.major_mode)
     eglot_format_buffer_before_save;
