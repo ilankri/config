@@ -128,7 +128,8 @@ module Minor_mode : sig
 end
 
 module Regexp : sig
-  val match_string : ?string:string -> int -> string option
+  val match_string :
+    ?with_text_properties:bool -> ?string:string -> int -> string option
 end
 
 module Ansi_color : sig
