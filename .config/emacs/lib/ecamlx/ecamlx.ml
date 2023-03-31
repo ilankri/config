@@ -83,19 +83,16 @@ end
 
 module Customization = struct
   let set_value variable value_ =
-    let custom_set_variables =
+    let customize_set_variable =
       let open Ecaml.Funcall.Wrap in
-      "custom-set-variables" <: value @-> return nil
+      "customize-set-variable"
+      <: Ecaml.Symbol.type_ @-> value @-> nil_or string @-> return nil
     in
     let variable = Ecaml.Customization.var variable in
-    custom_set_variables
-    @@ Ecaml.Value.list
-         [
-           variable |> Ecaml.Var.symbol |> Ecaml.Symbol.to_value;
-           value_
-           |> Ecaml.Value.Type.to_value variable.Ecaml.Var.type_
-           |> Ecaml.Form.quote |> Ecaml.Form.to_value;
-         ]
+    customize_set_variable
+      (Ecaml.Var.symbol variable)
+      (Ecaml.Value.Type.to_value variable.Ecaml.Var.type_ value_)
+      None
 
   let from_variable variable =
     let open Ecaml.Customization.Wrap in
