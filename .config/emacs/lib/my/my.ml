@@ -192,7 +192,7 @@ let c_trad_comment_on () =
 
 let init_package_archives () =
   Ecaml.Feature.require Ecamlx.Package.feature;
-  Ecamlx.Customization.set_value Ecamlx.Package.archives
+  Ecamlx.Customization.set_variable Ecamlx.Package.archives
     (Ecaml.Customization.standard_value Ecamlx.Package.archives
     @ [ ("melpa-stable", "https://stable.melpa.org/packages/") ])
 
@@ -283,7 +283,7 @@ let c_initialization_hook_f =
   hook_defun ~name:"c-initialization-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
-      Ecamlx.Customization.set_value Ecamlx.Cc_mode.default_style
+      Ecamlx.Customization.set_variable Ecamlx.Cc_mode.default_style
         {
           (Ecaml.Customization.standard_value Ecamlx.Cc_mode.default_style) with
           Ecamlx.Cc_mode.Default_style.other = Some "linux";
@@ -346,7 +346,7 @@ let init () =
           ])
   in
   init_package_archives ();
-  Ecamlx.Customization.set_value Ecamlx.Package.selected_packages
+  Ecamlx.Customization.set_variable Ecamlx.Package.selected_packages
     (List.map Ecaml.Symbol.intern
        [
          "magit";
@@ -389,8 +389,8 @@ let init () =
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Prog.major_mode)
     eglot_format_buffer_before_save;
-  Ecamlx.Customization.set_value Ecamlx.Eglot.autoshutdown true;
-  Ecamlx.Customization.set_value Ecamlx.Eglot.ignored_server_capabilities
+  Ecamlx.Customization.set_variable Ecamlx.Eglot.autoshutdown true;
+  Ecamlx.Customization.set_variable Ecamlx.Eglot.ignored_server_capabilities
     [ `Document_highlight_provider ];
   Ecaml.Var.set_default_value Ecamlx.Eglot.stay_out_of
     [ `Symbol (Ecaml.Symbol.intern "flymake") ];
@@ -405,7 +405,7 @@ let init () =
   Ecamlx.Auto_insert.define ~description:".gitignore file"
     (`Regexp (Ecaml.Regexp.of_pattern ".gitignore\\'"))
     (`Function (Function.gitignore_auto_insert ()));
-  Ecamlx.Customization.set_value Ecamlx.Auto_insert.directory
+  Ecamlx.Customization.set_variable Ecamlx.Auto_insert.directory
     (prefix_by_user_emacs_directory "insert/");
   Ecamlx.Auto_insert.define (`Major_mode Ecamlx.Major_mode.Latex.major_mode)
     (`File
@@ -414,7 +414,7 @@ let init () =
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_insert;
 
   (* Semantic *)
-  Ecamlx.Customization.set_value Ecamlx.Semantic.default_submodes
+  Ecamlx.Customization.set_variable Ecamlx.Semantic.default_submodes
     (Ecamlx.Semantic.Submode.global_stickyfunc
     :: Ecaml.Customization.standard_value Ecamlx.Semantic.default_submodes);
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.semantic;
@@ -423,7 +423,7 @@ let init () =
 
   (* Use hunspell instead of aspell because hunspell has a better French
      support. *)
-  Ecamlx.Customization.set_value Ecamlx.Ispell.program_name "hunspell";
+  Ecamlx.Customization.set_variable Ecamlx.Ispell.program_name "hunspell";
 
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Text.major_mode)
@@ -438,9 +438,9 @@ let init () =
     ];
 
   (* Filling *)
-  Ecamlx.Customization.set_value Ecamlx.Current_buffer.fill_column 72;
-  Ecamlx.Customization.set_value Ecamlx.Comment.multi_line true;
-  Ecamlx.Customization.set_value Ecamlx.Fill.nobreak_predicate
+  Ecamlx.Customization.set_variable Ecamlx.Current_buffer.fill_column 72;
+  Ecamlx.Customization.set_variable Ecamlx.Comment.multi_line true;
+  Ecamlx.Customization.set_variable Ecamlx.Fill.nobreak_predicate
     (Ecamlx.Fill.french_nobreak_p
     :: Ecaml.Customization.standard_value Ecamlx.Fill.nobreak_predicate);
 
@@ -458,7 +458,7 @@ let init () =
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.global_whitespace;
 
   (* Do not display spaces, tabs and newlines marks.  *)
-  Ecamlx.Customization.set_value Ecamlx.Whitespace.style
+  Ecamlx.Customization.set_variable Ecamlx.Whitespace.style
     (List.filter
        (fun x ->
          not
@@ -473,11 +473,11 @@ let init () =
               ])
        (Ecaml.Customization.standard_value Ecamlx.Whitespace.style));
 
-  Ecamlx.Customization.set_value Ecamlx.Whitespace.action
+  Ecamlx.Customization.set_variable Ecamlx.Whitespace.action
     [ Ecamlx.Whitespace.Action.Auto_cleanup ];
 
   (* Turn off whitespace-mode in Dired-like buffers.  *)
-  Ecamlx.Customization.set_value Ecamlx.Whitespace.global_modes
+  Ecamlx.Customization.set_variable Ecamlx.Whitespace.global_modes
     (Ecamlx.Whitespace.Global_modes.All
        {
          except =
@@ -489,12 +489,13 @@ let init () =
        });
 
   (* Compilation *)
-  Ecamlx.Customization.set_value Ecamlx.Compilation.scroll_output `First_error;
-  Ecamlx.Customization.set_value Ecamlx.Compilation.context_lines
+  Ecamlx.Customization.set_variable Ecamlx.Compilation.scroll_output
+    `First_error;
+  Ecamlx.Customization.set_variable Ecamlx.Compilation.context_lines
     (`Number_of_lines 0);
   Ecaml.Hook.add Ecamlx.Compilation.filter_hook ansi_color_compilation_filter;
   Ecaml.Feature.require Ecamlx.Compilation.feature;
-  Ecamlx.Customization.set_value Ecamlx.Compilation.error_regexp_alist
+  Ecamlx.Customization.set_variable Ecamlx.Compilation.error_regexp_alist
     (List.map
        (fun error_matcher -> `Error_matcher error_matcher)
        [
@@ -602,27 +603,27 @@ let init () =
     [ (module Ecamlx.Major_mode.Java); (module Ecamlx.Major_mode.C_plus_plus) ];
 
   (* Scala *)
-  Ecamlx.Customization.set_value
+  Ecamlx.Customization.set_variable
     Ecamlx.Scala_mode.Indent.default_run_on_strategy `Operators;
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Scala.major_mode)
     scala_mode_hook_f;
 
   (* Markdown *)
-  Ecamlx.Customization.set_value Ecamlx.Markdown_mode.command "pandoc";
-  Ecamlx.Customization.set_value Ecamlx.Markdown_mode.asymmetric_header true;
-  Ecamlx.Customization.set_value
+  Ecamlx.Customization.set_variable Ecamlx.Markdown_mode.command "pandoc";
+  Ecamlx.Customization.set_variable Ecamlx.Markdown_mode.asymmetric_header true;
+  Ecamlx.Customization.set_variable
     Ecamlx.Markdown_mode.fontify_code_blocks_natively true;
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Markdown.major_mode)
     markdown_mode_hook_f;
 
   (* LaTeX *)
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.auto_save true;
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.parse_self true;
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Latex.section_hook
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.Tex.auto_save true;
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.Tex.parse_self true;
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.Latex.section_hook
     [ `Heading; `Title; `Toc; `Section; `Label ];
-  Ecamlx.Customization.set_value Ecamlx.Reftex.plug_into_auctex
+  Ecamlx.Customization.set_variable Ecamlx.Reftex.plug_into_auctex
     {
       Ecamlx.Reftex.supply_labels_in_new_sections_and_environments = true;
       supply_arguments_for_macros_like_label = true;
@@ -630,28 +631,29 @@ let init () =
       supply_arguments_for_macros_like_cite = true;
       supply_arguments_for_macros_like_index = true;
     };
-  Ecamlx.Customization.set_value Ecamlx.Reftex.enable_partial_scans true;
-  Ecamlx.Customization.set_value Ecamlx.Reftex.save_parse_info true;
-  Ecamlx.Customization.set_value Ecamlx.Reftex.use_multiple_selection_buffers
+  Ecamlx.Customization.set_variable Ecamlx.Reftex.enable_partial_scans true;
+  Ecamlx.Customization.set_variable Ecamlx.Reftex.save_parse_info true;
+  Ecamlx.Customization.set_variable Ecamlx.Reftex.use_multiple_selection_buffers
     true;
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.electric_math
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.Tex.electric_math
     (Some ("$", "$"));
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.electric_sub_and_superscript
-    true;
-  Ecamlx.Customization.set_value Ecamlx.Auctex.font_latex_fontify_script
+  Ecamlx.Customization.set_variable
+    Ecamlx.Auctex.Tex.electric_sub_and_superscript true;
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.font_latex_fontify_script
     `Multi_level;
-  Ecamlx.Customization.set_value Ecamlx.Auctex.Tex.master `Query;
+  Ecamlx.Customization.set_variable Ecamlx.Auctex.Tex.master `Query;
   Ecaml.Hook.add Ecamlx.Auctex.Latex.mode_hook enable_latex_minor_modes;
 
   (* Proof general *)
-  Ecamlx.Customization.set_value Ecamlx.Proof_general.splash_enable false;
-  Ecamlx.Customization.set_value Ecamlx.Proof_general.three_window_mode_policy
-    `Hybrid;
-  Ecamlx.Customization.set_value Ecamlx.Proof_general.Coq.one_command_per_line
-    false;
+  Ecamlx.Customization.set_variable Ecamlx.Proof_general.splash_enable false;
+  Ecamlx.Customization.set_variable
+    Ecamlx.Proof_general.three_window_mode_policy `Hybrid;
+  Ecamlx.Customization.set_variable
+    Ecamlx.Proof_general.Coq.one_command_per_line false;
 
   (* Tuareg *)
-  Ecamlx.Customization.set_value Ecamlx.Tuareg.interactive_read_only_input true;
+  Ecamlx.Customization.set_variable Ecamlx.Tuareg.interactive_read_only_input
+    true;
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Tuareg.major_mode)
     tuareg_mode_hook_f;
@@ -662,10 +664,11 @@ let init () =
   (* Magit *)
   Ecaml.Feature.require Ecamlx.Git_commit.feature;
   Ecaml.Var.set_default_value Ecamlx.Magit.bind_magit_project_status false;
-  Ecamlx.Customization.set_value Ecamlx.Git_commit.summary_max_length
+  Ecamlx.Customization.set_variable Ecamlx.Git_commit.summary_max_length
     (Ecaml.Customization.standard_value Ecamlx.Current_buffer.fill_column);
-  Ecamlx.Customization.set_value Ecamlx.Magit.commit_show_diff false;
-  Ecamlx.Customization.set_value Ecamlx.Magit.define_global_key_bindings false;
+  Ecamlx.Customization.set_variable Ecamlx.Magit.commit_show_diff false;
+  Ecamlx.Customization.set_variable Ecamlx.Magit.define_global_key_bindings
+    false;
   Ecaml.Hook.add Ecamlx.Git_commit.setup_hook git_commit_setup_hook_f;
 
   Ecaml.Hook.add
@@ -682,7 +685,7 @@ let init () =
     csv_mode_hook_f;
   Ecamlx.Custom.load_theme "modus-operandi";
 
-  Ecamlx.Customization.set_value Ecamlx.Dired.completion_ignored_extensions
+  Ecamlx.Customization.set_variable Ecamlx.Dired.completion_ignored_extensions
     ([
        "auto/";
        ".prv/";
@@ -749,34 +752,35 @@ let init () =
 
   (* Miscellaneous settings *)
   Ecaml.Var.set_default_value Ecamlx.Novice.disabled_command_function None;
-  Ecamlx.Customization.set_value Ecamlx.Startup.inhibit_startup_screen true;
-  Ecamlx.Customization.set_value Ecamlx.mode_line_compact `Long;
-  Ecamlx.Customization.set_value Ecamlx.Custom.file
+  Ecamlx.Customization.set_variable Ecamlx.Startup.inhibit_startup_screen true;
+  Ecamlx.Customization.set_variable Ecamlx.mode_line_compact `Long;
+  Ecamlx.Customization.set_variable Ecamlx.Custom.file
     (Some (prefix_by_user_emacs_directory ".custom.el"));
-  Ecamlx.Customization.set_value Ecamlx.Files.auto_mode_case_fold false;
-  Ecamlx.Customization.set_value Ecamlx.Startup.initial_buffer_choice
+  Ecamlx.Customization.set_variable Ecamlx.Files.auto_mode_case_fold false;
+  Ecamlx.Customization.set_variable Ecamlx.Startup.initial_buffer_choice
     (Some
        (`Function
          (Ecaml.Function.of_value_exn @@ Ecaml.Command.to_value
         @@ Command.ansi_term ())));
-  Ecamlx.Customization.set_value Ecamlx.track_eol true;
-  Ecamlx.Customization.set_value Ecamlx.Minibuffer.completions_format
+  Ecamlx.Customization.set_variable Ecamlx.track_eol true;
+  Ecamlx.Customization.set_variable Ecamlx.Minibuffer.completions_format
     `One_column;
-  Ecamlx.Customization.set_value Ecamlx.Minibuffer.enable_recursive_minibuffers
-    true;
-  Ecamlx.Customization.set_value Ecamlx.Files.view_read_only true;
-  Ecamlx.Customization.set_value Ecamlx.Diff_mode.default_read_only true;
-  Ecamlx.Customization.set_value Ecamlx.Eldoc.echo_area_use_multiline_p `Never;
-  Ecamlx.Customization.set_value Ecamlx.Comint.prompt_read_only true;
-  Ecamlx.Customization.set_value Ecamlx.Term.buffer_maximum_size 0;
-  Ecamlx.Customization.set_value Ecamlx.Vc.follow_symlinks `Follow_link;
-  Ecamlx.Customization.set_value Ecamlx.Vc.command_messages true;
-  Ecamlx.Customization.set_value Ecamlx.Files.require_final_newline `Save;
-  Ecamlx.Customization.set_value Ecamlx.Current_buffer.scroll_up_aggressively
+  Ecamlx.Customization.set_variable
+    Ecamlx.Minibuffer.enable_recursive_minibuffers true;
+  Ecamlx.Customization.set_variable Ecamlx.Files.view_read_only true;
+  Ecamlx.Customization.set_variable Ecamlx.Diff_mode.default_read_only true;
+  Ecamlx.Customization.set_variable Ecamlx.Eldoc.echo_area_use_multiline_p
+    `Never;
+  Ecamlx.Customization.set_variable Ecamlx.Comint.prompt_read_only true;
+  Ecamlx.Customization.set_variable Ecamlx.Term.buffer_maximum_size 0;
+  Ecamlx.Customization.set_variable Ecamlx.Vc.follow_symlinks `Follow_link;
+  Ecamlx.Customization.set_variable Ecamlx.Vc.command_messages true;
+  Ecamlx.Customization.set_variable Ecamlx.Files.require_final_newline `Save;
+  Ecamlx.Customization.set_variable Ecamlx.Current_buffer.scroll_up_aggressively
     (Some 0.);
-  Ecamlx.Customization.set_value Ecamlx.Current_buffer.scroll_down_aggressively
-    (Some 0.);
-  Ecamlx.Customization.set_value Ecamlx.Indent.tabs_mode false;
+  Ecamlx.Customization.set_variable
+    Ecamlx.Current_buffer.scroll_down_aggressively (Some 0.);
+  Ecamlx.Customization.set_variable Ecamlx.Indent.tabs_mode false;
 
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;

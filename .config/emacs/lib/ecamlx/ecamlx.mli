@@ -47,7 +47,7 @@ module Current_buffer : sig
 end
 
 module Customization : sig
-  val set_value : 'a Ecaml.Customization.t -> 'a -> unit
+  val set_variable : ?comment:string -> 'a Ecaml.Customization.t -> 'a -> unit
 end
 
 module Comment : sig

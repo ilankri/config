@@ -82,7 +82,7 @@ module Command = struct
 end
 
 module Customization = struct
-  let set_value variable value_ =
+  let set_variable ?comment variable value_ =
     let customize_set_variable =
       let open Ecaml.Funcall.Wrap in
       "customize-set-variable"
@@ -92,7 +92,7 @@ module Customization = struct
     customize_set_variable
       (Ecaml.Var.symbol variable)
       (Ecaml.Value.Type.to_value variable.Ecaml.Var.type_ value_)
-      None
+      comment
 
   let from_variable variable =
     let open Ecaml.Customization.Wrap in
