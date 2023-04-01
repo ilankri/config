@@ -641,6 +641,7 @@ let init () =
   Ecamlx.Customization.set_variable
     Ecamlx.Current_buffer.scroll_down_aggressively (Some 0.);
   Ecamlx.Customization.set_variable Ecamlx.Indent.tabs_mode false;
+  Ecamlx.Customization.set_variable Ecamlx.Imenu.auto_rescan true;
 
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
