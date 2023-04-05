@@ -30,6 +30,7 @@
 !/.config/emacs/lib/my/
 !/.config/emacs/lib/my/dune
 !/.config/emacs/lib/my/my.ml
+!/.config/emacs/lib/my/my.mli
 !/.config/gh/
 !/.config/gh/config.yml
 !/.config/git/
