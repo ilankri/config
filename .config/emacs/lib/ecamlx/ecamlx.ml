@@ -1359,9 +1359,9 @@ module Package = struct
   let install_selected_packages ?no_confirm () =
     let install_selected_packages =
       let open Ecaml.Funcall.Wrap in
-      "package-install-selected-packages" <: nil_or bool @-> return string
+      "package-install-selected-packages" <: nil_or bool @-> return nil
     in
-    ignore (install_selected_packages no_confirm)
+    install_selected_packages no_confirm
 end
 
 module Proof_general = struct
