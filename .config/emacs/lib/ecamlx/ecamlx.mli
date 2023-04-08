@@ -218,10 +218,7 @@ module Compilation : sig
     Ecaml.Customization.t
 
   val filter_hook : Ecaml.Hook.normal Ecaml.Hook.t
-  val compile : ?comint:bool -> string -> unit
   val recompile : ?edit_command:bool -> unit -> unit
-  val command : string Ecaml.Customization.t
-  val read_command : string -> string
 
   module Error_matcher : sig
     type subexpression = int
@@ -420,6 +417,10 @@ module Package : sig
   val selected_packages : Ecaml.Symbol.t list Ecaml.Customization.t
   val initialize : ?no_activate:bool -> unit -> unit
   val install_selected_packages : ?no_confirm:bool -> unit -> unit
+end
+
+module Project : sig
+  val compile : unit -> unit
 end
 
 module Proof_general : sig

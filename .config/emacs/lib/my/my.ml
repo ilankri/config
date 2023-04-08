@@ -51,10 +51,7 @@ module Command = struct
       Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
       >>| fun arg ->
       Ecaml.Feature.require Ecamlx.Compilation.feature;
-      if arg then
-        Ecamlx.Compilation.compile @@ Ecamlx.Compilation.read_command
-        @@ Ecaml.Customization.value Ecamlx.Compilation.command
-      else Ecamlx.Compilation.recompile ());
+      if arg then Ecamlx.Project.compile () else Ecamlx.Compilation.recompile ());
     from_string name
 
   let indent_buffer () =
