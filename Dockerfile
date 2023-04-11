@@ -2,6 +2,7 @@ FROM debian
 RUN apt-get update --yes && \
     apt-get install --yes \
             bash-completion \
+            build-essential \
             curl \
             git \
             libgccjit-10-dev \
@@ -15,7 +16,8 @@ RUN apt-get update --yes && \
             libtiff-dev \
             libtinfo-dev \
             libxpm-dev \
-            opam
+            rsync \
+            unzip
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
     dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) \
@@ -29,12 +31,17 @@ WORKDIR /emacs-28.2
 RUN ./configure --with-native-compilation
 RUN make
 RUN make install
+RUN curl -fsSL --remote-name \
+    https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
+RUN sh ./install.sh <<EOF
+/usr/local/bin
+EOF
 RUN adduser ilankri
 USER ilankri
 RUN opam init --auto-setup --disable-sandboxing --yes
 RUN opam update --yes && opam install --yes ocaml-lsp-server
 WORKDIR /home/ilankri
 COPY --chown=ilankri . .
-RUN opam pin add --kind=path --unlock-base --yes .config/emacs/
+RUN opam pin add --kind=path --yes .config/emacs/
 RUN make
 CMD ["bash", "--login"]
