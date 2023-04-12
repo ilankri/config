@@ -205,6 +205,7 @@ let init () =
             Ecamlx.Minor_mode.reftex;
           ])
   in
+  Ecaml.Var.set_default_value Ecamlx.load_prefer_newer true;
   My.init_package_archives ();
   Ecamlx.Customization.set_variable Ecamlx.Package.selected_packages
     (List.map Ecaml.Symbol.intern
@@ -696,10 +697,6 @@ let init () =
 
   (* Emacs server *)
   Ecamlx.Server.start ()
-
-let init () =
-  Ecaml.Var.set_default_value Ecamlx.load_prefer_newer true;
-  init ()
 
 let () =
   let async_shutdown =
