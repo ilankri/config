@@ -1,3 +1,3 @@
 (library
  (name ecamlx)
- (libraries ecaml sexplib0))
+ (libraries ecaml sexplib0 position))

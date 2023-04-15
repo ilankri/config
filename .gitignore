@@ -31,6 +31,10 @@
 !/.config/emacs/lib/my/dune
 !/.config/emacs/lib/my/my.ml
 !/.config/emacs/lib/my/my.mli
+!/.config/emacs/lib/position/
+!/.config/emacs/lib/position/dune
+!/.config/emacs/lib/position/position.ml
+!/.config/emacs/lib/position/position.mli
 !/.config/gh/
 !/.config/gh/config.yml
 !/.config/git/

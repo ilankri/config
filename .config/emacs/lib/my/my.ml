@@ -2,7 +2,7 @@ let prefix_name name = Format.sprintf "my-%s" name
 
 let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
     ?interactive ?disabled ?evil_config ~returns f =
-  Ecamlx.defun ~name:(prefix_name name) ~__POS__ ?docstring ?define_keys
+  Ecamlx.Defun.defun ~name:(prefix_name name) ~__POS__ ?docstring ?define_keys
     ?obsoletes ?should_profile ?interactive ?disabled ?evil_config ~returns f
 
 let hook_defun
@@ -123,7 +123,8 @@ module Command = struct
       Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
           Ecamlx.Term.ansi_term ~new_buffer_name
             (Option.value
-               ~default:(Ecaml.Customization.value Ecamlx.shell_file_name)
+               ~default:
+                 (Ecaml.Customization.value Ecamlx.Process.shell_file_name)
                (Ecaml.System.getenv ~var:"ESHELL"))));
     from_string name
 end

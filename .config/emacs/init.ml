@@ -1,6 +1,6 @@
 let user_key key = Ecaml.Key_sequence.create_exn @@ Format.sprintf "C-c %s" key
-let global_set_key key command = Ecamlx.global_set_key (user_key key) command
-let local_set_key key command = Ecamlx.local_set_key (user_key key) command
+let global_set_key key command = Ecamlx.Key.global_set (user_key key) command
+let local_set_key key command = Ecamlx.Key.local_set (user_key key) command
 
 let set_prefix_key ?(local = false) ~prefix key command =
   let key = Format.sprintf "%s %s" prefix key in
@@ -14,7 +14,7 @@ let set_eglot_key ?local key command =
 
 module Function = struct
   let scala3_end_column () =
-    Ecamlx.lambda ~__POS__
+    Ecamlx.Defun.lambda ~__POS__
       ~returns:
         (Ecaml.Returns.Returns (Ecaml.Value.Type.nil_or Ecaml.Value.Type.int))
       (let open Ecaml.Defun.Let_syntax in
@@ -37,20 +37,20 @@ module Function = struct
          type_ filename)
 
   let makefile_auto_insert () =
-    Ecamlx.lambda ~__POS__
+    Ecamlx.Defun.lambda ~__POS__
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
       (let open Ecaml.Defun.Let_syntax in
       return () >>| fun () -> prompt_file_for_auto_insert "Makefile")
 
   let gitignore_auto_insert () =
-    Ecamlx.lambda ~__POS__
+    Ecamlx.Defun.lambda ~__POS__
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
       (let open Ecaml.Defun.Let_syntax in
       return () >>| fun () -> prompt_file_for_auto_insert "gitignore")
 end
 
 let prefix_by_user_emacs_directory file =
-  Ecaml.Var.default_value_exn Ecamlx.user_emacs_directory ^ file
+  Ecaml.Var.default_value_exn Ecamlx.User.emacs_directory ^ file
 
 let c_trad_comment_on () =
   Ecamlx.Current_buffer.set_buffer_local Ecamlx.Comment.start "/* ";
@@ -153,7 +153,7 @@ let tuareg_mode_hook_f =
   My.hook_defun ~name:"tuareg-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
-      Ecamlx.local_unset_key @@ Ecaml.Key_sequence.create_exn "C-c C-h")
+      Ecamlx.Key.local_unset @@ Ecaml.Key_sequence.create_exn "C-c C-h")
 
 let init () =
   let enable_auto_fill =
@@ -205,7 +205,7 @@ let init () =
             Ecamlx.Minor_mode.reftex;
           ])
   in
-  Ecaml.Var.set_default_value Ecamlx.load_prefer_newer true;
+  Ecaml.Var.set_default_value Ecamlx.Load.prefer_newer true;
   My.init_package_archives ();
   Ecamlx.Customization.set_variable Ecamlx.Package.selected_packages
     (List.map Ecaml.Symbol.intern
@@ -614,7 +614,7 @@ let init () =
   (* Miscellaneous settings *)
   Ecaml.Var.set_default_value Ecamlx.Novice.disabled_command_function None;
   Ecamlx.Customization.set_variable Ecamlx.Startup.inhibit_startup_screen true;
-  Ecamlx.Customization.set_variable Ecamlx.mode_line_compact `Long;
+  Ecamlx.Customization.set_variable Ecamlx.Mode_line.compact `Long;
   Ecamlx.Customization.set_variable Ecamlx.Custom.file
     (Some (prefix_by_user_emacs_directory ".custom.el"));
   Ecamlx.Customization.set_variable Ecamlx.Files.auto_mode_case_fold false;
@@ -623,7 +623,7 @@ let init () =
        (`Function
          (Ecaml.Function.of_value_exn @@ Ecaml.Command.to_value
         @@ My.Command.ansi_term ())));
-  Ecamlx.Customization.set_variable Ecamlx.track_eol true;
+  Ecamlx.Customization.set_variable Ecamlx.Display.track_eol true;
   Ecamlx.Customization.set_variable Ecamlx.Minibuffer.completions_format
     `One_column;
   Ecamlx.Customization.set_variable

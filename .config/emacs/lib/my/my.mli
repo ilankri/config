@@ -2,7 +2,7 @@ val init_package_archives : unit -> unit
 
 val hook_defun :
   ?name:string ->
-  __POS__:Ecamlx.position ->
+  __POS__:Position.t ->
   ?docstring:string ->
   ?should_profile:bool ->
   hook_type:'a Ecaml.Hook.Hook_type.t ->

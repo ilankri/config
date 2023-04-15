@@ -1,35 +1,52 @@
-type position = string * int * int * int
+module Defun : sig
+  val defun :
+    name:string ->
+    __POS__:Position.t ->
+    ?docstring:string ->
+    ?define_keys:(Ecaml.Keymap.t * string) list ->
+    ?obsoletes:Ecaml.Defun.Obsoletes.t ->
+    ?should_profile:bool ->
+    ?interactive:Ecaml.Defun.Interactive.t ->
+    ?disabled:bool ->
+    ?evil_config:Ecaml.Evil.Config.t ->
+    returns:(_, 'a) Ecaml.Returns.t ->
+    'a Ecaml.Defun.t ->
+    unit
 
-val defun :
-  name:string ->
-  __POS__:position ->
-  ?docstring:string ->
-  ?define_keys:(Ecaml.Keymap.t * string) list ->
-  ?obsoletes:Ecaml.Defun.Obsoletes.t ->
-  ?should_profile:bool ->
-  ?interactive:Ecaml.Defun.Interactive.t ->
-  ?disabled:bool ->
-  ?evil_config:Ecaml.Evil.Config.t ->
-  returns:(_, 'a) Ecaml.Returns.t ->
-  'a Ecaml.Defun.t ->
-  unit
+  val lambda :
+    __POS__:Position.t ->
+    ?docstring:string ->
+    ?interactive:Ecaml.Defun.Interactive.t ->
+    returns:(_, 'a) Ecaml.Returns.t ->
+    'a Ecaml.Defun.t ->
+    Ecaml.Function.t
+end
 
-val lambda :
-  __POS__:position ->
-  ?docstring:string ->
-  ?interactive:Ecaml.Defun.Interactive.t ->
-  returns:(_, 'a) Ecaml.Returns.t ->
-  'a Ecaml.Defun.t ->
-  Ecaml.Function.t
+module Key : sig
+  val global_set : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+  val local_set : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
+  val local_unset : Ecaml.Key_sequence.t -> unit
+end
 
-val global_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
-val local_set_key : Ecaml.Key_sequence.t -> Ecaml.Command.t -> unit
-val local_unset_key : Ecaml.Key_sequence.t -> unit
-val mode_line_compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
-val track_eol : bool Ecaml.Customization.t
-val shell_file_name : string Ecaml.Customization.t
-val user_emacs_directory : string Ecaml.Var.t
-val load_prefer_newer : bool Ecaml.Var.t
+module Mode_line : sig
+  val compact : [ `Never | `Always | `Long ] Ecaml.Customization.t
+end
+
+module Display : sig
+  val track_eol : bool Ecaml.Customization.t
+end
+
+module Process : sig
+  val shell_file_name : string Ecaml.Customization.t
+end
+
+module User : sig
+  val emacs_directory : string Ecaml.Var.t
+end
+
+module Load : sig
+  val prefer_newer : bool Ecaml.Var.t
+end
 
 module Command : sig
   val blink_matching_open : Ecaml.Command.t
@@ -72,7 +89,7 @@ module Hook : sig
   module Function : sig
     val create :
       name:string ->
-      __POS__:position ->
+      __POS__:Position.t ->
       ?docstring:string ->
       ?should_profile:bool ->
       hook_type:'a Ecaml.Hook.Hook_type.t ->

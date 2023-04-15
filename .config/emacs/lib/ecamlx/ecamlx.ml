@@ -1,31 +1,33 @@
-type position = string * int * int * int
+module Defun = struct
+  let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
+      ?interactive ?disabled ?evil_config ~returns f =
+    Ecaml.defun (Ecaml.Symbol.intern name)
+      (Position.to_lexing_position ~__POS__)
+      ~docstring:(Option.value ~default:"None" docstring)
+      ?define_keys ?obsoletes ?should_profile ?interactive ?disabled
+      ?evil_config returns f
 
-let position ~__POS__:(pos_fname, pos_lnum, pos_cnum, _) =
-  { Lexing.pos_fname; pos_lnum; pos_cnum; pos_bol = 0 }
+  let lambda ~__POS__ ?docstring ?interactive ~returns f =
+    Ecaml.lambda
+      (Position.to_lexing_position ~__POS__)
+      ?docstring ?interactive returns f
+end
 
-let defun ~name ~__POS__ ?docstring ?define_keys ?obsoletes ?should_profile
-    ?interactive ?disabled ?evil_config ~returns f =
-  Ecaml.defun (Ecaml.Symbol.intern name) (position ~__POS__)
-    ~docstring:(Option.value ~default:"None" docstring)
-    ?define_keys ?obsoletes ?should_profile ?interactive ?disabled ?evil_config
-    returns f
+module Key = struct
+  let global_set =
+    let open Ecaml.Funcall.Wrap in
+    "global-set-key"
+    <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
 
-let lambda ~__POS__ ?docstring ?interactive ~returns f =
-  Ecaml.lambda (position ~__POS__) ?docstring ?interactive returns f
+  let local_set =
+    let open Ecaml.Funcall.Wrap in
+    "local-set-key"
+    <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
 
-let global_set_key =
-  let open Ecaml.Funcall.Wrap in
-  "global-set-key"
-  <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
-
-let local_set_key =
-  let open Ecaml.Funcall.Wrap in
-  "local-set-key"
-  <: Ecaml.Key_sequence.type_ @-> Ecaml.Command.type_ @-> return nil
-
-let local_unset_key =
-  let open Ecaml.Funcall.Wrap in
-  "local-unset-key" <: Ecaml.Key_sequence.type_ @-> return nil
+  let local_unset =
+    let open Ecaml.Funcall.Wrap in
+    "local-unset-key" <: Ecaml.Key_sequence.type_ @-> return nil
+end
 
 module Value = struct
   module Type = struct
@@ -38,39 +40,52 @@ module Value = struct
   end
 end
 
-let mode_line_compact =
-  let type_ =
-    let module Type = struct
-      type t = [ `Never | `Always | `Long ]
+module Mode_line = struct
+  let compact =
+    let type_ =
+      let module Type = struct
+        type t = [ `Never | `Always | `Long ]
 
-      let all = [ `Never; `Always; `Long ]
+        let all = [ `Never; `Always; `Long ]
 
-      let sexp_of_t value =
-        let atom =
-          match value with `Never -> "nil" | `Always -> "t" | `Long -> "long"
-        in
-        Sexplib0.Sexp.Atom atom
-    end in
-    Value.Type.enum "mode-line-compact" (module Type)
-  in
-  let open Ecaml.Customization.Wrap in
-  "mode-line-compact" <: type_
+        let sexp_of_t value =
+          let atom =
+            match value with
+            | `Never -> "nil"
+            | `Always -> "t"
+            | `Long -> "long"
+          in
+          Sexplib0.Sexp.Atom atom
+      end in
+      Value.Type.enum "mode-line-compact" (module Type)
+    in
+    let open Ecaml.Customization.Wrap in
+    "mode-line-compact" <: type_
+end
 
-let track_eol =
-  let open Ecaml.Customization.Wrap in
-  "track-eol" <: bool
+module Display = struct
+  let track_eol =
+    let open Ecaml.Customization.Wrap in
+    "track-eol" <: bool
+end
 
-let shell_file_name =
-  let open Ecaml.Customization.Wrap in
-  "shell-file-name" <: string
+module Process = struct
+  let shell_file_name =
+    let open Ecaml.Customization.Wrap in
+    "shell-file-name" <: string
+end
 
-let user_emacs_directory =
-  let open Ecaml.Var.Wrap in
-  "user-emacs-directory" <: string
+module User = struct
+  let emacs_directory =
+    let open Ecaml.Var.Wrap in
+    "user-emacs-directory" <: string
+end
 
-let load_prefer_newer =
-  let open Ecaml.Var.Wrap in
-  "load-prefer-newer" <: bool
+module Load = struct
+  let prefer_newer =
+    let open Ecaml.Var.Wrap in
+    "load-prefer-newer" <: bool
+end
 
 module Command = struct
   let from_string name =
@@ -172,7 +187,8 @@ module Hook = struct
 
   module Function = struct
     let create ~name ~__POS__ ?docstring ?should_profile ~hook_type ~returns f =
-      Ecaml.Hook.Function.create (Ecaml.Symbol.intern name) (position ~__POS__)
+      Ecaml.Hook.Function.create (Ecaml.Symbol.intern name)
+        (Position.to_lexing_position ~__POS__)
         ~docstring:(Option.value ~default:"None" docstring)
         ?should_profile ~hook_type (Ecaml.Returns.Returns returns) f
   end
@@ -181,67 +197,67 @@ end
 module Major_mode = struct
   module Archive =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "archive-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Conf =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Conf_colon =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-colon-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Conf_space =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-space-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Conf_unix =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "conf-unix-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Csv =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "csv-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module C_plus_plus =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "c++-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Diff =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "diff-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Git_rebase =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "git-rebase-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Gitignore =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "gitignore-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Java =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "java-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Latex =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "latex-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Markdown =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "markdown-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Message =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "message-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Scala =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "scala-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 
   module Sh =
     (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "sh-mode"
-           (position ~__POS__))
+           (Position.to_lexing_position ~__POS__))
 end
 
 module Minor_mode = struct
@@ -423,7 +439,8 @@ module Auto_insert = struct
       let to_ value =
         if Ecaml.Value.is_symbol value then
           `Major_mode
-            (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__)
+            (Ecaml.Major_mode.find_or_wrap_existing
+               (Position.to_lexing_position ~__POS__)
                (Ecaml.Symbol.of_value_exn value))
         else `Regexp (Ecaml.Regexp.of_value_exn value)
       in
@@ -517,7 +534,7 @@ module Cc_mode = struct
                     else
                       `Major_mode
                         (Ecaml.Major_mode.find_or_wrap_existing
-                           (position ~__POS__)
+                           (Position.to_lexing_position ~__POS__)
                            (Ecaml.Symbol.of_value_exn major_mode))
                   in
                   let style =
@@ -1720,14 +1737,16 @@ module Whitespace = struct
               if Ecaml.Value.eq (maybe_not :> Ecaml.Value.t) not_ then
                 let except =
                   List.map
-                    (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__))
+                    (Ecaml.Major_mode.find_or_wrap_existing
+                       (Position.to_lexing_position ~__POS__))
                     except
                 in
                 All { except }
               else
                 let major_modes =
                   List.map
-                    (Ecaml.Major_mode.find_or_wrap_existing (position ~__POS__))
+                    (Ecaml.Major_mode.find_or_wrap_existing
+                       (Position.to_lexing_position ~__POS__))
                     major_modes
                 in
                 Only major_modes
