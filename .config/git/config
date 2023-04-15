@@ -43,6 +43,9 @@
 [tag]
 	gpgSign = true
 
+[transfer]
+	fsckObjects = true
+
 [user]
 	name = Idir Lankri
 	signingKey = 403FE1E31C030F8B
