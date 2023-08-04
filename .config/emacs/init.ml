@@ -1,6 +1,6 @@
-let user_key key = Ecaml.Key_sequence.create_exn @@ Format.sprintf "C-c %s" key
-let global_set_key key command = Ecamlx.Key.global_set (user_key key) command
-let local_set_key key command = Ecamlx.Key.local_set (user_key key) command
+let user_key key = Format.sprintf "C-c %s" key
+let global_set_key key command = Ecamlx.Keymap.global_set (user_key key) command
+let local_set_key key command = Ecamlx.Keymap.local_set (user_key key) command
 
 let set_prefix_key ?(local = false) ~prefix key command =
   let key = Format.sprintf "%s %s" prefix key in
@@ -152,8 +152,14 @@ let c_initialization_hook_f =
 let tuareg_mode_hook_f =
   My.hook_defun ~name:"tuareg-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
+    (fun () -> Ecamlx.Keymap.local_unset "C-c C-h")
+
+let icomplete_minibuffer_setup_hook_f =
+  My.hook_defun ~name:"icomplete-minibuffer-setup-hook-f" ~__POS__
+    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
     (fun () ->
-      Ecamlx.Key.local_unset @@ Ecaml.Key_sequence.create_exn "C-c C-h")
+      Ecamlx.Current_buffer.set_customization_buffer_local
+        Ecamlx.Minibuffer.completion_auto_help `Never)
 
 let init () =
   let enable_auto_fill =
@@ -215,17 +221,12 @@ let init () =
          "reason-mode";
          "debian-el";
          "csv-mode";
-         "rust-mode";
-         "go-mode";
          "markdown-mode";
          "scala-mode";
          "gnu-elpa-keyring-update";
-         "eglot";
-         "yaml-mode";
          "tuareg";
          "dune";
          "git-modes";
-         "dockerfile-mode";
          "auctex";
          "proof-general";
        ]);
@@ -235,6 +236,39 @@ let init () =
   Ecamlx.Package.install_selected_packages ();
 
   Ecaml.Feature.require Ecamlx.Debian_el.feature;
+
+  (* Tree-sitter *)
+  Ecaml.Feature.require Ecamlx.Treesit.feature;
+  Ecaml.Var.set_default_value Ecamlx.Treesit.language_source_alist
+    [
+      ( Ecaml.Symbol.intern "rust",
+        Ecamlx.Treesit.Language_source.make
+          "git@github.com:tree-sitter/tree-sitter-rust.git" );
+      ( Ecaml.Symbol.intern "go",
+        Ecamlx.Treesit.Language_source.make
+          "git@github.com:tree-sitter/tree-sitter-go.git" );
+      ( Ecaml.Symbol.intern "gomod",
+        Ecamlx.Treesit.Language_source.make
+          "git@github.com:camdencheek/tree-sitter-go-mod.git" );
+      ( Ecaml.Symbol.intern "yaml",
+        Ecamlx.Treesit.Language_source.make
+          "git@github.com:ikatyang/tree-sitter-yaml.git" );
+      ( Ecaml.Symbol.intern "dockerfile",
+        Ecamlx.Treesit.Language_source.make
+          "git@github.com:camdencheek/tree-sitter-dockerfile.git" );
+    ];
+  List.iter Ecamlx.Treesit.install_language_grammar
+    (List.filter
+       (Fun.negate @@ Ecamlx.Treesit.ready_p ~quiet:`Yes)
+       (List.map fst
+          (Ecaml.Var.default_value_exn Ecamlx.Treesit.language_source_alist)));
+  List.iter
+    (fun (lang, _) ->
+      let lang = Ecaml.Symbol.name lang in
+      if lang <> "gomod" then
+        Ecaml.Feature.require @@ Ecaml.Symbol.intern
+        @@ Format.sprintf "%s-ts-mode" lang)
+    (Ecaml.Var.default_value_exn Ecamlx.Treesit.language_source_alist);
 
   (* Eglot *)
   List.iter
@@ -522,6 +556,17 @@ let init () =
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
 
+  (* Completion *)
+  Ecamlx.Customization.set_variable Ecamlx.Minibuffer.completion_auto_help
+    `Always;
+  Ecamlx.Customization.set_variable Ecamlx.Minibuffer.completion_auto_select
+    `On_second_tab;
+
+  (* To avoid interferences between Icomplete and the default completion
+     system. *)
+  Ecaml.Hook.add Ecamlx.Icomplete.minibuffer_setup_hook
+    icomplete_minibuffer_setup_hook_f;
+
   (* Magit *)
   Ecaml.Feature.require Ecamlx.Git_commit.feature;
   Ecaml.Var.set_default_value Ecamlx.Magit.bind_magit_project_status false;
@@ -643,6 +688,8 @@ let init () =
     Ecamlx.Current_buffer.scroll_down_aggressively (Some 0.);
   Ecamlx.Customization.set_variable Ecamlx.Indent.tabs_mode false;
   Ecamlx.Customization.set_variable Ecamlx.Imenu.auto_rescan true;
+  Ecamlx.Customization.set_variable Ecamlx.Paren.context_when_offscreen
+    `Echo_area;
 
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
@@ -655,7 +702,6 @@ let init () =
   global_set_key "k" Ecamlx.Command.kill_current_buffer;
   set_eglot_key "a" (Ecamlx.Eglot.Command.code_actions ());
   set_eglot_key "r" (Ecamlx.Eglot.Command.rename ());
-  global_set_key "m" Ecamlx.Imenu.Command.imenu;
   global_set_key "n" Ecamlx.Windmove.Command.down;
   set_ispell_key "c" Ecamlx.Ispell.Command.comments_and_strings;
   set_ispell_key "d" Ecamlx.Ispell.Command.change_dictionary;
@@ -666,10 +712,8 @@ let init () =
   global_set_key "s" (My.Command.git_grep ());
   global_set_key "t" (My.Command.transpose_windows ());
   global_set_key "u" (Ecamlx.Winner.Command.undo ());
-  global_set_key "x" Ecamlx.Command.switch_to_completions;
   global_set_key "v" (My.Command.ansi_term ());
   global_set_key "w" Ecamlx.Whitespace.Command.cleanup;
-  global_set_key "y" Ecamlx.Command.blink_matching_open;
 
   List.iter Ecaml.Minor_mode.disable
     [

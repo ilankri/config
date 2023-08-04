@@ -5,7 +5,7 @@ RUN apt-get update --yes && \
             build-essential \
             curl \
             git \
-            libgccjit-10-dev \
+            libgccjit-12-dev \
             libgif-dev \
             libgmp-dev \
             libgnutls28-dev \
@@ -15,6 +15,7 @@ RUN apt-get update --yes && \
             libpng-dev \
             libtiff-dev \
             libtinfo-dev \
+            libtree-sitter-dev \
             libxpm-dev \
             rsync \
             unzip
@@ -25,9 +26,9 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
           https://cli.github.com/packages stable main" | \
     tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 RUN apt-get update --yes && apt-get install --yes gh
-RUN curl --remote-name https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.xz
-RUN tar -xf emacs-28.2.tar.xz
-WORKDIR /emacs-28.2
+RUN curl --remote-name https://ftp.gnu.org/gnu/emacs/emacs-29.1.tar.xz
+RUN tar -xf emacs-29.1.tar.xz
+WORKDIR /emacs-29.1
 RUN ./configure --with-native-compilation
 RUN make
 RUN make install

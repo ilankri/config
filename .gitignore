@@ -74,14 +74,16 @@
 !/.config/emacs/lib/ecamlx/grep.mli
 !/.config/emacs/lib/ecamlx/hook.ml
 !/.config/emacs/lib/ecamlx/hook.mli
+!/.config/emacs/lib/ecamlx/icomplete.ml
+!/.config/emacs/lib/ecamlx/icomplete.mli
 !/.config/emacs/lib/ecamlx/imenu.ml
 !/.config/emacs/lib/ecamlx/imenu.mli
 !/.config/emacs/lib/ecamlx/indent.ml
 !/.config/emacs/lib/ecamlx/indent.mli
 !/.config/emacs/lib/ecamlx/ispell.ml
 !/.config/emacs/lib/ecamlx/ispell.mli
-!/.config/emacs/lib/ecamlx/key.ml
-!/.config/emacs/lib/ecamlx/key.mli
+!/.config/emacs/lib/ecamlx/keymap.ml
+!/.config/emacs/lib/ecamlx/keymap.mli
 !/.config/emacs/lib/ecamlx/load.ml
 !/.config/emacs/lib/ecamlx/load.mli
 !/.config/emacs/lib/ecamlx/magit.ml
@@ -102,6 +104,8 @@
 !/.config/emacs/lib/ecamlx/novice.mli
 !/.config/emacs/lib/ecamlx/package.ml
 !/.config/emacs/lib/ecamlx/package.mli
+!/.config/emacs/lib/ecamlx/paren.ml
+!/.config/emacs/lib/ecamlx/paren.mli
 !/.config/emacs/lib/ecamlx/process.ml
 !/.config/emacs/lib/ecamlx/process.mli
 !/.config/emacs/lib/ecamlx/project.ml
@@ -124,6 +128,8 @@
 !/.config/emacs/lib/ecamlx/startup.mli
 !/.config/emacs/lib/ecamlx/term.ml
 !/.config/emacs/lib/ecamlx/term.mli
+!/.config/emacs/lib/ecamlx/treesit.ml
+!/.config/emacs/lib/ecamlx/treesit.mli
 !/.config/emacs/lib/ecamlx/tuareg.ml
 !/.config/emacs/lib/ecamlx/tuareg.mli
 !/.config/emacs/lib/ecamlx/user.ml
