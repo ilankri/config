@@ -146,9 +146,6 @@
 !/.config/emacs/lib/ecamlx/window.mli
 !/.config/emacs/lib/ecamlx/winner.ml
 !/.config/emacs/lib/ecamlx/winner.mli
-!/.config/emacs/lib/init-packages/
-!/.config/emacs/lib/init-packages/dune
-!/.config/emacs/lib/init-packages/init_packages.ml
 !/.config/emacs/lib/my/
 !/.config/emacs/lib/my/dune
 !/.config/emacs/lib/my/my.ml

@@ -1,6 +1,0 @@
-(executable
- (name init_packages)
- (libraries ecaml ecamlx my)
- (promote (until-clean))
- (modes
-  (native shared_object)))

@@ -7,7 +7,7 @@ DUNE = opam exec -- dune
 all: build
 
 build:
-	$(DUNE) build lib/init-packages/init_packages.so init.so
+	$(DUNE) build init.so
 
 clean:
 	$(DUNE) clean

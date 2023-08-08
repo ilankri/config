@@ -4,13 +4,6 @@ let archives =
   let open Ecaml.Customization.Wrap in
   "package-archives" <: list (tuple string string)
 
-let refresh_contents ?async () =
-  let refresh_contents =
-    let open Ecaml.Funcall.Wrap in
-    "package-refresh-contents" <: nil_or bool @-> return nil
-  in
-  refresh_contents async
-
 let selected_packages =
   let open Ecaml.Customization.Wrap in
   "package-selected-packages" <: list Ecaml.Symbol.type_

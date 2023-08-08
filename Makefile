@@ -6,12 +6,12 @@ print_installing = printf "Installing %s config...\n"
 print_done = echo "Done"
 
 .SUFFIXES:
-.PHONY: all install clean install-bash install-emacs			\
-	compile-emacs-config docker-build docker-debug-emacs-init
+.PHONY: all install clean install-bash compile-emacs-config \
+	docker-build docker-debug-emacs-init
 
-all: install
+all: compile-emacs-config install
 
-install: install-bash install-emacs
+install: install-bash
 
 clean:
 	@echo "Cleaning..."
@@ -26,11 +26,6 @@ install-bash:
 		"[ -f ~/.config/bash/bashrc.bash ]"		\
 		". ~/.config/bash/bashrc.bash"			\
 		>> ~/.bashrc
-	@$(print_done)
-
-install-emacs: compile-emacs-config
-	@$(print_installing) Emacs
-	@emacs --batch --load $(econfdir)/lib/init-packages/init_packages.so
 	@$(print_done)
 
 compile-emacs-config:
