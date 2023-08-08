@@ -243,19 +243,19 @@ let init () =
     [
       ( Ecaml.Symbol.intern "rust",
         Ecamlx.Treesit.Language_source.make
-          "git@github.com:tree-sitter/tree-sitter-rust.git" );
+          "https://github.com/tree-sitter/tree-sitter-rust.git" );
       ( Ecaml.Symbol.intern "go",
         Ecamlx.Treesit.Language_source.make
-          "git@github.com:tree-sitter/tree-sitter-go.git" );
+          "https://github.com/tree-sitter/tree-sitter-go.git" );
       ( Ecaml.Symbol.intern "gomod",
         Ecamlx.Treesit.Language_source.make
-          "git@github.com:camdencheek/tree-sitter-go-mod.git" );
+          "https://github.com/camdencheek/tree-sitter-go-mod.git" );
       ( Ecaml.Symbol.intern "yaml",
         Ecamlx.Treesit.Language_source.make
-          "git@github.com:ikatyang/tree-sitter-yaml.git" );
+          "https://github.com/ikatyang/tree-sitter-yaml.git" );
       ( Ecaml.Symbol.intern "dockerfile",
         Ecamlx.Treesit.Language_source.make
-          "git@github.com:camdencheek/tree-sitter-dockerfile.git" );
+          "https://github.com/camdencheek/tree-sitter-dockerfile.git" );
     ];
   List.iter Ecamlx.Treesit.install_language_grammar
     (List.filter
