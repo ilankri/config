@@ -61,3 +61,7 @@ module Scala =
 module Sh =
   (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "sh-mode"
          (Position.to_lexing_position ~__POS__))
+
+module Typst =
+  (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "typst-ts-mode"
+         (Position.to_lexing_position ~__POS__))

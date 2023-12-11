@@ -33,6 +33,44 @@ val ignored_server_capabilities :
   list
   Ecaml.Customization.t
 
+module Language : sig
+  type t = { major_mode : Ecaml.Major_mode.t; id : string option }
+
+  val make : ?id:string -> Ecaml.Major_mode.t -> t
+
+  module Server : sig
+    type t =
+      | Program of {
+          name : string;
+          args : string list;
+          initialization_options :
+            [ `List of Ecaml.Value.t list | `Function of Ecaml.Function.t ]
+            option;
+        }
+      | Program_with_auto_port of {
+          name : string;
+          args_before_auto_port : string list;
+          args_after_auto_port : string list;
+        }
+      | Host of { name : string; port : int; tcp_args : string list }
+      | Class of { name : Ecaml.Symbol.t; init_args : Ecaml.Value.t list }
+
+    val make_program :
+      ?args:string list ->
+      ?initialization_options:
+        [ `List of Ecaml.Value.t list | `Function of Ecaml.Function.t ] ->
+      string ->
+      t
+  end
+end
+
+val server_programs :
+  (Language.t list
+  * [ `Language_server of Language.Server.t | `Function of Ecaml.Function.t ])
+  list
+  Ecaml.Var.t
+
+val connect_timeout : int option Ecaml.Customization.t
 val ensure : unit -> unit
 val managed_p : unit -> bool
 val format_buffer : unit -> unit

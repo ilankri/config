@@ -47,6 +47,8 @@
 !.config/emacs/lib/ecamlx/eglot.mli
 !.config/emacs/lib/ecamlx/eldoc.ml
 !.config/emacs/lib/ecamlx/eldoc.mli
+!.config/emacs/lib/ecamlx/flyspell.ml
+!.config/emacs/lib/ecamlx/flyspell.mli
 !.config/emacs/lib/ecamlx/ffap.ml
 !.config/emacs/lib/ecamlx/ffap.mli
 !.config/emacs/lib/ecamlx/files.ml

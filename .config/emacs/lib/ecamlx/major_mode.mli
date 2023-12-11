@@ -14,3 +14,4 @@ module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
 module Message : Ecaml.Major_mode.S_with_lazy_keymap
 module Scala : Ecaml.Major_mode.S_with_lazy_keymap
 module Sh : Ecaml.Major_mode.S_with_lazy_keymap
+module Typst : Ecaml.Major_mode.S_with_lazy_keymap
