@@ -212,6 +212,8 @@ let init () =
           ])
   in
   Ecaml.Var.set_default_value Ecamlx.Load.prefer_newer true;
+  Ecamlx.Customization.set_variable Ecamlx.Custom.file
+    (Some (prefix_by_user_emacs_directory ".custom.el"));
   My.init_package_archives ();
   Ecamlx.Customization.set_variable Ecamlx.Package.selected_packages
     (List.map Ecaml.Symbol.intern
@@ -660,8 +662,6 @@ let init () =
   Ecaml.Var.set_default_value Ecamlx.Novice.disabled_command_function None;
   Ecamlx.Customization.set_variable Ecamlx.Startup.inhibit_startup_screen true;
   Ecamlx.Customization.set_variable Ecamlx.Mode_line.compact `Long;
-  Ecamlx.Customization.set_variable Ecamlx.Custom.file
-    (Some (prefix_by_user_emacs_directory ".custom.el"));
   Ecamlx.Customization.set_variable Ecamlx.Files.auto_mode_case_fold false;
   Ecamlx.Customization.set_variable Ecamlx.Startup.initial_buffer_choice
     (Some
