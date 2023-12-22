@@ -6,7 +6,10 @@ val context_lines :
   Ecaml.Customization.t
 
 val filter_hook : Ecaml.Hook.normal Ecaml.Hook.t
-val recompile : ?edit_command:bool -> unit -> unit
+
+module Command : sig
+  val recompile : Ecaml.Command.t
+end
 
 module Error_matcher : sig
   type subexpression = int

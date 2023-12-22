@@ -726,7 +726,7 @@ let init () =
 
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
-  global_set_key "c" (My.Command.compile ());
+  global_set_key "c" Ecamlx.Compilation.Command.recompile;
   global_set_key "b" Ecamlx.Windmove.Command.left;
   global_set_key "f" Ecamlx.Windmove.Command.right;
   global_set_key "h" Ecamlx.Man.Command.man;

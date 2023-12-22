@@ -43,17 +43,6 @@ module Command = struct
       return () >>| fun () -> ispell "fr_FR");
     from_string name
 
-  let compile () =
-    let name = "compile" in
-    defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
-      ~interactive:Ecaml.Defun.Interactive.Raw_prefix
-      (let open Ecaml.Defun.Let_syntax in
-      Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
-      >>| fun arg ->
-      Ecaml.Feature.require Ecamlx.Compilation.feature;
-      if arg then Ecamlx.Project.compile () else Ecamlx.Compilation.recompile ());
-    from_string name
-
   let indent_buffer () =
     let name = "indent-buffer" in
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)

@@ -99,8 +99,6 @@
 !.config/emacs/lib/ecamlx/paren.mli
 !.config/emacs/lib/ecamlx/process.ml
 !.config/emacs/lib/ecamlx/process.mli
-!.config/emacs/lib/ecamlx/project.ml
-!.config/emacs/lib/ecamlx/project.mli
 !.config/emacs/lib/ecamlx/proof_general.ml
 !.config/emacs/lib/ecamlx/proof_general.mli
 !.config/emacs/lib/ecamlx/reftex.ml

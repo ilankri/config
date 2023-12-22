@@ -46,12 +46,9 @@ let filter_hook =
   let open Ecaml.Hook.Wrap in
   "compilation-filter-hook" <: Ecaml.Hook.Hook_type.Normal_hook
 
-let recompile ?edit_command () =
-  let recompile =
-    let open Ecaml.Funcall.Wrap in
-    "recompile" <: nil_or bool @-> return nil
-  in
-  recompile edit_command
+module Command = struct
+  let recompile = Command.from_string "recompile"
+end
 
 module Error_matcher = struct
   type subexpression = int

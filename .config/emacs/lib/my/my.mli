@@ -13,7 +13,6 @@ val hook_defun :
 module Command : sig
   val ispell_en : unit -> Ecaml.Command.t
   val ispell_fr : unit -> Ecaml.Command.t
-  val compile : unit -> Ecaml.Command.t
   val indent_buffer : unit -> Ecaml.Command.t
   val git_grep : unit -> Ecaml.Command.t
   val transpose_windows : unit -> Ecaml.Command.t
