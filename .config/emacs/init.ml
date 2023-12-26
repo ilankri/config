@@ -18,10 +18,10 @@ module Function = struct
       ~returns:
         (Ecaml.Returns.Returns (Ecaml.Value.Type.nil_or Ecaml.Value.Type.int))
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () ->
-      Option.map
-        (fun column -> column |> String.trim |> int_of_string |> succ)
-        (Ecamlx.Regexp.match_string 3))
+       return () >>| fun () ->
+       Option.map
+         (fun column -> column |> String.trim |> int_of_string |> succ)
+         (Ecamlx.Regexp.match_string 3))
 
   let prompt_file_for_auto_insert filename =
     let open Async_kernel.Deferred.Let_syntax in
@@ -40,13 +40,13 @@ module Function = struct
     Ecamlx.Defun.lambda ~__POS__
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () -> prompt_file_for_auto_insert "Makefile")
+       return () >>| fun () -> prompt_file_for_auto_insert "Makefile")
 
   let gitignore_auto_insert () =
     Ecamlx.Defun.lambda ~__POS__
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () -> prompt_file_for_auto_insert "gitignore")
+       return () >>| fun () -> prompt_file_for_auto_insert "gitignore")
 end
 
 let prefix_by_user_emacs_directory file =

@@ -268,12 +268,12 @@ module Language = struct
                   | [ initialization_options ] ->
                       Some
                         (if Ecaml.Value.is_function initialization_options then
-                         `Function
-                           (Ecaml.Function.of_value_exn initialization_options)
-                        else
-                          `List
-                            (Ecaml.Value.to_list_exn ~f:Fun.id
-                               initialization_options))
+                           `Function
+                             (Ecaml.Function.of_value_exn initialization_options)
+                         else
+                           `List
+                             (Ecaml.Value.to_list_exn ~f:Fun.id
+                                initialization_options))
                 in
                 Program
                   {

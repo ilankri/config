@@ -32,7 +32,7 @@ module Command = struct
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
       ~interactive:Ecaml.Defun.Interactive.No_arg
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () -> ispell "en_US");
+       return () >>| fun () -> ispell "en_US");
     from_string name
 
   let ispell_fr () =
@@ -40,7 +40,7 @@ module Command = struct
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
       ~interactive:Ecaml.Defun.Interactive.No_arg
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () -> ispell "fr_FR");
+       return () >>| fun () -> ispell "fr_FR");
     from_string name
 
   let indent_buffer () =
@@ -48,9 +48,9 @@ module Command = struct
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
       ~interactive:Ecaml.Defun.Interactive.No_arg
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () ->
-      Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
-        ~end_:(Ecaml.Point.max ()) ());
+       return () >>| fun () ->
+       Ecaml.Current_buffer.indent_region ~start:(Ecaml.Point.min ())
+         ~end_:(Ecaml.Point.max ()) ());
     from_string name
 
   let git_grep () =
@@ -58,11 +58,11 @@ module Command = struct
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
       ~interactive:Ecaml.Defun.Interactive.No_arg
       (let open Ecaml.Defun.Let_syntax in
-      return () >>| fun () ->
-      Ecaml.Feature.require Ecamlx.Grep.feature;
-      Ecaml.Feature.require Ecamlx.Vc.Git.feature;
-      Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
-        (Ecamlx.Grep.read_regexp ()));
+       return () >>| fun () ->
+       Ecaml.Feature.require Ecamlx.Grep.feature;
+       Ecaml.Feature.require Ecamlx.Vc.Git.feature;
+       Ecamlx.Vc.Git.grep ?dir:(Ecamlx.Vc.root_dir ()) ~files:""
+         (Ecamlx.Grep.read_regexp ()));
     from_string name
 
   (* Inspired by https://www.emacswiki.org/emacs/TransposeWindows.  *)
@@ -71,26 +71,26 @@ module Command = struct
     defun ~name ~__POS__ ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
       ~interactive:Ecaml.Defun.Interactive.Raw_prefix
       (let open Ecaml.Defun.Let_syntax in
-      Ecaml.Defun.optional_with_default "count" 1 Ecaml.Defun.int
-      >>| fun count ->
-      match Ecaml.Frame.window_list () with
-      | [] -> assert false
-      | w1 :: _ as ws ->
-          let w1buf = Ecaml.Window.buffer_exn w1 in
-          let w1start = Ecaml.Window.start w1 in
-          let w1pt = Ecaml.Window.point_exn w1 in
-          let w2 =
-            match List.nth_opt ws (count mod List.length ws) with
-            | None -> assert false
-            | Some w2 -> w2
-          in
-          let w2buf = Ecaml.Window.buffer_exn w2 in
-          let w2start = Ecaml.Window.start w2 in
-          let w2pt = Ecaml.Window.point_exn w2 in
-          Ecamlx.Window.set_buffer_start_and_point ~buffer:w2buf ~start:w2start
-            ~point:w2pt w1;
-          Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
-            ~point:w1pt w2);
+       Ecaml.Defun.optional_with_default "count" 1 Ecaml.Defun.int
+       >>| fun count ->
+       match Ecaml.Frame.window_list () with
+       | [] -> assert false
+       | w1 :: _ as ws ->
+           let w1buf = Ecaml.Window.buffer_exn w1 in
+           let w1start = Ecaml.Window.start w1 in
+           let w1pt = Ecaml.Window.point_exn w1 in
+           let w2 =
+             match List.nth_opt ws (count mod List.length ws) with
+             | None -> assert false
+             | Some w2 -> w2
+           in
+           let w2buf = Ecaml.Window.buffer_exn w2 in
+           let w2start = Ecaml.Window.start w2 in
+           let w2pt = Ecaml.Window.point_exn w2 in
+           Ecamlx.Window.set_buffer_start_and_point ~buffer:w2buf ~start:w2start
+             ~point:w2pt w1;
+           Ecamlx.Window.set_buffer_start_and_point ~buffer:w1buf ~start:w1start
+             ~point:w1pt w2);
     from_string name
 
   let ansi_term () =
@@ -99,22 +99,22 @@ module Command = struct
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Buffer.type_)
       ~interactive:Ecaml.Defun.Interactive.Raw_prefix
       (let open Ecaml.Defun.Let_syntax in
-      Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
-      >>| fun arg ->
-      let default_buffer_name = "terminal" in
-      let new_buffer_name =
-        if arg then
-          Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
-            ~collection:(Ecaml.Completing.Collection.create_elisp [])
-            ~default:default_buffer_name ~prompt:"Name: " ()
-        else Async_kernel.return default_buffer_name
-      in
-      Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
-          Ecamlx.Term.ansi_term ~new_buffer_name
-            (Option.value
-               ~default:
-                 (Ecaml.Customization.value Ecamlx.Process.shell_file_name)
-               (Ecaml.System.getenv ~var:"ESHELL"))));
+       Ecaml.Defun.optional_with_default "arg" false Ecaml.Defun.bool
+       >>| fun arg ->
+       let default_buffer_name = "terminal" in
+       let new_buffer_name =
+         if arg then
+           Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
+             ~collection:(Ecaml.Completing.Collection.create_elisp [])
+             ~default:default_buffer_name ~prompt:"Name: " ()
+         else Async_kernel.return default_buffer_name
+       in
+       Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->
+           Ecamlx.Term.ansi_term ~new_buffer_name
+             (Option.value
+                ~default:
+                  (Ecaml.Customization.value Ecamlx.Process.shell_file_name)
+                (Ecaml.System.getenv ~var:"ESHELL"))));
     from_string name
 end
 

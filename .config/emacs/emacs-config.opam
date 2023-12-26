@@ -10,5 +10,5 @@ depends: [
   "ecaml" {>= "v0.16.0" & < "v0.17.0"}
   "sexplib0" {>= "v0.16.0" & < "v0.17.0"}
   "async_kernel" {>= "v0.16.0" & < "v0.17.0"}
-  "ocamlformat" {dev & = "0.24.1"}
+  "ocamlformat" {dev & = "0.26.1"}
 ]
