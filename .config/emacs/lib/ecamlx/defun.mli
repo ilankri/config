@@ -6,7 +6,7 @@ val defun :
   ?obsoletes:Ecaml.Defun.Obsoletes.t ->
   ?should_profile:bool ->
   ?interactive:Ecaml.Defun.Interactive.t ->
-  ?disabled:bool ->
+  ?disabled:Ecaml.Symbol.Disabled.t ->
   ?evil_config:Ecaml.Evil.Config.t ->
   returns:(_, 'a) Ecaml.Returns.t ->
   'a Ecaml.Defun.t ->
