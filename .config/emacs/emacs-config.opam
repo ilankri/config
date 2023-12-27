@@ -2,8 +2,8 @@ opam-version: "2.0"
 synopsis: "Emacs configuration"
 maintainer: "Idir Lankri <ilankri@protonmail.com>"
 authors: "Idir Lankri <ilankri@protonmail.com>"
-homepage: "https://gitlab.com/ilankri/dotfiles"
-bug-reports: "https://gitlab.com/ilankri/dotfiles/-/issues"
+homepage: "https://gitlab.com/ilankri/config"
+bug-reports: "https://gitlab.com/ilankri/config/-/issues"
 depends: [
   "ocaml" {>= "5.1.1" & < "5.2.0"}
   "dune" {>= "3.12.1" & < "4.0.0"}

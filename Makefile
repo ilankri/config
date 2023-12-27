@@ -1,5 +1,5 @@
 SHELL = /bin/sh
-DOCKER_IMAGE_TAG = ilankri-dotfiles
+DOCKER_IMAGE_TAG = ilankri-config
 
 econfdir = ~/.config/emacs
 print_installing = printf "Installing %s config...\n"
