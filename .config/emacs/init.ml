@@ -718,7 +718,7 @@ let init () =
   Ecamlx.Customization.set_variable Ecamlx.Comint.prompt_read_only true;
   Ecamlx.Customization.set_variable Ecamlx.Term.buffer_maximum_size 0;
   Ecamlx.Customization.set_variable Ecamlx.Vc.follow_symlinks `Follow_link;
-  Ecamlx.Customization.set_variable Ecamlx.Vc.command_messages true;
+  Ecamlx.Customization.set_variable Ecamlx.Vc.command_messages `Log_only;
   Ecamlx.Customization.set_variable Ecamlx.Files.require_final_newline `Save;
   Ecamlx.Customization.set_variable Ecamlx.Current_buffer.scroll_up_aggressively
     (Some 0.);

@@ -20,8 +20,25 @@ let follow_symlinks =
   "vc-follow-symlinks" <: type_
 
 let command_messages =
+  let type_ =
+    let module Type = struct
+      type t = [ `No | `Log_and_display | `Log_only ]
+
+      let all = [ `No; `Log_and_display; `Log_only ]
+
+      let sexp_of_t value =
+        let atom =
+          match value with
+          | `No -> "nil"
+          | `Log_and_display -> "t"
+          | `Log_only -> "log"
+        in
+        Sexplib0.Sexp.Atom atom
+    end in
+    Value.Type.enum "vc-command-messages" (module Type)
+  in
   let open Ecaml.Customization.Wrap in
-  "vc-command-messages" <: bool
+  "vc-command-messages" <: type_
 
 let root_dir =
   let open Ecaml.Funcall.Wrap in
