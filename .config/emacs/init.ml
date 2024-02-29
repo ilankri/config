@@ -250,8 +250,8 @@ let init () =
   Ecamlx.Package.initialize ();
 
   (* Ensure that packages are installed.  *)
-  Ecamlx.Package.install_selected_packages ();
   Ecamlx.Package.Vc.install_selected_packages ();
+  Ecamlx.Package.install_selected_packages ();
 
   Ecaml.Feature.require Ecamlx.Debian_el.feature;
 
