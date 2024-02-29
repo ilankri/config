@@ -253,6 +253,10 @@ let init () =
   Ecamlx.Package.Vc.install_selected_packages ();
   Ecamlx.Package.install_selected_packages ();
 
+  (* Ensure that the latest version of packages is installed.  *)
+  Ecamlx.Package.upgrade_all ~query:false ();
+
+  Ecamlx.Package.autoremove ();
   Ecaml.Feature.require Ecamlx.Debian_el.feature;
 
   (* Tree-sitter *)

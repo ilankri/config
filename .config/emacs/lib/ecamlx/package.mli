@@ -3,6 +3,8 @@ val archives : (string * string) list Ecaml.Customization.t
 val selected_packages : Ecaml.Symbol.t list Ecaml.Customization.t
 val initialize : ?no_activate:bool -> unit -> unit
 val install_selected_packages : ?no_confirm:bool -> unit -> unit
+val upgrade_all : ?query:bool -> unit -> unit
+val autoremove : unit -> unit
 
 module Vc : sig
   module Package_specification : sig

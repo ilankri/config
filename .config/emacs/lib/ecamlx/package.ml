@@ -22,6 +22,17 @@ let install_selected_packages ?no_confirm () =
   in
   install_selected_packages no_confirm
 
+let upgrade_all ?query () =
+  let upgrade_all =
+    let open Ecaml.Funcall.Wrap in
+    "package-upgrade-all" <: nil_or bool @-> return nil
+  in
+  upgrade_all query
+
+let autoremove =
+  let open Ecaml.Funcall.Wrap in
+  "package-autoremove" <: nullary @-> return nil
+
 module Vc = struct
   module Package_specification = struct
     type t = {
