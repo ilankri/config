@@ -236,6 +236,7 @@ let init () =
          "git-modes";
          "auctex";
          "proof-general";
+         "typst-ts-mode";
        ]);
   Ecamlx.Customization.set_variable Ecamlx.Package.Vc.selected_packages
     (List.map
