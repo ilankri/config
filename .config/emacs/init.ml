@@ -251,7 +251,7 @@ let init () =
 
   (* Ensure that packages are installed.  *)
   Ecamlx.Package.Vc.install_selected_packages ();
-  Ecamlx.Package.install_selected_packages ();
+  Ecamlx.Package.install_selected_packages ~no_confirm:true ();
 
   (* Ensure that the latest version of packages is installed.  *)
   Ecamlx.Package.upgrade_all ~query:false ();
