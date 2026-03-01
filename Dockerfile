@@ -10,7 +10,6 @@ RUN apt-get update --yes && \
             libgmp-dev \
             libgnutls28-dev \
             libgtk-3-dev \
-            libjansson-dev \
             libjpeg-dev \
             libpng-dev \
             libtiff-dev \
@@ -26,10 +25,10 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
           https://cli.github.com/packages stable main" | \
     tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 RUN apt-get update --yes && apt-get install --yes gh
-RUN curl --remote-name https://ftp.gnu.org/gnu/emacs/emacs-29.1.tar.xz
-RUN tar -xf emacs-29.1.tar.xz
-WORKDIR /emacs-29.1
-RUN ./configure --with-native-compilation
+RUN curl --remote-name https://ftp.gnu.org/gnu/emacs/emacs-30.2.tar.xz
+RUN tar -xf emacs-30.2.tar.xz
+WORKDIR /emacs-30.2
+RUN ./configure
 RUN make
 RUN make install
 RUN curl -fsSL --remote-name \
