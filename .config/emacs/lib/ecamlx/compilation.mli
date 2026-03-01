@@ -5,7 +5,7 @@ val context_lines :
   [ `Scroll_when_no_fringe | `Never_scroll | `Number_of_lines of int ]
   Ecaml.Customization.t
 
-val filter_hook : Ecaml.Hook.normal Ecaml.Hook.t
+val filter_hook : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
 
 module Command : sig
   val recompile : Ecaml.Command.t

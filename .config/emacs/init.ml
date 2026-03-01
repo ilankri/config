@@ -26,9 +26,7 @@ module Function = struct
   let prompt_file_for_auto_insert filename =
     let open Async_kernel.Deferred.Let_syntax in
     Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
-      ~collection:
-        (Ecaml.Completing.Collection.create_elisp
-           [ "c"; "java"; "latex"; "ocaml" ])
+      ~collection:[ "c"; "java"; "latex"; "ocaml" ]
       ~require_match:Ecaml.Completing.Require_match.True ~prompt:"Type: " ()
     >>| fun type_ ->
     Ecaml.Point.insert_file_contents_exn
@@ -336,8 +334,8 @@ let init () =
     (prefix_by_user_emacs_directory "insert/");
   Ecamlx.Auto_insert.define (`Major_mode Ecamlx.Major_mode.Latex.major_mode)
     (`File
-      (Ecaml.Customization.standard_value Ecamlx.Auto_insert.directory
-      ^ "latex/preamble.tex"));
+       (Ecaml.Customization.standard_value Ecamlx.Auto_insert.directory
+       ^ "latex/preamble.tex"));
   Ecaml.Minor_mode.enable Ecamlx.Minor_mode.auto_insert;
 
   (* Semantic *)
@@ -704,8 +702,8 @@ let init () =
   Ecamlx.Customization.set_variable Ecamlx.Startup.initial_buffer_choice
     (Some
        (`Function
-         (Ecaml.Function.of_value_exn @@ Ecaml.Command.to_value
-        @@ My.Command.ansi_term ())));
+          (Ecaml.Function.of_value_exn @@ Ecaml.Command.to_value
+         @@ My.Command.ansi_term ())));
   Ecamlx.Customization.set_variable Ecamlx.Display.track_eol true;
   Ecamlx.Customization.set_variable Ecamlx.Minibuffer.completions_format
     `One_column;

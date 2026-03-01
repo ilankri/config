@@ -3,7 +3,7 @@ module Latex : sig
     val math : Ecaml.Minor_mode.t
   end
 
-  val mode_hook : Ecaml.Hook.normal Ecaml.Hook.t
+  val mode_hook : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
 
   val section_hook :
     [ `Heading | `Title | `Toc | `Section | `Label ] list Ecaml.Customization.t

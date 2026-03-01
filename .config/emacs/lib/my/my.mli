@@ -5,10 +5,10 @@ val hook_defun :
   __POS__:Position.t ->
   ?docstring:string ->
   ?should_profile:bool ->
-  hook_type:'a Ecaml.Hook.Hook_type.t ->
+  hook_type:('a, unit) Ecaml.Hook.Hook_type.t ->
   returns:unit Ecaml.Value.Type.t ->
   ('a -> unit) ->
-  'a Ecaml.Hook.Function.t
+  ('a, unit) Ecaml.Hook.Function.t
 
 module Command : sig
   val ispell_en : unit -> Ecaml.Command.t

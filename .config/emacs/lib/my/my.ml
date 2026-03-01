@@ -105,8 +105,7 @@ module Command = struct
        let new_buffer_name =
          if arg then
            Ecaml.Completing.read ~history:Ecaml.Minibuffer.history
-             ~collection:(Ecaml.Completing.Collection.create_elisp [])
-             ~default:default_buffer_name ~prompt:"Name: " ()
+             ~collection:[] ~default:default_buffer_name ~prompt:"Name: " ()
          else Async_kernel.return default_buffer_name
        in
        Async_kernel.Deferred.map new_buffer_name ~f:(fun new_buffer_name ->

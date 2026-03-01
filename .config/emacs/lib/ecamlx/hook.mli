@@ -1,5 +1,5 @@
-val find_file : Ecaml.Hook.normal Ecaml.Hook.t
-val post_self_insert : Ecaml.Hook.normal Ecaml.Hook.t
+val find_file : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
+val post_self_insert : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
 
 module Function : sig
   val create :
@@ -7,8 +7,8 @@ module Function : sig
     __POS__:Position.t ->
     ?docstring:string ->
     ?should_profile:bool ->
-    hook_type:'a Ecaml.Hook.Hook_type.t ->
+    hook_type:('a, unit) Ecaml.Hook.Hook_type.t ->
     returns:unit Ecaml.Value.Type.t ->
     ('a -> unit) ->
-    'a Ecaml.Hook.Function.t
+    ('a, unit) Ecaml.Hook.Function.t
 end

@@ -1,5 +1,5 @@
-val common_hook : Ecaml.Hook.normal Ecaml.Hook.t
-val initialization_hook : Ecaml.Hook.normal Ecaml.Hook.t
+val common_hook : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
+val initialization_hook : (Ecaml.Hook.normal, unit) Ecaml.Hook.t
 
 module Default_style : sig
   type t = {
