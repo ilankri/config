@@ -21,4 +21,5 @@ val flyspell : Ecaml.Minor_mode.t
 val reftex : Ecaml.Minor_mode.t
 val auto_insert : Ecaml.Minor_mode.t
 val global_goto_address : Ecaml.Minor_mode.t
+val ocaml_eglot : Ecaml.Minor_mode.t
 val make : ?variable_name:string -> string -> Ecaml.Minor_mode.t

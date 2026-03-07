@@ -150,7 +150,9 @@ let c_initialization_hook_f =
 let tuareg_mode_hook_f =
   My.hook_defun ~name:"tuareg-mode-hook-f" ~__POS__
     ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
-    (fun () -> Ecamlx.Keymap.local_unset "C-c C-h")
+    (fun () ->
+      Ecamlx.Keymap.local_unset "C-c C-h";
+      Ecaml.Minor_mode.enable Ecamlx.Minor_mode.ocaml_eglot)
 
 let icomplete_minibuffer_setup_hook_f =
   My.hook_defun ~name:"icomplete-minibuffer-setup-hook-f" ~__POS__
@@ -235,6 +237,7 @@ let init () =
          "auctex";
          "proof-general";
          "typst-ts-mode";
+         "ocaml-eglot";
        ]);
   Ecamlx.Customization.set_variable Ecamlx.Package.Vc.selected_packages
     (List.map
