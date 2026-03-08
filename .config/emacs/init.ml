@@ -754,7 +754,6 @@ let init () =
   set_ispell_key "f" (My.Command.ispell_fr ());
   set_ispell_key "o" Ecamlx.Ispell.Command.ispell;
   global_set_key "s" (My.Command.git_grep ());
-  global_set_key "t" (My.Command.transpose_windows ());
   global_set_key "v" (My.Command.ansi_term ());
   global_set_key "w" Ecamlx.Whitespace.Command.cleanup;
 

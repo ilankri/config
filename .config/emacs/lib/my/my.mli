@@ -15,6 +15,5 @@ module Command : sig
   val ispell_fr : unit -> Ecaml.Command.t
   val indent_buffer : unit -> Ecaml.Command.t
   val git_grep : unit -> Ecaml.Command.t
-  val transpose_windows : unit -> Ecaml.Command.t
   val ansi_term : unit -> Ecaml.Command.t
 end
