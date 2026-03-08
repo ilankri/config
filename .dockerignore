@@ -121,6 +121,8 @@
 !.config/emacs/lib/ecamlx/treesit.mli
 !.config/emacs/lib/ecamlx/tuareg.ml
 !.config/emacs/lib/ecamlx/tuareg.mli
+!.config/emacs/lib/ecamlx/typst_mode.ml
+!.config/emacs/lib/ecamlx/typst_mode.mli
 !.config/emacs/lib/ecamlx/user.ml
 !.config/emacs/lib/ecamlx/user.mli
 !.config/emacs/lib/ecamlx/value.ml

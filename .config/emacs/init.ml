@@ -45,6 +45,15 @@ module Function = struct
       ~returns:(Ecaml.Returns.Returns_deferred Ecaml.Value.Type.unit)
       (let open Ecaml.Defun.Let_syntax in
        return () >>| fun () -> prompt_file_for_auto_insert "gitignore")
+
+  let download_typst_lsp_server () =
+    Ecamlx.Defun.lambda ~__POS__
+      ~returns:(Ecaml.Returns.Returns Ecaml.Value.Type.unit)
+      (let open Ecaml.Defun.Let_syntax in
+       Ecaml.Defun.both
+         (Ecaml.Defun.optional "interactive" Ecaml.Defun.bool)
+         (Ecaml.Defun.optional "project" Ecaml.Defun.value)
+       >>| fun _ -> Ecamlx.Typst_mode.Lsp.download_binary ())
 end
 
 let prefix_by_user_emacs_directory file =
@@ -161,11 +170,6 @@ let icomplete_minibuffer_setup_hook_f =
       Ecamlx.Current_buffer.set_customization_buffer_local
         Ecamlx.Minibuffer.completion_auto_help `Never)
 
-let typst_mode_hook_f =
-  My.hook_defun ~name:"typst-mode-hook-f" ~__POS__
-    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
-    (fun () -> Ecamlx.Keymap.local_unset "M-TAB")
-
 let init () =
   let enable_auto_fill =
     My.hook_defun ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
@@ -239,15 +243,6 @@ let init () =
          "typst-ts-mode";
          "ocaml-eglot";
        ]);
-  Ecamlx.Customization.set_variable Ecamlx.Package.Vc.selected_packages
-    (List.map
-       (fun (name, spec) ->
-         (Ecaml.Symbol.intern name, Some (`Package_specification spec)))
-       [
-         ( "typst-ts-mode",
-           Ecamlx.Package.Vc.Package_specification.make
-             "https://git.sr.ht/~meow_king/typst-ts-mode" );
-       ]);
   Ecamlx.Package.initialize ();
 
   (* Ensure that packages are installed.  *)
@@ -310,8 +305,7 @@ let init () =
     ];
   Ecaml.Var.set_default_value Ecamlx.Eglot.server_programs
     (( [ Ecamlx.Eglot.Language.make Ecamlx.Major_mode.Typst.major_mode ],
-       `Language_server (Ecamlx.Eglot.Language.Server.make_program "typst-lsp")
-     )
+       `Function (Function.download_typst_lsp_server ()) )
     :: Ecaml.Var.default_value_exn Ecamlx.Eglot.server_programs);
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Prog.major_mode)
@@ -574,11 +568,6 @@ let init () =
     `Multi_level;
   Ecamlx.Customization.set_variable Ecamlx.Auctex.Tex.master `Query;
   Ecaml.Hook.add Ecamlx.Auctex.Latex.mode_hook enable_latex_minor_modes;
-
-  (* Typst *)
-  Ecaml.Hook.add
-    (Ecaml.Hook.major_mode_hook Ecamlx.Major_mode.Typst.major_mode)
-    typst_mode_hook_f;
 
   (* Proof general *)
   Ecamlx.Customization.set_variable Ecamlx.Proof_general.splash_enable false;
