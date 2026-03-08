@@ -12,6 +12,8 @@ module Java : Ecaml.Major_mode.S_with_lazy_keymap
 module Latex : Ecaml.Major_mode.S_with_lazy_keymap
 module Markdown : Ecaml.Major_mode.S_with_lazy_keymap
 module Message : Ecaml.Major_mode.S_with_lazy_keymap
+module Neocaml : Ecaml.Major_mode.S_with_lazy_keymap
+module Neocaml_interface : Ecaml.Major_mode.S_with_lazy_keymap
 module Scala : Ecaml.Major_mode.S_with_lazy_keymap
 module Sh : Ecaml.Major_mode.S_with_lazy_keymap
 module Typst : Ecaml.Major_mode.S_with_lazy_keymap

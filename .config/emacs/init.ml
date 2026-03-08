@@ -156,11 +156,10 @@ let c_initialization_hook_f =
           Ecamlx.Cc_mode.Default_style.other = Some "linux";
         })
 
-let tuareg_mode_hook_f =
-  My.hook_defun ~name:"tuareg-mode-hook-f" ~__POS__
-    ~hook_type:Ecaml.Hook.Hook_type.Normal_hook ~returns:Ecaml.Value.Type.unit
-    (fun () ->
-      Ecamlx.Keymap.local_unset "C-c C-h";
+let neocaml_mode_hook_f mode =
+  My.hook_defun ~name:(Printf.sprintf "%s-hook-f" mode)
+    ~__POS__ ~hook_type:Ecaml.Hook.Hook_type.Normal_hook
+    ~returns:Ecaml.Value.Type.unit (fun () ->
       Ecaml.Minor_mode.enable Ecamlx.Minor_mode.ocaml_eglot)
 
 let icomplete_minibuffer_setup_hook_f =
@@ -235,7 +234,7 @@ let init () =
          "markdown-mode";
          "scala-mode";
          "gnu-elpa-keyring-update";
-         "tuareg";
+         "neocaml";
          "dune";
          "git-modes";
          "auctex";
@@ -299,13 +298,22 @@ let init () =
         eglot_ensure)
     [
       (module Ecamlx.Major_mode.Scala);
-      (module Ecaml.Major_mode.Tuareg);
+      (module Ecamlx.Major_mode.Neocaml);
       (module Ecamlx.Major_mode.Sh);
       (module Ecamlx.Major_mode.Typst);
     ];
   Ecaml.Var.set_default_value Ecamlx.Eglot.server_programs
     (( [ Ecamlx.Eglot.Language.make Ecamlx.Major_mode.Typst.major_mode ],
        `Function (Function.download_typst_lsp_server ()) )
+    :: ( List.map
+           (fun (module Major_mode : Ecaml.Major_mode.S_with_lazy_keymap) ->
+             Ecamlx.Eglot.Language.make Major_mode.major_mode)
+           [
+             (module Ecamlx.Major_mode.Neocaml);
+             (module Ecamlx.Major_mode.Neocaml_interface);
+           ],
+         `Language_server (Ecamlx.Eglot.Language.Server.make_program "ocamllsp")
+       )
     :: Ecaml.Var.default_value_exn Ecamlx.Eglot.server_programs);
   Ecaml.Hook.add
     (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Prog.major_mode)
@@ -576,12 +584,18 @@ let init () =
   Ecamlx.Customization.set_variable
     Ecamlx.Proof_general.Coq.one_command_per_line false;
 
-  (* Tuareg *)
-  Ecamlx.Customization.set_variable Ecamlx.Tuareg.interactive_read_only_input
-    true;
-  Ecaml.Hook.add
-    (Ecaml.Hook.major_mode_hook Ecaml.Major_mode.Tuareg.major_mode)
-    tuareg_mode_hook_f;
+  (* Neocaml *)
+  List.iter
+    (fun (module Major_mode : Ecaml.Major_mode.S_with_lazy_keymap) ->
+      let major_mode = Major_mode.major_mode in
+      Ecaml.Hook.add
+        (Ecaml.Hook.major_mode_hook major_mode)
+        (neocaml_mode_hook_f @@ Ecaml.Symbol.name
+        @@ Ecaml.Major_mode.symbol major_mode))
+    [
+      (module Ecamlx.Major_mode.Neocaml);
+      (module Ecamlx.Major_mode.Neocaml_interface);
+    ];
 
   (* Enable smerge-mode when necessary.  *)
   Ecaml.Hook.add Ecamlx.Hook.find_file try_smerge;
@@ -678,7 +692,7 @@ let init () =
          ("bash-fc\\'", Ecamlx.Major_mode.Sh.major_mode);
          ("\\.bash_aliases\\'", Ecamlx.Major_mode.Sh.major_mode);
          ("\\.dockerignore\\'", Ecamlx.Major_mode.Gitignore.major_mode);
-         ("\\.ml[ly]\\'", Ecaml.Major_mode.Tuareg.major_mode);
+         ("\\.ml[ly]\\'", Ecamlx.Major_mode.Neocaml.major_mode);
          ("\\.ocp-indent\\'", Ecamlx.Major_mode.Conf_unix.major_mode);
          ("_tags\\'", Ecamlx.Major_mode.Conf_colon.major_mode);
          ("\\.merlin\\'", Ecamlx.Major_mode.Conf_space.major_mode);

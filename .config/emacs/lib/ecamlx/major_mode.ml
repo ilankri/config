@@ -54,6 +54,14 @@ module Message =
   (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "message-mode"
          (Position.to_lexing_position ~__POS__))
 
+module Neocaml =
+  (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "neocaml-mode"
+         (Position.to_lexing_position ~__POS__))
+
+module Neocaml_interface =
+  (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "neocaml-interface-mode"
+         (Position.to_lexing_position ~__POS__))
+
 module Scala =
   (val Ecaml.Major_mode.wrap_existing_with_lazy_keymap "scala-mode"
          (Position.to_lexing_position ~__POS__))
