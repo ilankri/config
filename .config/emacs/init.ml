@@ -719,27 +719,28 @@ let init () =
   Ecamlx.Customization.set_variable Ecamlx.Paren.context_when_offscreen
     `Echo_area;
 
+  (* Windmove *)
+  Ecamlx.Windmove.default_keybindings ();
+  Ecamlx.Windmove.delete_default_keybindings ();
+  Ecamlx.Windmove.display_default_keybindings ();
+  Ecamlx.Windmove.swap_states_default_keybindings ();
+
   (* Custom global key bindings *)
   global_set_key "a" Ecamlx.Find_file.Command.get_other_file;
   global_set_key "c" Ecamlx.Compilation.Command.recompile;
-  global_set_key "b" Ecamlx.Windmove.Command.left;
-  global_set_key "f" Ecamlx.Windmove.Command.right;
   global_set_key "h" Ecamlx.Man.Command.man;
   global_set_key "i" (My.Command.indent_buffer ());
   global_set_key "j" Ecamlx.Ffap.Command.find_file_at_point;
   global_set_key "k" Ecamlx.Command.kill_current_buffer;
   set_eglot_key "a" (Ecamlx.Eglot.Command.code_actions ());
   set_eglot_key "r" (Ecamlx.Eglot.Command.rename ());
-  global_set_key "n" Ecamlx.Windmove.Command.down;
   set_ispell_key "c" Ecamlx.Ispell.Command.comments_and_strings;
   set_ispell_key "d" Ecamlx.Ispell.Command.change_dictionary;
   set_ispell_key "e" (My.Command.ispell_en ());
   set_ispell_key "f" (My.Command.ispell_fr ());
   set_ispell_key "o" Ecamlx.Ispell.Command.ispell;
-  global_set_key "p" Ecamlx.Windmove.Command.up;
   global_set_key "s" (My.Command.git_grep ());
   global_set_key "t" (My.Command.transpose_windows ());
-  global_set_key "u" (Ecamlx.Winner.Command.undo ());
   global_set_key "v" (My.Command.ansi_term ());
   global_set_key "w" Ecamlx.Whitespace.Command.cleanup;
 

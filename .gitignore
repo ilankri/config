@@ -146,8 +146,6 @@
 !/.config/emacs/lib/ecamlx/windmove.mli
 !/.config/emacs/lib/ecamlx/window.ml
 !/.config/emacs/lib/ecamlx/window.mli
-!/.config/emacs/lib/ecamlx/winner.ml
-!/.config/emacs/lib/ecamlx/winner.mli
 !/.config/emacs/lib/my/
 !/.config/emacs/lib/my/dune
 !/.config/emacs/lib/my/my.ml
