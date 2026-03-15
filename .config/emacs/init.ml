@@ -227,7 +227,6 @@ let init () =
     (List.map Ecaml.Symbol.intern
        [
          "magit";
-         "git-commit";
          "reason-mode";
          "debian-el";
          "csv-mode";
