@@ -12,3 +12,6 @@ TAGS
 auto/
 _region_.prv/
 _region_.tex
+
+# direnv files
+.envrc

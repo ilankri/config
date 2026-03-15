@@ -2,6 +2,7 @@
 !Makefile
 !.xsessionrc
 !.config/bash/bashrc.bash
+!.config/direnv/direnvrc
 !.config/docker/config.json
 !.config/emacs/.ocamlformat
 !.config/emacs/Makefile

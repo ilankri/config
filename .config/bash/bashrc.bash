@@ -37,16 +37,7 @@ function prompt_end() {
     fi
 }
 
-function odig_env_hook() {
-    local status="$?"
-
-    export ODIG_CACHE_DIR=$(opam var prefix)/var/cache/odig
-    export ODIG_DOC_DIR=$(opam var doc)
-    export ODIG_LIB_DIR=$(opam var lib)
-    return $status
-}
-
-export PROMPT_COMMAND='odig_env_hook; __git_ps1 $my_ps1 "$(prompt_end) "'
+export PROMPT_COMMAND='__git_ps1 $my_ps1 "$(prompt_end) "'
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -87,6 +78,9 @@ export SBT_NATIVE_CLIENT=true
 
 # Docker
 export DOCKER_CONFIG=~/.config/docker
+
+# direnv
+eval "$(direnv hook bash)"
 
 ## Aliases
 alias rm='rm -i'

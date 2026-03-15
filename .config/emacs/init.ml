@@ -240,6 +240,7 @@ let init () =
          "proof-general";
          "typst-ts-mode";
          "ocaml-eglot";
+         "envrc";
        ]);
   Ecamlx.Package.initialize ();
 
@@ -776,6 +777,7 @@ let init () =
       Ecamlx.Minor_mode.minibuffer_depth_indicate;
       Ecamlx.Minor_mode.global_auto_revert;
       Ecamlx.Minor_mode.global_goto_address;
+      Ecamlx.Minor_mode.envrc;
     ];
 
   Ecamlx.Frame.toggle_fullscreen ();
