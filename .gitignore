@@ -9,7 +9,7 @@
 !/.config/bash/
 !/.config/bash/bashrc.bash
 !/.config/direnv/
-!/.config/direnv/direnvrc
+!/.config/direnv/ocaml_envrc
 !/.config/docker/
 !/.config/docker/config.json
 !/.config/emacs/
